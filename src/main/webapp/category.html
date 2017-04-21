@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html ng-app="category-app">
+<head>
+<meta charset="utf-8">
+<title>分类名</title>
+<script src="js/lib/angular.min.js"></script>
+<script src="js/lib/angular-animate.min.js"></script>
+<script src="js/lib/jquery-3.1.1.min.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<script src="js/common.js"></script>
+<link rel="stylesheet" href="css/lib/bootstrap.min.css" />
+<link rel="stylesheet" href="css/lib/bootstrap-theme.min.css" />
+<link rel="stylesheet" href="css/common.css" />
+<link rel="stylesheet" href="css/category.css" />
+<style>
+	
+	
+</style>
+</head>
+<body>
+	<nav ng-controller="nav-controller" class="navbar navbar-default"
+		role="navigation" novalidate ng-cloak style="border-radius: 0;">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">玄奘书籍销售平台</a>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li ng-if="user===null">
+					<a href="register.html">
+					<span class="glyphicon glyphicon-user"></span> 注册</a>
+				</li>
+				<li ng-if="user===null">
+					<a href="login.html">
+					<span class="glyphicon glyphicon-log-in"></span> 登录</a>
+				</li>
+				<li ng-if="user!==null" class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown">{{nickname}}
+						<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a>个人中心</a></li>
+						<li><a>设置</a></li>
+						<li class="divider"></li>
+						<li><a ng-click="logout()">退出登录</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	
+	<div id="wrapper">
+		<header>
+			<form>
+				<input>
+				<button>搜索</button>
+			</form>
+		</header>
+		<div ng-controller="books-controller" ng-cloak>
+			<div id="books">
+				<!-- js自动生成内容 -->
+			</div>
+			<div class="text-center">
+				点击加载更多
+			</div>
+		</div>
+	</div>
+	
+</body>
+<script src="js/controller/category.js" ></script>
+</html>

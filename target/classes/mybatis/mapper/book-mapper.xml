@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lost4found.dao.BookDao">
+	
+	<resultMap type="cn.lost4found.entity.BookEntity" id="bookEntity"
+		autoMapping="true">
+		<id property="id" column="id" />
+		<result property="pressTime" column="press_time" />
+	</resultMap>
+
+	<select id="select" resultMap="bookEntity">
+		select * from info_book where
+		${uf}=#{value}
+	</select>
+	
+	<insert id="insert">
+		insert into info_book
+			(id, name, description, author, press, press_time, price, add_time)
+		values
+			(#{id}, #{name}, #{description}, #{author}, #{press}, #{pressTime}, #{price}, #{addTime})
+	</insert>
+	
+	<update id="update">
+	<!-- 
+		update sys_user set
+			account=#{account}, password=#{password},
+			nickname=#{nickname}, telephone=#{telephone}, email=#{email}
+		where
+			id=#{id}
+	 -->
+	</update>
+</mapper>

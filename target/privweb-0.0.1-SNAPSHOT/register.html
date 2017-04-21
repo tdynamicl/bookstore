@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html ng-app="register-app">
+<head>
+<meta charset="utf-8">
+<title>注册|xxx</title>
+<script src="js/lib/angular.min.js"></script>
+<script src="js/lib/angular-animate.min.js"></script>
+<script src="js/lib/angular-md5.min.js"></script>
+<script src="js/lib/jquery-3.1.1.min.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+<style>
+body {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 100px;
+	width: 20em;
+}
+
+.errortip{
+	color:red;
+}
+</style>
+</head>
+<body>
+	<div ng-controller="register-controller" ng-cloak>
+		<form name="registerForm" class="form-signup" role="form" novalidate >
+			<h2 class="form-signin-header">注册xxx</h2>
+			<span class="errortip">
+				<span ng-show="registerForm.account.$dirty && registerForm.account.$invalid">
+					<span ng-show="registerForm.account.$error.required">用户名不能为空</span>
+				</span>&nbsp;
+			</span>
+			<div class="input-group input-group-md has-feedback">
+				<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+				<input ng-model="user.account" type="text" class="form-control"
+					name="account" maxlength="12" placeholder="用户名" required autofocus>
+				<span class="glyphicon glyphicon-ok form-control-feedback"
+				ng-show="registerForm.account.$dirty && registerForm.account.$valid"></span>
+			</div>
+			<span class="errortip">
+				<span ng-show="registerForm.password.$dirty && registerForm.password.$invalid">
+					<span ng-show="registerForm.password.$error.required">密码不能为空</span>
+					<span ng-show="!registerForm.password.$error.required">密码最少6位</span>
+				</span>&nbsp;
+			</span>
+			<div class="input-group input-group-md">
+				<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+				<input ng-model="user.password" type="password" class="form-control"
+					name="password" maxlength="16" ng-minlength="6" placeholder="密码" required>
+				<span class="glyphicon glyphicon-ok form-control-feedback "
+				ng-show="registerForm.password.$dirty && registerForm.password.$valid"></span>
+			</div>
+			<span class="errortip">
+				<span ng-show="registerForm.nickname.$dirty && registerForm.nickname.$invalid">
+					<span ng-show="registerForm.nickname.$error.required">昵称不能为空</span>
+				</span>&nbsp;
+			</span>
+			<div class="input-group input-group-md">
+				<span class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></span>
+				<input ng-model="user.nickname" type="text" class="form-control"
+					maxlength="12" name="nickname" placeholder="昵称" required>
+				<span class="glyphicon glyphicon-ok form-control-feedback"
+				ng-show="registerForm.nickname.$dirty && registerForm.nickname.$valid"></span>
+			</div>
+			<span class="errortip">
+				<span ng-show="registerForm.tel.$dirty">
+					<span ng-show="registerForm.tel.$error.required">手机号码不能为空</span>
+					<span ng-show="!registerForm.tel.$error.required &&
+						registerForm.tel.$invalid">格式错误</span>
+				</span>&nbsp;
+			</span>
+			<div class="input-group input-group-md">
+				<span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
+				<input ng-model="user.telephone" type="tel" class="form-control" ng-pattern="/^1\d{10}$/"
+					name="tel" maxlength="11" ng-minlength="11" placeholder="电话" required>
+				<span class="glyphicon glyphicon-ok form-control-feedback"
+				ng-show="registerForm.tel.$dirty && registerForm.tel.$valid"></span>
+			</div>
+			<span class="errortip">
+				<span ng-show="registerForm.email.$dirty && registerForm.email.$invalid">
+					<span ng-show="registerForm.email.$error.required">邮箱是必填的</span>
+					<span ng-show="!registerForm.email.$error.required && 
+						registerForm.email.$error.email">邮箱格式错误</span>
+				</span>&nbsp;
+			</span>
+			<div class="input-group input-group-md">
+				<span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+				<input ng-model="user.email" type="email" class="form-control"
+					name="email" placeholder="邮箱" required>
+				<span class="glyphicon glyphicon-ok form-control-feedback"
+				ng-show="registerForm.email.$dirty && registerForm.email.$valid"></span>
+			</div>
+			<br>
+			<button onclick='window.location.href="login.html"'
+				class="btn btn-default">返回登录</button>
+			<button ng-click="register()" class="btn btn-primary"
+				ng-disabled=" registerForm.account.$invalid ||
+				registerForm.password.$invalid ||
+				registerForm.nickname.$invalid ||
+				registerForm.tel.$invalid ||
+				registerForm.email.$invalid"
+				style='float: right;'>提交注册</button>
+		</form>
+	
+		<div class="modal fade" id="regResultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h4 class="modal-title">提示</h4>
+		            </div>
+		            <div class="modal-body">{{regResult.message}}</div>
+		            <div class="modal-footer">
+		                <button class="btn btn-primary" data-dismiss="modal">确定</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+	
+</body>
+<script src='js/controller/register.js'></script>
+</html>

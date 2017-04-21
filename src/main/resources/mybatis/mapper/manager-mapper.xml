@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lost4found.dao.ManagerDao">
+	
+	<resultMap type="cn.lost4found.entity.ManagerEntity" id="managerEntity"
+		autoMapping="true">
+		<id property="id" column="id" />
+	
+	</resultMap>
+	<!-- 仅配置了属性和数据库字段名不一致的 
+	<result property="lastLoginTime" column="lastlogintime" />
+	-->
+
+	<select id="select" resultMap="managerEntity">
+		select * from info_manager where
+		${uf}=#{value}
+	</select>
+	
+	<insert id="insert">
+	<!-- 
+		insert into sys_user
+			(id, account, password, nickname, telephone, email)
+		values
+			(#{id}, #{account}, #{password}, #{nickname}, #{telephone}, #{email})
+	-->
+	</insert>
+	
+	<update id="update">
+	<!-- 
+		update sys_user set
+			account=#{account}, password=#{password},
+			nickname=#{nickname}, telephone=#{telephone}, email=#{email}
+		where
+			id=#{id}
+	-->
+	</update>
+</mapper>

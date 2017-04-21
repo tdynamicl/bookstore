@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html ng-app="index-app">
+<head>
+<meta charset="utf-8">
+<title>首页|xxx</title>
+<script src="js/lib/angular.min.js"></script>
+<script src="js/lib/angular-animate.min.js"></script>
+<script src="js/lib/jquery-3.1.1.min.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+<style>
+nav li {
+	cursor: pointer;
+}
+.navbar{
+	margin-bottom: 0;
+}
+</style>
+</head>
+<body>
+	<nav ng-controller="nav-controller" class="navbar navbar-inverse"
+		role="navigation" novalidate ng-cloak style="border-radius: 0;">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">LOGO is here</a>
+			</div>
+			<div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a>AAAA</a></li>
+					<li><a>BBBBB</a></li>
+				</ul>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li ng-if="user===null">
+					<a href="register.html">
+					<span class="glyphicon glyphicon-user"></span> 注册</a>
+				</li>
+				<li ng-if="user===null">
+					<a href="login.html">
+					<span class="glyphicon glyphicon-log-in"></span> 登录</a>
+				</li>
+				<li ng-if="user!==null" class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown">{{nickname}}
+						<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a>个人中心</a></li>
+						<li><a>设置</a></li>
+						<li class="divider"></li>
+						<li><a ng-click="logout()">退出登录</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+
+	<!-- <div id="myCarousel" class="carousel slide">
+		轮播（Carousel）指标
+		<ol class="carousel-indicators">
+			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			<li data-target="#myCarousel" data-slide-to="1"></li>
+			<li data-target="#myCarousel" data-slide-to="2"></li>
+		</ol>   
+		轮播（Carousel）项目
+		<div class="carousel-inner">
+			<div class="item active">
+				<img src="img/index/slide1.png" alt="First slide">
+				<div class="carousel-caption">标题 1</div>
+			</div>
+			<div class="item">
+				<img src="img/index/slide2.png" alt="Second slide">
+				<div class="carousel-caption">标题 2</div>
+			</div>
+			<div class="item">
+				<img src="img/index/slide3.png" alt="Third slide">
+				<div class="carousel-caption">标题 3</div>
+			</div>
+		</div>
+		轮播（Carousel）导航
+		<a class="carousel-control left" href="#myCarousel" 
+		   data-slide="prev">&lsaquo;</a>
+		<a class="carousel-control right" href="#myCarousel" 
+		   data-slide="next">&rsaquo;</a>
+	</div> -->
+
+
+
+</body>
+<script>
+	var indexapp = angular.module("index-app", []);
+	indexapp.controller("nav-controller", function($scope, $rootScope, $http) {
+		$scope.user = sessionStorage.getItem("user");
+		if ($scope.user != null) {
+			$scope.user = JSON.parse($scope.user);
+			$scope.nickname = $scope.user.nickname;
+			$rootScope.user = $scope.user;
+		}
+
+		$scope.logout = function() {
+			sessionStorage.removeItem("user");
+			location.reload();
+		};
+
+	});
+</script>
+</html>

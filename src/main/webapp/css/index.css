@@ -1,0 +1,121 @@
+#category {
+	width: 200px;
+}
+.com-text-center {
+	text-align: center;
+}
+#title-category {
+	font-family: "微软雅黑";
+	background-color: gray;
+	color: white;
+	padding: 10px;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	border: 2px solid gray;
+	border-bottom:dotted;
+}
+#items-category {
+	font-size: 120%;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	border: 2px solid gray;
+	border-top: none;
+	height: auto;
+	
+}
+#items-category > div {
+	font-size: 90%;
+	padding-left: 20px;
+	padding-right: 20px;
+	line-height: 32px;
+	border-top: 1px dotted gray;
+}
+#items-category > div > span {
+	font-size: 100%;
+	font-family: "微软雅黑";
+	font-weight: bolder;
+	display: block;
+}
+#items-category > div > a {
+	color: black;
+	display: inline-block;
+	padding-right: 5px;
+}
+#items-category > div > a:active{
+	color: red;
+}
+#items-category > div > a:visited{
+	color: black;
+}
+#img-exhibition {
+	position: absolute;
+	left: 220px;
+	top: 80px;
+	width: 760px;
+	height: 300px;
+	background-color: #4CAE4C;
+}
+#img-exhibition img{
+	width: 760px;
+	height: 300px;
+}
+#newBooks {
+	position: absolute;
+	left: 220px;
+	top: 400px;
+	width: 760px;
+	height: 219px;
+}
+#newBooks > div {
+	padding: 10px 25px 0 25px;
+	float: left;
+	width: 190px;
+	height: 191px;
+}
+#newBooks > div > img{
+	cursor: pointer;
+	width: 140px;
+	height: 150px;
+}
+#newBooks > div > span {
+	line-height: 24px;
+	cursor: pointer;
+}
+#newBooks .price {
+	cursor: default;
+	float: right;
+	color:#D9534F;
+	font-family:"微软雅黑";
+	font-size: 120%;
+}
+#newBooks .price::before {
+	content: "￥";
+}
+#newBooks h3 {
+	font-family: "微软雅黑";
+	border-bottom: 1px solid black;
+}
+aside {
+	position: absolute;
+	width: 200px;
+	height: 539px;
+	top: 80px;
+	left: 1000px;
+}
+aside h3 {
+	font-family: "微软雅黑";
+	margin-bottom: 17px;
+}
+aside > div {
+	border: 2px solid gray;
+	border-radius: 6px;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+aside ol {
+	margin: 0;
+	padding-left: 20px;
+}
+aside li {
+	padding-top: 10px;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="login-app">
+<head>
+<meta charset="utf-8">
+<title>登录|xxx</title>
+<script src="js/lib/angular.min.js"></script>
+<script src="js/lib/angular-animate.min.js"></script>
+<script src="js/lib/angular-md5.min.js"></script>
+<script src="js/lib/jquery-3.1.1.min.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+<style>
+body {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 100px;
+	width: 20em;
+}
+</style>
+</head>
+
+<body>
+	<form ng-controller="login-controller" name="loginForm" 
+			class="form-signin" role="form" novalidate ng-cloak>
+		<h2 class="form-signin-header">登录xxx</h2>
+			<span style="color: red;">{{logintip}}&nbsp;<br></span> 
+		<span style="color:red">
+			<span ng-show="loginForm.account.$dirty && loginForm.account.$invalid">
+				<span ng-show="loginForm.account.$error.required">请填写用户名</span>&nbsp;
+			</span>&nbsp;
+ 		</span>
+		<div class="input-group input-group-md">
+			<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span> 
+			<input ng-model="user.account" ng-change="clearlogintip()" name="account" 
+					class="form-control" placeholder="用户名" required autofocus>
+		</div>
+ 		<span style="color:red">
+			<span ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
+				<span ng-show="loginForm.password.$error.required">请填写密码</span>&nbsp;
+			</span>&nbsp;
+ 		</span>
+		<div class="input-group input-group-md">
+			<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span> 
+			<input ng-model="user.password" ng-change="clearlogintip()" name="password" 
+					type="password" class="form-control" placeholder="密码" required>
+		</div>
+		<br>
+		<label><input type="checkbox" value="remember-me">&nbsp;记住我(没完成)</label>
+		<button ng-click="login()" class="btn btn-md btn-primary btn-block"
+			ng-disabled=" loginForm.account.$invalid ||  
+					 loginForm.password.$invalid"
+		>登录</button>
+	</from>
+</body>
+<script src='js/controller/login.js'></script>
+</html>

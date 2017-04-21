@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lost4found.dao.RefBookKeywordDao">
+	
+	<resultMap type="cn.lost4found.entity.RefBookKeywordEntity" id="refBookKeywordEntity"
+		autoMapping="true">
+		<id property="id" column="id" />
+		<result property="bookId" column="book_id" />
+		<result property="KeywordId" column="keyword_id" />
+	</resultMap>
+
+
+	<select id="select" resultMap="refBookKeywordEntity">
+	
+	</select>
+	
+	<insert id="insert">
+		insert into ref_book_keyword
+			(id, book_id, keyword_id)
+		values
+			(#{id}, #{bookId}, #{keywordId})
+	</insert>
+	
+	<update id="update">
+
+	</update>
+
+	<select id="queryByKeywordIdLimited" resultType="java.lang.String">
+		select book_id from ref_book_keyword where
+			keyword_id=#{arg0}
+		limit #{arg1},#{arg2}
+	</select>
+
+</mapper>
