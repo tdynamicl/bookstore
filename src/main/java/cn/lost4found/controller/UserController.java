@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import cn.lost4found.common.MyException;
 import cn.lost4found.dto.BookInfoDto;
+import cn.lost4found.dto.SubmitIndentDto;
 import cn.lost4found.dto.UserRegisterDto;
 import cn.lost4found.dto.json.JsonRespose;
 import cn.lost4found.entity.UserEntity;
@@ -53,6 +54,18 @@ public class UserController {
 		jsonRespose.setData(resultList);
 		return jsonRespose.toModelAndView();
 	}
+
+	@RequestMapping(value="submitIndent.do", method=RequestMethod.POST)
+	public ModelAndView submitIndent(SubmitIndentDto submitIndentDto) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		String indentId = userServiceImpl.submitIndent(submitIndentDto);
+		jsonRespose.setData(indentId);
+		jsonRespose.setMessage("订单提交成功，即将前往支付");
+		return jsonRespose.toModelAndView();
+	}
+	
+	
+	
 	
 	@ExceptionHandler(MyException.class)
 	public ModelAndView exceptionHandler(MyException e) throws Exception{

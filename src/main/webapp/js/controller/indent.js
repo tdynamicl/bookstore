@@ -1,5 +1,5 @@
-var indexapp = angular.module("index-app", []);
-indexapp.controller("nav-controller", function($scope, $rootScope, $http) {
+var indentapp = angular.module("index-app", []);
+indentapp.controller("nav-controller", function($scope, $rootScope, $http) {
 	$rootScope.user = null;
 	$rootScope.checkLoginUser = function() {
 		var userString = sessionStorage.getItem("user");
@@ -15,9 +15,5 @@ indexapp.controller("nav-controller", function($scope, $rootScope, $http) {
 	};
 		
 	$rootScope.checkLoginUser();
-	
-});
-
-indexapp.controller("newBook-controller", function($scope, $rootScope, $http) {
 	
 });

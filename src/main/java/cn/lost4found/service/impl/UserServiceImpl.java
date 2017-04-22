@@ -1,19 +1,22 @@
 package cn.lost4found.service.impl;
 
 import java.util.LinkedList;
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.lost4found.dao.BookDao;
+import cn.lost4found.dao.IndentDao;
 import cn.lost4found.dao.KeywordDao;
 import cn.lost4found.dao.RefBookKeywordDao;
 import cn.lost4found.dao.UserDao;
 import cn.lost4found.dto.BookInfoDto;
+import cn.lost4found.dto.SubmitIndentDto;
 import cn.lost4found.dto.UserRegisterDto;
 import cn.lost4found.entity.BookEntity;
+import cn.lost4found.entity.IndentEntity;
 import cn.lost4found.entity.KeywordEntity;
 import cn.lost4found.entity.UserEntity;
 import cn.lost4found.common.MyException;
+import cn.lost4found.common.Util;
 import cn.lost4found.service.UserService;
 
 @Service
@@ -27,6 +30,8 @@ public class UserServiceImpl implements UserService {
 	private KeywordDao keywordDao;
 	@Autowired
 	private RefBookKeywordDao refBookKeywordDao;
+	@Autowired
+	private IndentDao indentDao;
 	
 	@Override
 	public UserEntity login(String account, String password) throws Exception {
@@ -43,6 +48,8 @@ public class UserServiceImpl implements UserService {
 		if (!password.equals(userEntity.getPassword())) {
 			throw new MyException("用户名或密码错误");
 		}
+		userEntity.setAccount("");
+		userEntity.setPassword("");
 		return userEntity;
 	}
 
@@ -61,7 +68,7 @@ public class UserServiceImpl implements UserService {
 			throw new MyException("昵称长度在1-20位之间");
 		}
 		UserEntity userEntity = new UserEntity();
-		userEntity.setId(UUID.randomUUID().toString().replaceAll("-", ""));
+		userEntity.setId(Util.generateUUID());
 		userEntity.setAccount(userDto.getAccount());
 		userEntity.setPassword(userDto.getPassword());
 		userEntity.setNickname(userDto.getNickname().trim());
@@ -106,6 +113,24 @@ public class UserServiceImpl implements UserService {
 		}
 		return list;
 	}
-	
-	
+
+	@Override
+	public String submitIndent(SubmitIndentDto submitIndentDto) throws Exception {
+		IndentEntity indentEntity = new IndentEntity();
+		String indentId = Util.generateUUID();
+		indentEntity.setId(indentId);
+		indentEntity.setUserId(submitIndentDto.getUserId());
+		indentEntity.setBookId(submitIndentDto.getBookId());
+		indentEntity.setAddress(submitIndentDto.getAddr());
+		indentEntity.setReceiverName(submitIndentDto.getReceiverName());
+		indentEntity.setReceiverTel(submitIndentDto.getReceiverTel());
+		indentEntity.setGeneratTime(Util.nowDate());
+		indentEntity.setStatus(0);
+		indentEntity.setCommentContent("");
+		indentEntity.setCommentLevel(0);
+		indentEntity.setCommentTime(null);
+		indentDao.insert(indentEntity);
+		return indentId;
+	}
+
 }

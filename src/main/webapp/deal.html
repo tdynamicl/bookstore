@@ -41,8 +41,64 @@
 			</ul>
 		</div>
 	</nav>
-	<div id="wrapper" ng-controller="deal-controller">
-	
+	<div id="wrapper" ng-controller="deal-controller"  ng-cloak>
+		<form role="form" name="dealForm" novalidate>
+			<div>
+				你正在购买《xxxxx》
+			</div>
+			填写收货地址：<br>
+			<span style="color:red">
+				<span ng-show="dealForm.province.$dirty && dealForm.province.$invalid">
+					<span ng-show="dealForm.province.$error.required">请填写收货地所在省</span>&nbsp;
+				</span>&nbsp;
+	 		</span>
+	 		<br>
+			<label><input name="province" ng-model="addr.province" ng-change="clearTip()"
+				required>省</label>
+			<br>
+			<span style="color:red">
+				<span ng-show="dealForm.city.$dirty && dealForm.city.$invalid">
+					<span ng-show="dealForm.city.$error.required">请填收货地所在市</span>&nbsp;
+				</span>&nbsp;
+	 		</span>
+	 		<br>
+			<label><input name="city" ng-model="addr.city" ng-change="clearTip()"
+				required>市</label>
+			<br>
+			<span style="color:red">
+				<span ng-show="dealForm.street.$dirty && dealForm.street.$invalid">
+					<span ng-show="dealForm.street.$error.required">请填写详细收货地址</span>&nbsp;
+				</span>&nbsp;
+	 		</span>
+	 		<br>
+			<label><input name="street" ng-model="addr.street" ng-change="clearTip()"
+				required>街道（详细地址）</label>
+			<br>
+			<span style="color:red">
+				<span ng-show="dealForm.name.$dirty && dealForm.name.$invalid">
+					<span ng-show="dealForm.name.$error.required">请填写收货人姓名</span>&nbsp;
+				</span>&nbsp;
+	 		</span>
+	 		<br>
+			<label><input name="name" ng-model="name" ng-change="clearTip()"
+				required>收货人姓名</label>
+			<br>
+			<span style="color:red">
+				<span ng-show="dealForm.tel.$dirty">
+					<span ng-show="dealForm.tel.$error.required">手机号码不能为空</span>
+					<span ng-show="!dealForm.tel.$error.required &&
+						dealForm.tel.$invalid">格式错误</span>
+				</span>&nbsp;
+	 		</span>
+	 		<br>
+			<label><input name="tel" ng-model="tel" ng-change="clearTip()"
+				type="tel" ng-pattern="/^1\d{10}$/" maxlength="11" ng-minlength="11"
+				required>收货人联系电话</label>
+			<br>
+			
+			<div>订单金额 ￥36.12</div>
+			<button ng-click="submitIndent()">提交订单</button>
+		</form>
 	</div>
 </body>
 <script src="js/controller/deal.js"></script>

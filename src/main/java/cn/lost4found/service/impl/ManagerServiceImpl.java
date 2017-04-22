@@ -1,10 +1,9 @@
 package cn.lost4found.service.impl;
 
-import java.util.Date;
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.lost4found.common.MyException;
+import cn.lost4found.common.Util;
 import cn.lost4found.dao.BookDao;
 import cn.lost4found.dao.ManagerDao;
 import cn.lost4found.dao.RefBookKeywordDao;
@@ -44,7 +43,7 @@ public class ManagerServiceImpl implements ManagerService {
 
 	@Override
 	public void addBook(AddBookDto addBookDto) throws Exception {
-		String bookId = UUID.randomUUID().toString().replaceAll("-", "");
+		String bookId = Util.generateUUID();
 		BookEntity bookEntity = new BookEntity();
 		RefBookKeywordEntity refBookKeywordEntity = new RefBookKeywordEntity();
 		bookEntity.setId(bookId);
@@ -54,10 +53,10 @@ public class ManagerServiceImpl implements ManagerService {
 		bookEntity.setPress(addBookDto.getPress());
 		bookEntity.setPrice(addBookDto.getPrice());
 		bookEntity.setPressTime(AddBookDto.sdf.parse(addBookDto.getPressTimeString()));
-		bookEntity.setAddTime(new Date(System.currentTimeMillis()));
+		bookEntity.setAddTime(Util.nowDate());
 		bookDao.insert(bookEntity);
 		for (String k : addBookDto.getKeyword()) {
-			refBookKeywordEntity.setId(UUID.randomUUID().toString().replaceAll("-", ""));
+			refBookKeywordEntity.setId(Util.generateUUID());
 			refBookKeywordEntity.setKeywordId(k);
 			refBookKeywordEntity.setBookId(bookId);
 			refBookKeywordDao.insert(refBookKeywordEntity);

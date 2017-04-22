@@ -1,16 +1,21 @@
 var bookapp = angular.module("book-app", []);
 
 bookapp.controller("nav-controller", function($scope, $rootScope, $http) {
-	$scope.user = sessionStorage.getItem("user");
-	if ($scope.user != null) {
-		$scope.user = JSON.parse($scope.user);
-		$scope.nickname = $scope.user.nickname;
-		$rootScope.user = $scope.user;
-	}
-		$scope.logout = function() {
+	$rootScope.user = null;
+	$rootScope.checkLoginUser = function() {
+		var userString = sessionStorage.getItem("user");
+		if (userString !== null) {
+			$rootScope.user = JSON.parse(userString);
+			$scope.nickname = $scope.user.nickname;
+		}
+	};
+	
+	$scope.logout = function() {
 		sessionStorage.removeItem("user");
 		location.reload();
 	};
+		
+	$rootScope.checkLoginUser();
 	
 });
 
@@ -41,12 +46,13 @@ bookapp.controller("book-controller", function($scope, $rootScope, $http) {
 	};
 
 	$scope.purchase = function(){
-		if ($scope.user == null) {
+		$rootScope.checkLoginUser();
+		if ($rootScope.user == null) {
 			alert("您还未登录，请登录后继续");
 			sessionStorage.setItem("previousURL", document.URL);
 			window.location = "login.html";
 		} else {
-			window.location = "deal.html?id=" + $scope.bookInfo.id;
+			window.location = "deal.html?bid=" + $scope.bookInfo.id;
 		}
 	};
 	

@@ -1,17 +1,21 @@
 var categoryapp = angular.module("category-app", []);
 
 categoryapp.controller("nav-controller", function($scope, $rootScope, $http) {
-	$scope.user = sessionStorage.getItem("user");
-	if ($scope.user != null) {
-		$scope.user = JSON.parse($scope.user);
-		$scope.nickname = $scope.user.nickname;
-		$rootScope.user = $scope.user;
-	}
-
+	$rootScope.user = null;
+	$rootScope.checkLoginUser = function() {
+		var userString = sessionStorage.getItem("user");
+		if (userString !== null) {
+			$rootScope.user = JSON.parse(userString);
+			$scope.nickname = $scope.user.nickname;
+		}
+	};
+	
 	$scope.logout = function() {
 		sessionStorage.removeItem("user");
 		location.reload();
 	};
+		
+	$rootScope.checkLoginUser();
 
 	
 });
