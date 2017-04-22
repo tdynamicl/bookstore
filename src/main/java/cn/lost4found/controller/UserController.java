@@ -67,7 +67,7 @@ public class UserController {
 		e.printStackTrace();
 		JsonRespose jsonRespose = new JsonRespose();
 		jsonRespose.setCode(1101);
-		jsonRespose.setMessage("网络异常，请稍后重试");
+		jsonRespose.setMessage("发生未知错误，请稍后重试");
 		return jsonRespose.toModelAndView();
 	}
 }

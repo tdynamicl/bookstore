@@ -1,7 +1,7 @@
 package cn.lost4found.dao;
 
-import cn.lost4found.entity.CommentEnity;
+import cn.lost4found.entity.IndentEntity;
 
-public interface IndentDao extends BaseDao<CommentEnity> {
+public interface IndentDao extends BaseDao<IndentEntity> {
 
 }

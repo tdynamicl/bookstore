@@ -13,3 +13,7 @@ indexapp.controller("nav-controller", function($scope, $rootScope, $http) {
 	};
 		
 });
+
+indexapp.controller("newBook-controller", function($scope, $rootScope, $http) {
+	
+});

@@ -16,8 +16,8 @@ bookapp.controller("nav-controller", function($scope, $rootScope, $http) {
 
 bookapp.controller("book-controller", function($scope, $rootScope, $http) {
 	$scope.bookId = {'id': getQueryString("id")};
-	$scope.bookInfo = {'id':'', 'name':'', 'desc':'', 'authorName':'', 'pressName':'',
-		'pressTime':'', 'rankTotal':'', 'rankLevel':'', 'price':''};
+	//$scope.bookInfo = {'id':'', 'name':'', 'desc':'', 'authorName':'', 'pressName':'',
+	//	'pressTime':'', 'rankTotal':'', 'rankLevel':'', 'price':''};
 	$scope.getBookInfo = function(){
 		$http({
 			method: 'POST',
@@ -27,16 +27,29 @@ bookapp.controller("book-controller", function($scope, $rootScope, $http) {
 		}).then(function(resp){
 			if(resp.data.code){
 				//获取失败
+				alert("该书已下架，为您跳转到主页");
+				window.location="index.html";
 			}else{
 				$scope.bookInfo = angular.copy(resp.data.data);
+				document.title = $scope.bookInfo.name;
 			}
 		}, function(err){
 			alert("网络异常");
+			//window.location="index.html";
 		});
 
 	};
-		
+
+	$scope.purchase = function(){
+		if ($scope.user == null) {
+			alert("您还未登录，请登录后继续");
+			sessionStorage.setItem("previousURL", document.URL);
+			window.location = "login.html";
+		} else {
+			window.location = "deal.html?id=" + $scope.bookInfo.id;
+		}
+	};
+	
 	$scope.getBookInfo();
-	document.title = $scope.bookInfo.name;
 	
 });

@@ -1,9 +1,49 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-	</head>
-	<body>
-	</body>
+<html ng-app="deal-app">
+<head>
+<meta charset="UTF-8">
+<title>填写订单</title>
+<script src="js/lib/angular.min.js"></script>
+<script src="js/lib/angular-animate.min.js"></script>
+<script src="js/lib/jquery-3.1.1.min.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<script src="js/common.js"></script>
+<link rel="stylesheet" href="css/lib/bootstrap.min.css" />
+<link rel="stylesheet" href="css/lib/bootstrap-theme.min.css" />
+<link rel="stylesheet" href="css/common.css" />
+</head>
+<body>
+	<nav ng-controller="nav-controller" class="navbar navbar-default"
+		role="navigation" novalidate ng-cloak style="border-radius: 0;">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">玄奘书籍销售平台</a>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li ng-if="user===null">
+					<a href="register.html">
+					<span class="glyphicon glyphicon-user"></span> 注册</a>
+				</li>
+				<li ng-if="user===null">
+					<a href="login.html">
+					<span class="glyphicon glyphicon-log-in"></span> 登录</a>
+				</li>
+				<li ng-if="user!==null" class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown">{{nickname}}
+						<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a>个人中心</a></li>
+						<li><a>设置</a></li>
+						<li class="divider"></li>
+						<li><a ng-click="logout()">退出登录</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div id="wrapper" ng-controller="deal-controller">
+	
+	</div>
+</body>
+<script src="js/controller/deal.js"></script>
 </html>

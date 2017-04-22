@@ -14,9 +14,15 @@ var loginapp = angular.module('login-app', ['angular-md5']);
 				if(resp.data.code){
 					$scope.logintip=resp.data.message;
 				}else{
-				var loggeduser = resp.data.data;
-				sessionStorage.setItem("user", JSON.stringify(loggeduser));
-				window.location="index.html";
+					var loggeduser = resp.data.data;
+					sessionStorage.setItem("user", JSON.stringify(loggeduser));
+					var prevURL = sessionStorage.getItem("previousURL");
+					if (prevURL !== null) {
+						sessionStorage.removeItem("previousURL");
+						window.location = prevURL;
+					}else {
+						window.location="index.html";
+					}
 				}
 			}, function(err){
 				alert("网络异常");
