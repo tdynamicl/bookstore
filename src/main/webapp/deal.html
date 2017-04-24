@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/lib/bootstrap.min.css" />
 <link rel="stylesheet" href="css/lib/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="css/common.css" />
+<link rel="stylesheet" href="css/deal.css" />
 </head>
 <body>
 	<nav ng-controller="nav-controller" class="navbar navbar-default"
@@ -32,8 +33,7 @@
 					<a class="dropdown-toggle" data-toggle="dropdown">{{nickname}}
 						<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a>个人中心</a></li>
-						<li><a>设置</a></li>
+						<li><a ng-click="toPrivateCenter()">个人中心</a></li>
 						<li class="divider"></li>
 						<li><a ng-click="logout()">退出登录</a></li>
 					</ul>
@@ -43,11 +43,13 @@
 	</nav>
 	<div id="wrapper" ng-controller="deal-controller"  ng-cloak>
 		<form role="form" name="dealForm" novalidate>
-			<div>
-				你正在购买《xxxxx》
-			</div>
-			填写收货地址：<br>
-			<span style="color:red">
+			<h3>您正在购买<span class="bookName">{{bookInfo.name}}</span></h3>
+			<br>
+			<h4>填写收货地址：</h4>
+			<span class="errortip">
+				{{errorTip}}&nbsp;		
+			</span>
+			<span class="errortip">
 				<span ng-show="dealForm.province.$dirty && dealForm.province.$invalid">
 					<span ng-show="dealForm.province.$error.required">请填写收货地所在省</span>&nbsp;
 				</span>&nbsp;
@@ -56,7 +58,7 @@
 			<label><input name="province" ng-model="addr.province" ng-change="clearTip()"
 				required>省</label>
 			<br>
-			<span style="color:red">
+			<span class="errortip">
 				<span ng-show="dealForm.city.$dirty && dealForm.city.$invalid">
 					<span ng-show="dealForm.city.$error.required">请填收货地所在市</span>&nbsp;
 				</span>&nbsp;
@@ -65,7 +67,7 @@
 			<label><input name="city" ng-model="addr.city" ng-change="clearTip()"
 				required>市</label>
 			<br>
-			<span style="color:red">
+			<span class="errortip">
 				<span ng-show="dealForm.street.$dirty && dealForm.street.$invalid">
 					<span ng-show="dealForm.street.$error.required">请填写详细收货地址</span>&nbsp;
 				</span>&nbsp;
@@ -74,7 +76,7 @@
 			<label><input name="street" ng-model="addr.street" ng-change="clearTip()"
 				required>街道（详细地址）</label>
 			<br>
-			<span style="color:red">
+			<span class="errortip">
 				<span ng-show="dealForm.name.$dirty && dealForm.name.$invalid">
 					<span ng-show="dealForm.name.$error.required">请填写收货人姓名</span>&nbsp;
 				</span>&nbsp;
@@ -83,7 +85,7 @@
 			<label><input name="name" ng-model="name" ng-change="clearTip()"
 				required>收货人姓名</label>
 			<br>
-			<span style="color:red">
+			<span class="errortip">
 				<span ng-show="dealForm.tel.$dirty">
 					<span ng-show="dealForm.tel.$error.required">手机号码不能为空</span>
 					<span ng-show="!dealForm.tel.$error.required &&
@@ -96,8 +98,8 @@
 				required>收货人联系电话</label>
 			<br>
 			
-			<div>订单金额 ￥36.12</div>
-			<button ng-click="submitIndent()">提交订单</button>
+			<div>订单金额 <span class="price">{{bookInfo.price}}</span></div>
+			<button class="btn btn-success" ng-click="submitIndent()">提交订单</button>
 		</form>
 	</div>
 </body>

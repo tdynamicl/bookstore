@@ -9,6 +9,10 @@ indexapp.controller("nav-controller", function($scope, $rootScope, $http) {
 		}
 	};
 	
+	$scope.toPrivateCenter = function() {
+		location.href = "user.html?id=" + $rootScope.user.id;
+	};
+	
 	$scope.logout = function() {
 		sessionStorage.removeItem("user");
 		location.reload();

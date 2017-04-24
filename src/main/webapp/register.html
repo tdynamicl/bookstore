@@ -11,30 +11,14 @@
 <link rel="stylesheet" href="css/lib/bootstrap.min.css" />
 <link rel="stylesheet" href="css/lib/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="css/common.css" />
-<style>
-body {
-
-}
-
-.errortip{
-	color:red;
-}
-
-#wrapper {
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 60px;
-	width: 20em;
-}
-
-</style>
+<link rel="stylesheet" href="css/register.css" />
 </head>
 <body>
 	<nav class="navbar navbar-default"
 		role="navigation" novalidate ng-cloak style="border-radius: 0;">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand">玄奘书籍销售平台</a>
+				<a class="navbar-brand">网络书籍销售平台</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
@@ -51,7 +35,7 @@ body {
 	
 	<div ng-controller="register-controller" id="wrapper" ng-cloak>
 		<form name="registerForm" class="form-signup" role="form" novalidate >
-			<h2 class="form-signin-header">注册xxx</h2>
+			<h2 class="form-signin-header">注册</h2>
 			<span class="errortip">
 				<span ng-show="registerForm.account.$dirty && registerForm.account.$invalid">
 					<span ng-show="registerForm.account.$error.required">用户名不能为空</span>

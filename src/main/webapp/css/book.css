@@ -27,13 +27,13 @@
 #main .priceDiv > header {
 	
 }
-#main .priceDiv > .price {
-	font-family: "微软雅黑";
-	color: red;
-	padding-left: 30px;
-	font-size: 220%;
+
+.operations {
+	margin-top: 50px;
+	height: 30px;
+	float: right;
 }
-#main .priceDiv > .price::before {
-	font-size: 70%;
-	content: "￥";
+
+.operations button {
+	margin-left: 15px;
 }

@@ -11,17 +11,7 @@
 <link rel="stylesheet" href="css/lib/bootstrap.min.css" />
 <link rel="stylesheet" href="css/lib/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="css/common.css" />
-<style>
-body {
-
-}
-#wrapper {
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 100px;
-	width: 20em;
-}
-</style>
+<link rel="stylesheet" href="css/login.css" />
 </head>
 
 <body>
@@ -46,9 +36,9 @@ body {
 	<div id="wrapper">
 		<form ng-controller="login-controller" name="loginForm" 
 				class="form-signin" role="form" novalidate ng-cloak>
-			<h2 class="form-signin-header">登录xxx</h2>
-				<span style="color: red;">{{logintip}}&nbsp;<br></span> 
-			<span style="color:red">
+			<h2 class="form-signin-header">登录</h2>
+				<span class="errortip">{{errorTip}}&nbsp;<br></span> 
+			<span class="errortip">
 				<span ng-show="loginForm.account.$dirty && loginForm.account.$invalid">
 					<span ng-show="loginForm.account.$error.required">请填写用户名</span>&nbsp;
 				</span>&nbsp;
@@ -58,7 +48,7 @@ body {
 				<input ng-model="user.account" ng-change="clearlogintip()" name="account" 
 						class="form-control" placeholder="用户名" required autofocus>
 			</div>
-	 		<span style="color:red">
+	 		<span class="errortip">
 				<span ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
 					<span ng-show="loginForm.password.$error.required">请填写密码</span>&nbsp;
 				</span>&nbsp;

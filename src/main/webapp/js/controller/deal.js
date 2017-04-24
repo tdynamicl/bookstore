@@ -10,6 +10,10 @@ dealapp.controller("nav-controller", function($scope, $rootScope, $http) {
 		}
 	};
 	
+	$scope.toPrivateCenter = function() {
+		location.href = "user.html?id=" + $rootScope.user.id;
+	};
+	
 	$scope.logout = function() {
 		sessionStorage.removeItem("user");
 		location.reload();
@@ -20,6 +24,7 @@ dealapp.controller("nav-controller", function($scope, $rootScope, $http) {
 });
 
 dealapp.controller("deal-controller", function($scope, $rootScope, $http){
+	$scope.bookInfo = null;
 	$scope.submitIndent = function(){
 		$rootScope.checkLoginUser();
 		if ($rootScope.user === null) {
@@ -43,17 +48,44 @@ dealapp.controller("deal-controller", function($scope, $rootScope, $http){
 				headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
 			}).then(function(resp){
 				if(resp.data.code){
-					$scope.logintip=resp.data.message;
+					$scope.errorTip = resp.data.message;
 				}else{
-					window.location="indent.html";
+					window.location="indent.html?id=" + resp.data.data;
 				}
 			}, function(err){
 				alert("网络异常");
 			});
-			
-			//window.location = "indent.html?id=" + 123;
 		}
 	};
+	
+	$scope.loadBookInfo = function(){
+		var param = {};
+		param.id = getQueryString("bid");
+		$http({
+			method: 'POST',
+			url: 'loadBookInfo.do',
+			data: $.param(param),
+			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
+		}).then(function(resp){
+			if(resp.data.code){
+				//获取失败
+				alert("该书已下架，为您跳转到主页");
+				window.location="index.html";
+			}else{
+				$scope.bookInfo = angular.copy(resp.data.data);
+			}
+		}, function(err){
+			alert("网络异常");
+			window.location="index.html";
+		});
+
+	};
+	
+	if ($rootScope.user===null) {
+		window.location="index.html";
+	}
+	
+	$scope.loadBookInfo();
 	
 	$scope.clearTip = function(){
 		

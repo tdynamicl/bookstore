@@ -1,0 +1,25 @@
+#wrapper h1 {
+	margin-top: 30px;
+}
+
+#wrapper .indentDetail {
+	position: absolute;
+	padding:20px;
+	width:100%;
+	top: 120px;
+	left: 0;
+	background-color: #EEEEEE;
+}
+
+.operations {
+	position: absolute;
+	display: inline-block;
+	height: 50px;
+	top: 360px;
+	right: 0;
+	
+}
+
+.operations button {
+	margin-left: 15px;
+}

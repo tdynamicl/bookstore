@@ -2,7 +2,7 @@
 <html ng-app="indent-app">
 <head>
 <meta charset="utf-8">
-<title></title>
+<title>订单详情</title>
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/angular-animate.min.js"></script>
 <script src="js/lib/jquery-3.1.1.min.js"></script>
@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="css/lib/bootstrap.min.css" />
 <link rel="stylesheet" href="css/lib/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="css/common.css" />
-<link rel="stylesheet" href="css/book.css" />
+<link rel="stylesheet" href="css/indent.css" />
 </head>
 <body>
 	<nav ng-controller="nav-controller" class="navbar navbar-default"
@@ -33,8 +33,7 @@
 					<a class="dropdown-toggle" data-toggle="dropdown">{{nickname}}
 						<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a>个人中心</a></li>
-						<li><a>设置</a></li>
+						<li><a ng-click="toPrivateCenter()">个人中心</a></li>
 						<li class="divider"></li>
 						<li><a ng-click="logout()">退出登录</a></li>
 					</ul>
@@ -42,11 +41,68 @@
 			</ul>
 		</div>
 	</nav>
-	<div id="wrapper">
-		
+	<div ng-controller="indent-controller" id="wrapper" ng-cloak>
+		<div class="indentDetail" ng-show="user!=null && indentInfo!=null && bookInfo!=null">
+			<h3>订单详情：</h3>
+			<br>
+			<ul>
+				<li>订单编号：<span>{{indentInfo.id}}</span></li>
+				<li>下单时间：<span>{{indentInfo.generateTime}}</span></li>
+				<li>书籍信息：<span class="bookName"><a href={{bookInfo.bookURL}}>{{bookInfo.name}}</a></span></li>
+				<li>收货人姓名：<span>{{indentInfo.receiverName}}</span></li>
+				<li>收货人电话：<span>{{indentInfo.receiverTel}}</span></li>
+				<li>收货地址：<span>{{indentInfo.address}}</span></li>
+			</ul>
+		</div>
+		<div ng-if="indentInfo.status===1">
+			<h1>订单已被提交，待支付</h1>
+			<div class="operations">
+				<span class="price">{{bookInfo.price}}</span><br>
+				<button class="btn btn-warning" ng-click="cancelIndent()">取消订单</button>
+				<button class="btn btn-success" ng-click="purchase()">立即支付</button>
+			</div>
+		</div>
+		<div ng-if="indentInfo.status===2">
+			<h1>支付成功，请耐心等待管理员发货</h1>
+			<!-- <div class="operations">
+				<button class="btn btn-warning" ng-click="cancelIndent()">取消订单</button>
+			</div> -->
+		</div>
+		<div ng-if="indentInfo.status===3">
+			<h1>管理员已发货</h1>
+			<div class="operations">
+				<button class="btn btn-warning" ng-click="received()">签收订单</button>
+			</div>
+		</div>
+		<div ng-if="indentInfo.status===4">
+			<h1>交易已完成，您可以评论此次购物</h1>
+			<div class="operations">
+				<button class="btn btn-default" ng-click="rate()">评价</button>
+				<button class="btn btn-danger" ng-click="deleteIndent()">删除订单记录</button>
+			</div>
+		</div>
+		<div ng-if="indentInfo.status===5">
+			<h1>交易已完成</h1>
+			<div class="operations">
+				<button class="btn btn-danger" ng-click="deleteIndent()">删除订单记录</button>
+			</div>
+		</div>
+		<!-- 模态对话框 -->
+		<div class="modal fade" id="modalEL" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h4 class="modal-title">{{modalDialog.title}}</h4>
+		            </div>
+		            <div class="modal-body">{{modalDialog.content}}</div>
+		            <div class="modal-footer">
+		                <button ng-if="modalDialog.hasCancel" ng-click="cancel()" class="btn btn-default">取消</button>
+		                <button ng-if="modalDialog.hasConfirm" ng-click="confirm()" class="btn btn-primary" data-dismiss="modal">确定</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 	</div>
-	
-
 </body>
 <script src="js/controller/indent.js"></script>
 </html>

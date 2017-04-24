@@ -13,14 +13,10 @@ public class IndentEntity implements Serializable {
 	private String receiverName;
 	private String receiverTel;
 	private String address;
-	/*
-	 * status 订单的状态 0 用户删除订单，已从用户的查看列表去除。 1 刚生成，待支付 2 已支付，待发货 3 已发货，待签收 4已签收，待评论
-	 * 5 已评论，订单完成
-	 */
 	private int status;
 	private int commentLevel;
 	private String commentContent;
-	private Date generatTime;
+	private Date generateTime;
 	private Date commentTime;
 
 	public String getId() {
@@ -95,12 +91,12 @@ public class IndentEntity implements Serializable {
 		this.commentContent = commentContent;
 	}
 
-	public Date getGeneratTime() {
-		return generatTime;
+	public Date getGenerateTime() {
+		return generateTime;
 	}
 
-	public void setGeneratTime(Date generatTime) {
-		this.generatTime = generatTime;
+	public void setGenerateTime(Date generateTime) {
+		this.generateTime = generateTime;
 	}
 
 	public Date getCommentTime() {
@@ -115,7 +111,7 @@ public class IndentEntity implements Serializable {
 	public String toString() {
 		return "IndentEntity [id=" + id + ", bookId=" + bookId + ", userId=" + userId + ", receiverName=" + receiverName
 				+ ", receiverTel=" + receiverTel + ", address=" + address + ", status=" + status + ", commentLevel="
-				+ commentLevel + ", commentContent=" + commentContent + ", generatTime=" + generatTime
+				+ commentLevel + ", commentContent=" + commentContent + ", generateTime=" + generateTime
 				+ ", commentTime=" + commentTime + "]";
 	}
 

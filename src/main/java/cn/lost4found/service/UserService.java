@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import cn.lost4found.dto.BookInfoDto;
 import cn.lost4found.dto.SubmitIndentDto;
 import cn.lost4found.dto.UserRegisterDto;
+import cn.lost4found.entity.IndentEntity;
 import cn.lost4found.entity.UserEntity;
 
 public interface UserService {
@@ -47,6 +48,56 @@ public interface UserService {
 	 * @return 返回生成的订单id
 	 * @throws Exception
 	 */
-	public String submitIndent(SubmitIndentDto submitIndentDto)  throws Exception;
+	public String submitIndent(SubmitIndentDto submitIndentDto) throws Exception;
+	
+	/**
+	 * 获得订单实体
+	 * @param id
+	 * @return 订单信息实体
+	 * @throws Exception
+	 */
+	public IndentEntity loadIndentInfo(String id, String userId) throws Exception;
+	
+	/**
+	 * 支付订单
+	 * @param id
+	 * @param userId
+	 * @throws Exception
+	 */
+	public void purchaseIndent(String id, String userId) throws Exception;
+	
+	/**
+	 * 取消订单
+	 * @param id
+	 * @param userId
+	 * @throws Exception
+	 */
+	public void cancelIndent(String id, String userId) throws Exception;
+	
+	/**
+	 * 签收订单
+	 * @param id
+	 * @param userId
+	 * @throws Exception
+	 */
+	public void receivedIndent(String id, String userId) throws Exception;
+	
+	/**
+	 * 评价订单
+	 * @param id
+	 * @param userId
+	 * @param content
+	 * @param level
+	 * @throws Exception
+	 */
+	public void rateIndent(String id, String userId, String content, int level) throws Exception;
+	
+	/**
+	 * 删除订单
+	 * @param id
+	 * @param userId
+	 * @throws Exception
+	 */
+	public void deleteIndent(String id, String userId) throws Exception;
 	
 }

@@ -10,6 +10,10 @@ categoryapp.controller("nav-controller", function($scope, $rootScope, $http) {
 		}
 	};
 	
+	$scope.toPrivateCenter = function() {
+		location.href = "user.html?id=" + $rootScope.user.id;
+	};
+	
 	$scope.logout = function() {
 		sessionStorage.removeItem("user");
 		location.reload();
@@ -21,30 +25,32 @@ categoryapp.controller("nav-controller", function($scope, $rootScope, $http) {
 });
 
 categoryapp.controller("books-controller", function($scope, $rootScope, $http) {
+	document.title = getQueryString("word");
+	$scope.currIndex = 0;
 	$scope.BooksEL = $("#books");
-	$scope.paramString = {"word":getQueryString("word"), "index": 0};
 	
 	$scope.loadBookInfo = function(){
+		var param = {"word": getQueryString("word"), "index": $scope.currIndex};
 		$http({
 			method: 'POST',
 			url: 'loadBookInfosByCategory.do',
-			data: $.param($scope.paramString),
+			data: $.param(param),
 			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
 		}).then(function(resp){
 			if(resp.data.code){
 				//获取失败
 				alert(resp.data.message);
 			}else{
-				$scope.bookInfos = angular.copy(resp.data.data);
+				var bookInfos = angular.copy(resp.data.data);
 			}
-			if ($scope.bookInfos==null) {
+			if (bookInfos == null) {
 				return;
 			}
 			//添加
-			for (var i = 0; i < $scope.bookInfos.length; i++) {
-				$scope.addBookEL($scope.bookInfos[i]);
+			for (var i = 0; i < bookInfos.length; i++) {
+				$scope.addBookEL(bookInfos[i]);
 			}
-			$scope.paramString.index += $scope.bookInfos.length;
+			$scope.currIndex += bookInfos.length;
 		}, function(err){
 			alert("网络异常");
 		});

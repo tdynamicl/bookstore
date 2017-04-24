@@ -33,8 +33,7 @@
 					<a class="dropdown-toggle" data-toggle="dropdown">{{nickname}}
 						<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a>个人中心</a></li>
-						<li><a>设置</a></li>
+						<li><a ng-click="toPrivateCenter()">个人中心</a></li>
 						<li class="divider"></li>
 						<li><a ng-click="logout()">退出登录</a></li>
 					</ul>
@@ -65,11 +64,26 @@
 					<header>定价：</header>
 					<span class="price">{{bookInfo.price}}</span>
 				</div>
-				<div>
-					<button class="btn btnAddtocart"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;加入购物车</button>
-					<button ng-click="purchase()" class="btn btnBuynow">立即购买</button>
+				<div class="operations">
+					<button class="bttn bttnAddtocart"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;加入购物车</button>
+					<button ng-click="purchase()" class="bttn bttnBuynow">立即购买</button>
 				</div>
 			</article>
+			<!-- 模态对话框 -->
+			<div class="modal fade" id="modalEL" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <h4 class="modal-title">{{modalDialog.title}}</h4>
+			            </div>
+			            <div class="modal-body">{{modalDialog.content}}</div>
+			            <div class="modal-footer">
+			                <button ng-if="modalDialog.hasCancel" ng-click="cancel()" class="btn btn-default">取消</button>
+			                <button ng-if="modalDialog.hasConfirm" ng-click="confirm()" class="btn btn-primary" data-dismiss="modal">确定</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
 		</div>
 	</div>
 	

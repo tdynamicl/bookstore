@@ -13,6 +13,7 @@ import cn.lost4found.dto.BookInfoDto;
 import cn.lost4found.dto.SubmitIndentDto;
 import cn.lost4found.dto.UserRegisterDto;
 import cn.lost4found.dto.json.JsonRespose;
+import cn.lost4found.entity.IndentEntity;
 import cn.lost4found.entity.UserEntity;
 import cn.lost4found.service.impl.UserServiceImpl;
 
@@ -41,32 +42,73 @@ public class UserController {
 	
 	@RequestMapping(value="/loadBookInfo.do", method=RequestMethod.POST)
 	public ModelAndView loadBookInfo(@RequestParam("id")String id) throws Exception{
-		JsonRespose jsonRespose = new JsonRespose();
 		BookInfoDto bookInfoDto = userServiceImpl.loadBookInfo(id);
+		JsonRespose jsonRespose = new JsonRespose();
 		jsonRespose.setData(bookInfoDto);
 		return jsonRespose.toModelAndView();
 	}
 	
 	@RequestMapping(value="loadBookInfosByCategory.do", method=RequestMethod.POST)
 	public ModelAndView loadBookInfosByCategory(@RequestParam("word")String word, @RequestParam("index")int index) throws Exception{
-		JsonRespose jsonRespose = new JsonRespose();
 		List<BookInfoDto> resultList = userServiceImpl.loadBookInfosByCategory(word, index);
+		JsonRespose jsonRespose = new JsonRespose();
 		jsonRespose.setData(resultList);
 		return jsonRespose.toModelAndView();
 	}
 
 	@RequestMapping(value="submitIndent.do", method=RequestMethod.POST)
 	public ModelAndView submitIndent(SubmitIndentDto submitIndentDto) throws Exception{
-		JsonRespose jsonRespose = new JsonRespose();
 		String indentId = userServiceImpl.submitIndent(submitIndentDto);
+		JsonRespose jsonRespose = new JsonRespose();
 		jsonRespose.setData(indentId);
 		jsonRespose.setMessage("订单提交成功，即将前往支付");
 		return jsonRespose.toModelAndView();
 	}
 	
+	@RequestMapping(value="loadIndentInfo.do", method=RequestMethod.POST)
+	public ModelAndView loadIndentInfo(@RequestParam("id")String id, @RequestParam("userId")String userId) throws Exception{
+		IndentEntity indentEntity = userServiceImpl.loadIndentInfo(id, userId);
+		JsonRespose jsonRespose = new JsonRespose();
+		jsonRespose.setData(indentEntity);
+		return jsonRespose.toModelAndView();
+	}
 	
+	@RequestMapping(value="purchaseIndent.do", method=RequestMethod.POST)
+	public ModelAndView purchaseIndent(@RequestParam("id")String id, @RequestParam("userId")String userId) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		userServiceImpl.purchaseIndent(id, userId);
+		return jsonRespose.toModelAndView();
+	}
 	
+	@RequestMapping(value="cancelIndent.do", method=RequestMethod.POST)
+	public ModelAndView cancelIndent(@RequestParam("id")String id, @RequestParam("userId")String userId) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		userServiceImpl.cancelIndent(id, userId);
+		return jsonRespose.toModelAndView();
+	}
 	
+	@RequestMapping(value="receivedIndent.do", method=RequestMethod.POST)
+	public ModelAndView receivedIndent(@RequestParam("id")String id, @RequestParam("userId")String userId) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		userServiceImpl.receivedIndent(id, userId);
+		return jsonRespose.toModelAndView();
+	}
+	
+	@RequestMapping(value="rateIndent.do", method=RequestMethod.POST)
+	public ModelAndView rateIndent(@RequestParam("id")String id, @RequestParam("userId")String userId) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		userServiceImpl.rateIndent(id, userId, "12321", 2);
+		return jsonRespose.toModelAndView();
+	}
+	
+	@RequestMapping(value="deleteIndent.do", method=RequestMethod.POST)
+	public ModelAndView deleteIndent(@RequestParam("id")String id, @RequestParam("userId")String userId) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		userServiceImpl.deleteIndent(id, userId);
+		return jsonRespose.toModelAndView();
+	}
+	
+	//-------ExceptionHandler--------------
 	@ExceptionHandler(MyException.class)
 	public ModelAndView exceptionHandler(MyException e) throws Exception{
 		JsonRespose jsonRespose = new JsonRespose();

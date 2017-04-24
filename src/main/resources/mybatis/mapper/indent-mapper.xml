@@ -6,31 +6,53 @@
 	<resultMap type="cn.lost4found.entity.IndentEntity" id="indentEntity"
 		autoMapping="true">
 		<id property="id" column="id" />
-	
+		<result property="bookId" column="book_id" />
+		<result property="userId" column="user_id" />
+		<result property="receiverName" column="receiver_name" />
+		<result property="receiverTel" column="receiver_tel" />
+		<result property="commentLevel" column="comment_level" />
+		<result property="commentContent" column="comment_content" />
+		<result property="commentTime" column="comment_time" />
+		<result property="generateTime" column="generate_time" />
 	</resultMap>
-	<!-- 仅配置了属性和数据库字段名不一致的 
-	<result property="lastLoginTime" column="lastlogintime" />
-	-->
 
 	<select id="select" resultMap="indentEntity">
 		select * from info_indent where
 		${uf}=#{value}
 	</select>
 
+	<select id="queryAvgOfCommentLevelByBookId" resultType="java.lang.Double">
+		select AVG(comment_level) from info_indent where
+		book_id=#{bookId} and status=5
+	</select>
+
+	<select id="queryTotalOfCommentByBookId" resultType="java.lang.Integer">
+		select count(*) from info_indent where
+		book_id=#{bookId} and status=5
+	</select>
+
 	<insert id="insert">
 		insert into info_indent
 			(id, book_id, user_id, receiver_name, receiver_tel, address, 
-			comment_level, comment_content, comment_time, generate_time)
+			comment_level, comment_content, comment_time, generate_time, status)
 		values
 			(#{id}, #{bookId}, #{userId}, #{receiverName}, #{receiverTel}, #{address},
-			#{commentLevel}, #{commentContent}, #{commentTime}, #{generatTime})
+			#{commentLevel}, #{commentContent}, #{commentTime}, #{generateTime}, #{status})
 	</insert>
 	
 	<update id="update">
-		<!-- update info_user set
-			account=#{account}, password=#{password},
-			nickname=#{nickname}, telephone=#{telephone}, email=#{email}
+		update info_indent set
+			book_id=#{bookId}, 
+			user_id=#{userId}, 
+			receiver_name=#{receiverName}, 
+			receiver_tel=#{receiverTel}, 
+			address=#{address}, 
+			comment_level=#{commentLevel}, 
+			comment_content=#{commentContent}, 
+			comment_time=#{commentTime}, 
+			generate_time=#{generateTime}, 
+			status=#{status}
 		where
-			id=#{id} -->
+			id=#{id}
 	</update>
 </mapper>

@@ -8,9 +8,6 @@
 		<id property="id" column="id" />
 	
 	</resultMap>
-	<!-- 仅配置了属性和数据库字段名不一致的 
-	<result property="lastLoginTime" column="lastlogintime" />
-	-->
 
 	<select id="select" resultMap="managerEntity">
 		select * from info_manager where

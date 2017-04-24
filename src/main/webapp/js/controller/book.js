@@ -10,6 +10,10 @@ bookapp.controller("nav-controller", function($scope, $rootScope, $http) {
 		}
 	};
 	
+	$scope.toPrivateCenter = function() {
+		location.href = "user.html?id=" + $rootScope.user.id;
+	};
+	
 	$scope.logout = function() {
 		sessionStorage.removeItem("user");
 		location.reload();
@@ -20,14 +24,14 @@ bookapp.controller("nav-controller", function($scope, $rootScope, $http) {
 });
 
 bookapp.controller("book-controller", function($scope, $rootScope, $http) {
-	$scope.bookId = {'id': getQueryString("id")};
-	//$scope.bookInfo = {'id':'', 'name':'', 'desc':'', 'authorName':'', 'pressName':'',
-	//	'pressTime':'', 'rankTotal':'', 'rankLevel':'', 'price':''};
-	$scope.getBookInfo = function(){
+	$scope.modalDialog = {};
+	$scope.modalDialogDefault = {title:"", content:"", hasCancel: false, hasConfirm: false};
+	$scope.loadBookInfo = function(){
+		var param = {'id': getQueryString("id")};
 		$http({
 			method: 'POST',
 			url: 'loadBookInfo.do',
-			data: $.param($scope.bookId),
+			data: $.param(param),
 			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
 		}).then(function(resp){
 			if(resp.data.code){
@@ -48,14 +52,39 @@ bookapp.controller("book-controller", function($scope, $rootScope, $http) {
 	$scope.purchase = function(){
 		$rootScope.checkLoginUser();
 		if ($rootScope.user == null) {
-			alert("您还未登录，请登录后继续");
-			sessionStorage.setItem("previousURL", document.URL);
-			window.location = "login.html";
+			$scope.modalDialog = angular.copy($scope.modalDialogDefault);
+			$scope.modalDialog.title = "提示";
+			$scope.modalDialog.content = "您还未登录，请登录后继续";
+			$scope.modalDialog.hasConfirm = true;
+			$scope.modalDialog.confirmFun = function() {
+				sessionStorage.setItem("previousURL", document.URL);
+				window.location = "login.html";
+			};
+			$scope.showModalDialog();
 		} else {
 			window.location = "deal.html?bid=" + $scope.bookInfo.id;
 		}
 	};
 	
-	$scope.getBookInfo();
+	$scope.showModalDialog = function(){
+		$scope.modalResult = {confirmed: false, canceled: false};
+		$('#modalEL').modal({show: true});
+	};
+	
+	$scope.confirm = function() {
+		$scope.modalResult.confirmed = true;
+	};
+	
+	$scope.cancel = function() {
+		$scope.modalResult.canceled = true; 
+	};
+	
+	$('#modalEL').on('hidden.bs.modal', function () {
+		if ($scope.modalResult.confirmed && $scope.modalDialog.confirmFun!==undefined) {
+			$scope.modalDialog.confirmFun();
+		}
+	});
+	
+	$scope.loadBookInfo();
 	
 });

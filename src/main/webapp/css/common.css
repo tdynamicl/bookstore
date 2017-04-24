@@ -42,17 +42,28 @@ h1, h2, h3, h4, h5, h6 {
 	content: "平均评分：";
 	color: #666666;
 }
-.btn {
+.price {
+	font-family: "微软雅黑";
+	color: red;
+	padding-left: 30px;
+	font-size: 220%;
+}
+.price::before {
+	font-size: 70%;
+	content: "￥";
+}
+.bttn {
 	font-family: "微软雅黑";
 	font-size: 120%;
-	padding: 5px 10px;
+	padding: 5px 12px;
 	border: 1px solid;
+	border-radius: 3px;
 }
-.btnBuynow {
-
+.bttnBuynow {
+	background-color: orange;
 }
-.btnAddtocart {
-	
+.bttnAddtocart {
+	background-color: white;
 }
 nav li {
 	cursor: pointer;
@@ -60,6 +71,9 @@ nav li {
 .navbar{
 	margin-bottom: 0;
 	min-width: 1200px;
+}
+.errortip{
+	color:red;
 }
 #wrapper {
 	position: relative;
@@ -94,4 +108,11 @@ nav li {
 	width: 80px;
 	top: 20px;
 	left: 950px;
+}
+.load-more {
+	background-color: #efefef;
+	font-family: "微软雅黑";
+	font-size: 120%;
+	padding: 5px;
+	cursor: pointer;
 }

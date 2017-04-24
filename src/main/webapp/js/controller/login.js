@@ -2,20 +2,20 @@ var loginapp = angular.module('login-app', ['angular-md5']);
 	loginapp.controller('login-controller', function ($scope, $http, md5){
 		$scope.user={'account':'', 'password':''};
 		$scope.login = function(){
-			$scope.encuser = angular.copy($scope.user);
-			$scope.encuser.account = md5.createHash($scope.encuser.account);
-			$scope.encuser.password = md5.createHash(md5.createHash($scope.encuser.password));
+			var param = {};
+			param.account = md5.createHash($scope.user.account);
+			param.password = md5.createHash(md5.createHash($scope.user.password));
 			$http({
 				method: 'POST',
 				url: 'login.do',
-				data: $.param($scope.encuser),
+				data: $.param(param),
 				headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
 			}).then(function(resp){
 				if(resp.data.code){
-					$scope.logintip=resp.data.message;
+					$scope.errorTip=resp.data.message;
 				}else{
-					var loggeduser = resp.data.data;
-					sessionStorage.setItem("user", JSON.stringify(loggeduser));
+					var userString = resp.data.data;
+					sessionStorage.setItem("user", JSON.stringify(userString));
 					var prevURL = sessionStorage.getItem("previousURL");
 					if (prevURL !== null) {
 						sessionStorage.removeItem("previousURL");

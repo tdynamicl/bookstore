@@ -91,9 +91,9 @@ public class UserServiceImpl implements UserService {
 		bookInfoDto.setPrice(String.format("%.2f", bookEntity.getPrice()/100.0));
 		bookInfoDto.setAuthorName(bookEntity.getAuthor());
 		bookInfoDto.setPressName(bookEntity.getPress());
-		//TODO 给bookInfoDto加入评分等信息
-		bookInfoDto.setRankTotal(15);
-		bookInfoDto.setRankLevel("4.3");
+		Double avg = indentDao.queryAvgOfCommentLevelByBookId(id);
+		bookInfoDto.setRankTotal(indentDao.queryTotalOfCommentByBookId(id));
+		bookInfoDto.setRankLevel((avg==null||avg==0)?"暂无":String.format("%.1f", avg));
 		return bookInfoDto;
 	}
 
@@ -103,9 +103,9 @@ public class UserServiceImpl implements UserService {
 		if (keywordEntity==null) {
 			throw new MyException("没有此图书分类");
 		}
-		LinkedList<String> bookIds = refBookKeywordDao.queryByKeywordIdLimited(keywordEntity.getId(), index, 10);
+		LinkedList<String> bookIds = refBookKeywordDao.queryByKeywordIdLimited(keywordEntity.getId(), index, 7);
 		if (bookIds.isEmpty()) {
-			throw new MyException("暂无该分类的图书");
+			throw new MyException("暂无更多此分类图书");
 		}
 		LinkedList<BookInfoDto> list = new LinkedList<>();
 		for(String id : bookIds) {
@@ -124,13 +124,84 @@ public class UserServiceImpl implements UserService {
 		indentEntity.setAddress(submitIndentDto.getAddr());
 		indentEntity.setReceiverName(submitIndentDto.getReceiverName());
 		indentEntity.setReceiverTel(submitIndentDto.getReceiverTel());
-		indentEntity.setGeneratTime(Util.nowDate());
-		indentEntity.setStatus(0);
-		indentEntity.setCommentContent("");
+		indentEntity.setGenerateTime(Util.nowDate());
+		indentEntity.setStatus(1);
+		indentEntity.setCommentContent(null);
 		indentEntity.setCommentLevel(0);
 		indentEntity.setCommentTime(null);
 		indentDao.insert(indentEntity);
 		return indentId;
 	}
 
+	@Override
+	public IndentEntity loadIndentInfo(String id, String userId) throws Exception {
+		IndentEntity indentEntity = indentDao.select("id", id);
+		checkIndentOwner(indentEntity, userId);
+		return indentEntity;
+	}
+
+	@Override
+	public void purchaseIndent(String id, String userId) throws Exception {
+		IndentEntity indentEntity = indentDao.select("id", id);
+		checkIndentOwner(indentEntity, userId);
+		if (indentEntity.getStatus() != 1) {
+			throw new MyException("该订单不处于“待支付”状态");
+		}
+		indentEntity.setStatus(2);
+		indentDao.update(indentEntity);
+	}
+
+	@Override
+	public void cancelIndent(String id, String userId) throws Exception {
+		IndentEntity indentEntity = indentDao.select("id", id);
+		checkIndentOwner(indentEntity, userId);
+/*		if (indentEntity.getStatus() != 2) {
+			throw new MyException("该订单不处于“”状态");
+		}*/
+		indentEntity.setStatus(0);
+		indentDao.update(indentEntity);
+	}
+
+	@Override
+	public void receivedIndent(String id, String userId) throws Exception {
+		IndentEntity indentEntity = indentDao.select("id", id);
+		checkIndentOwner(indentEntity, userId);
+		if (indentEntity.getStatus() != 3) {
+			throw new MyException("该订单不处于“待收货”状态");
+		}
+		indentEntity.setStatus(4);
+		indentDao.update(indentEntity);
+	}
+
+	@Override
+	public void rateIndent(String id, String userId, String content, int level) throws Exception {
+		IndentEntity indentEntity = indentDao.select("id", id);
+		checkIndentOwner(indentEntity, userId);
+		if (indentEntity.getStatus() != 4) {
+			throw new MyException("该订单不处于“已收货，未评价”状态");
+		}
+		indentEntity.setStatus(5);
+		indentDao.update(indentEntity);
+	}
+
+	@Override
+	public void deleteIndent(String id, String userId) throws Exception {
+		IndentEntity indentEntity = indentDao.select("id", id);
+		checkIndentOwner(indentEntity, userId);
+		/*if (indentEntity.getStatus() != 5) {
+			throw new MyException("该订单不处于“”状态");
+		}*/
+		indentEntity.setStatus(0);
+		indentDao.update(indentEntity);
+	}
+
+	private void checkIndentOwner(IndentEntity indentEntity, String userId) throws Exception{
+		if (indentEntity==null || indentEntity.getStatus() == 0) {
+			throw new MyException("该订单已失效，或已被删除");
+		}
+		if (!indentEntity.getUserId().equals(userId)) {
+			throw new MyException("该订单（编号："+ indentEntity.getId() +"）不属于你，无法查看或操作");
+		}
+	}
+	
 }

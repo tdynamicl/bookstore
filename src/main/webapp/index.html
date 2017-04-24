@@ -2,7 +2,7 @@
 <html ng-app="index-app">
 <head>
 <meta charset="utf-8">
-<title>首页|xxx</title>
+<title>首页</title>
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/angular-animate.min.js"></script>
 <script src="js/lib/jquery-3.1.1.min.js"></script>
@@ -32,8 +32,7 @@
 					<a class="dropdown-toggle" data-toggle="dropdown">{{nickname}}
 						<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a>个人中心</a></li>
-						<li><a>设置</a></li>
+						<li><a ng-click="toPrivateCenter()">个人中心</a></li>
 						<li class="divider"></li>
 						<li><a ng-click="logout()">退出登录</a></li>
 					</ul>

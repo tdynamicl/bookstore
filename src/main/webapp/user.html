@@ -1,21 +1,16 @@
 <!DOCTYPE html>
-<html ng-app="category-app">
+<html ng-app="index-app">
 <head>
 <meta charset="utf-8">
-<title></title>
+<title>个人中心|xxx</title>
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/angular-animate.min.js"></script>
 <script src="js/lib/jquery-3.1.1.min.js"></script>
 <script src="js/lib/bootstrap.min.js"></script>
-<script src="js/common.js"></script>
 <link rel="stylesheet" href="css/lib/bootstrap.min.css" />
 <link rel="stylesheet" href="css/lib/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="css/common.css" />
-<link rel="stylesheet" href="css/category.css" />
-<style>
-	
-	
-</style>
+<link rel="stylesheet" href="css/user.css" />
 </head>
 <body>
 	<nav ng-controller="nav-controller" class="navbar navbar-default"
@@ -37,7 +32,7 @@
 					<a class="dropdown-toggle" data-toggle="dropdown">{{nickname}}
 						<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a ng-click="toPrivateCenter()">个人中心</a></li>
+						<li><a>个人中心</a></li>
 						<li class="divider"></li>
 						<li><a ng-click="logout()">退出登录</a></li>
 					</ul>
@@ -45,24 +40,11 @@
 			</ul>
 		</div>
 	</nav>
-	
 	<div id="wrapper">
-		<header>
-			<form>
-				<input>
-				<button>搜索</button>
-			</form>
-		</header>
-		<div ng-controller="books-controller" ng-cloak>
-			<div id="books">
-				<!-- js自动生成内容 -->
-			</div>
-			<div ng-click="loadBookInfo()" class="text-center load-more">
-				点击加载更多
-			</div>
-		</div>
+				
+		
+		
 	</div>
-	
 </body>
-<script src="js/controller/category.js" ></script>
+<script src='js/controller/index.js'></script>
 </html>
