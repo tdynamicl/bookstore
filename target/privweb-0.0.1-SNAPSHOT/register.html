@@ -8,25 +8,34 @@
 <script src="js/lib/angular-md5.min.js"></script>
 <script src="js/lib/jquery-3.1.1.min.js"></script>
 <script src="js/lib/bootstrap.min.js"></script>
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
-<style>
-body {
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 100px;
-	width: 20em;
-}
-
-.errortip{
-	color:red;
-}
-</style>
+<link rel="stylesheet" href="css/lib/bootstrap.min.css" />
+<link rel="stylesheet" href="css/lib/bootstrap-theme.min.css" />
+<link rel="stylesheet" href="css/common.css" />
+<link rel="stylesheet" href="css/register.css" />
 </head>
 <body>
-	<div ng-controller="register-controller" ng-cloak>
+	<nav class="navbar navbar-default"
+		role="navigation" novalidate ng-cloak style="border-radius: 0;">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">网络书籍销售平台</a>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href="index.html">
+					<span class="glyphicon glyphicon-home"></span> 返回主页</a>
+				</li>
+				<li>
+					<a href="login.html">
+					<span class="glyphicon glyphicon-log-in"></span> 登录</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	
+	<div ng-controller="register-controller" id="wrapper" ng-cloak>
 		<form name="registerForm" class="form-signup" role="form" novalidate >
-			<h2 class="form-signin-header">注册xxx</h2>
+			<h2 class="form-signin-header">注册</h2>
 			<span class="errortip">
 				<span ng-show="registerForm.account.$dirty && registerForm.account.$invalid">
 					<span ng-show="registerForm.account.$error.required">用户名不能为空</span>
@@ -93,8 +102,6 @@ body {
 				ng-show="registerForm.email.$dirty && registerForm.email.$valid"></span>
 			</div>
 			<br>
-			<button onclick='window.location.href="login.html"'
-				class="btn btn-default">返回登录</button>
 			<button ng-click="register()" class="btn btn-primary"
 				ng-disabled=" registerForm.account.$invalid ||
 				registerForm.password.$invalid ||

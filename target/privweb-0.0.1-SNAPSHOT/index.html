@@ -2,34 +2,22 @@
 <html ng-app="index-app">
 <head>
 <meta charset="utf-8">
-<title>首页|xxx</title>
+<title>首页</title>
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/angular-animate.min.js"></script>
 <script src="js/lib/jquery-3.1.1.min.js"></script>
 <script src="js/lib/bootstrap.min.js"></script>
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
-<style>
-nav li {
-	cursor: pointer;
-}
-.navbar{
-	margin-bottom: 0;
-}
-</style>
+<link rel="stylesheet" href="css/lib/bootstrap.min.css" />
+<link rel="stylesheet" href="css/lib/bootstrap-theme.min.css" />
+<link rel="stylesheet" href="css/common.css" />
+<link rel="stylesheet" href="css/index.css" />
 </head>
 <body>
-	<nav ng-controller="nav-controller" class="navbar navbar-inverse"
+	<nav ng-controller="nav-controller" class="navbar navbar-default"
 		role="navigation" novalidate ng-cloak style="border-radius: 0;">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand">LOGO is here</a>
-			</div>
-			<div>
-				<ul class="nav navbar-nav">
-					<li class="active"><a>AAAA</a></li>
-					<li><a>BBBBB</a></li>
-				</ul>
+				<a class="navbar-brand">玄奘书籍销售平台</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li ng-if="user===null">
@@ -44,8 +32,7 @@ nav li {
 					<a class="dropdown-toggle" data-toggle="dropdown">{{nickname}}
 						<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a>个人中心</a></li>
-						<li><a>设置</a></li>
+						<li><a ng-click="toPrivateCenter()">个人中心</a></li>
 						<li class="divider"></li>
 						<li><a ng-click="logout()">退出登录</a></li>
 					</ul>
@@ -53,55 +40,146 @@ nav li {
 			</ul>
 		</div>
 	</nav>
-
-
-	<!-- <div id="myCarousel" class="carousel slide">
-		轮播（Carousel）指标
-		<ol class="carousel-indicators">
-			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-			<li data-target="#myCarousel" data-slide-to="1"></li>
-			<li data-target="#myCarousel" data-slide-to="2"></li>
-		</ol>   
-		轮播（Carousel）项目
-		<div class="carousel-inner">
-			<div class="item active">
-				<img src="img/index/slide1.png" alt="First slide">
-				<div class="carousel-caption">标题 1</div>
+	<div id="wrapper">
+		<header>
+			<form>
+				<input>
+				<button>搜索</button>
+			</form>
+		</header>
+		<div id="category">
+			<div id="title-category">
+				<h3 class="com-text-center">图书分类</h3>
 			</div>
-			<div class="item">
-				<img src="img/index/slide2.png" alt="Second slide">
-				<div class="carousel-caption">标题 2</div>
-			</div>
-			<div class="item">
-				<img src="img/index/slide3.png" alt="Third slide">
-				<div class="carousel-caption">标题 3</div>
+			<div id="items-category">
+				<div>
+					<span>教育</span>
+					<a href="category.html?word=教程">教程</a>
+					<a href="category.html?word=教材">教材</a>
+					<a href="category.html?word=考试">考试</a>
+					<a href="category.html?word=工具书">工具书</a>
+					<a href="category.html?word=中小学辅导">中小学辅导</a>
+				</div>
+				<div>
+					<span>小说</span>
+					<a href="category.html?word=古典小说">古典小说 </a>
+					<a href="category.html?word=现代小说">现代小说</a>
+					<a href="category.html?word=网络小说">网络小说</a>
+					<a href="category.html?word=外国小说">外国小说</a>
+				</div>
+				<div>
+					<span>文艺</span>
+					<a href="category.html?word=文学">文学</a>
+					<a href="category.html?word=传记">传记</a>
+					<a href="category.html?word=艺术">艺术</a>
+					<a href="category.html?word=摄影">摄影</a>
+				</div>
+				<div>
+					<span>儿童</span>
+					<a href="category.html?word=科普">科普</a>
+					<a href="category.html?word=幼儿启蒙">幼儿启蒙</a>
+					<a href="category.html?word=益智">益智</a>
+				</div>
+				<div>
+					<span>生活</span>
+					<a href="category.html?word=美食">美食</a>
+					<a href="category.html?word=旅游">旅游</a>
+					<a href="category.html?word=休闲">休闲</a>
+					<a href="category.html?word=美妆">美妆</a>
+				</div>
+				<div>
+					<span>科技</span>
+					<a href="category.html?word=建筑">建筑</a>
+					<a href="category.html?word=医学">医学</a>
+					<a href="category.html?word=计算机">计算机</a>
+					<a href="category.html?word=农林">农林</a>
+					<a href="category.html?word=自然">自然</a>
+					<a href="category.html?word=工业">工业</a>
+				</div>
 			</div>
 		</div>
-		轮播（Carousel）导航
-		<a class="carousel-control left" href="#myCarousel" 
-		   data-slide="prev">&lsaquo;</a>
-		<a class="carousel-control right" href="#myCarousel" 
-		   data-slide="next">&rsaquo;</a>
-	</div> -->
-
-
+		<div id="img-exhibition">
+			<img src="img/index/exihibitions/01.jpg" />
+		</div>
+		<div id="newBooks" ng-controller="newBook-controller">
+			<h3><span>新书上架</span></h3>
+			<div>
+				<img src=""/>
+				<span>xxxxxxxxx</span>
+				<span class="price">15</span>
+			</div>
+			<div>
+				<img src=""/>
+				<span>xxxxxxxxx</span>
+				<span class="price">15</span>
+			</div>
+			<div>
+				<img src=""/>
+				<span>xxxxxxxxx</span>
+				<span class="price">15</span>
+			</div>
+			<div>
+				<img src=""/>
+				<span>xxxxxxxxx</span>
+				<span class="price">15</span>
+			</div>
+		</div>
+		<aside>
+			<div>
+				<h3><span class="glyphicon glyphicon-star-empty"></span>销售榜</h3>
+				<ol>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+					<li>
+						<a href="#">xxx是怎么炼成的</a>
+					</li>
+				</ol>
+			</div>
+		</aside>
+		<div></div>
+	</div>
+	
 
 </body>
-<script>
-	var indexapp = angular.module("index-app", []);
-	indexapp.controller("nav-controller", function($scope, $rootScope, $http) {
-		$scope.user = sessionStorage.getItem("user");
-		if ($scope.user != null) {
-			$scope.user = JSON.parse($scope.user);
-			$scope.nickname = $scope.user.nickname;
-			$rootScope.user = $scope.user;
-		}
-
-		$scope.logout = function() {
-			sessionStorage.removeItem("user");
-			location.reload();
-		};
-
-	});
-</script>
+<script src='js/controller/index.js'></script>
 </html>

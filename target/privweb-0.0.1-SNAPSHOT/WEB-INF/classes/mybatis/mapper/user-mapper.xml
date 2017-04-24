@@ -8,24 +8,21 @@
 		<id property="id" column="id" />
 	
 	</resultMap>
-	<!-- 仅配置了属性和数据库字段名不一致的 
-	<result property="lastLoginTime" column="lastlogintime" />
-	-->
 
 	<select id="select" resultMap="userEntity">
-		select * from sys_user where
+		select * from info_user where
 		${uf}=#{value}
 	</select>
 	
 	<insert id="insert">
-		insert into sys_user
+		insert into info_user
 			(id, account, password, nickname, telephone, email)
 		values
 			(#{id}, #{account}, #{password}, #{nickname}, #{telephone}, #{email})
 	</insert>
 	
 	<update id="update">
-		update sys_user set
+		update info_user set
 			account=#{account}, password=#{password},
 			nickname=#{nickname}, telephone=#{telephone}, email=#{email}
 		where
