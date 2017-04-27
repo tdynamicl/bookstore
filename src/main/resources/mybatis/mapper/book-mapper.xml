@@ -14,6 +14,12 @@
 		${uf}=#{value}
 	</select>
 	
+	<select id="queryByNameDescAuthorPressLimited" resultType="java.lang.String">
+		select * from info_book where
+		name like #{arg0} or description like #{arg0} or author like #{arg0}
+		or press like #{arg0} limit #{arg1}, #{arg2}
+	</select>
+	
 	<insert id="insert">
 		insert into info_book
 			(id, name, description, author, press, press_time, price, add_time)

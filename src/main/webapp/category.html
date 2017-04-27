@@ -60,6 +60,20 @@
 			<div ng-click="loadBookInfo()" class="text-center load-more">
 				点击加载更多
 			</div>
+			<div class="modal fade" id="modalEL" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <h4 class="modal-title">{{modalDialog.title}}</h4>
+			            </div>
+			            <div class="modal-body">{{modalDialog.content}}</div>
+			            <div class="modal-footer">
+			                <button ng-if="modalDialog.hasCancel" ng-click="cancel()" class="btn btn-default">取消</button>
+			                <button ng-if="modalDialog.hasConfirm" ng-click="confirm()" class="btn btn-primary" data-dismiss="modal">确定</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
 		</div>
 	</div>
 	

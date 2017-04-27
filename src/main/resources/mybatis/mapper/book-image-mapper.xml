@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lost4found.dao.BookImageDao">
+	
+	<resultMap type="cn.lost4found.entity.BookImageEntity" id="bookImageEntity"
+		autoMapping="true">
+		<id property="id" column="id" />
+		<result property="bookId" column="book_id" />
+		<result property="imageStream" column="image_stream" />
+	</resultMap>
+
+	<select id="select" resultMap="bookImageEntity">
+		select * from info_book where
+		${uf}=#{value}
+	</select>
+	
+	<select id="selectOneByBookId" resultType="java.lang.String">
+		select image_stream from info_book_image where
+		book_id=#{bookId} limit 0, 1
+	</select>
+	
+	
+	<insert id="insert">
+
+	</insert>
+	
+	<update id="update">
+	<!-- 
+		update sys_user set
+			account=#{account}, password=#{password},
+			nickname=#{nickname}, telephone=#{telephone}, email=#{email}
+		where
+			id=#{id}
+	 -->
+	</update>
+</mapper>

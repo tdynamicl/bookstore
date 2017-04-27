@@ -10,7 +10,7 @@ indentapp.controller("nav-controller", function($scope, $rootScope, $http) {
 	};
 	
 	$scope.toPrivateCenter = function() {
-		location.href = "user.html?id=" + $rootScope.user.id;
+		location.href = "user.html";
 	};
 	
 	$scope.logout = function() {
@@ -32,7 +32,7 @@ indentapp.controller("indent-controller", function($scope, $rootScope, $http, $f
 		param.id = getQueryString("id");
 		$scope.sendRequest('loadIndentInfo.do', param, function(resp) {
 			$scope.indentInfo = resp.data.data;
-			$scope.indentInfo.generateTime = $filter('date')($scope.indentInfo.generateTime, "yyyy-MM-dd hh:mm:ss");
+			$scope.indentInfo.generateTime = $filter('date')($scope.indentInfo.generateTime, "yyyy-MM-dd HH:mm:ss");
 			$scope.loadBookInfo(resp.data.data.bookId);
 			/////////////////////////////////////////////
 			console.log($scope.indentInfo);
@@ -142,6 +142,7 @@ indentapp.controller("indent-controller", function($scope, $rootScope, $http, $f
 		if ($scope.modalResult.confirmed && $scope.modalDialog.confirmFun!==undefined) {
 			$scope.modalDialog.confirmFun();
 		}
+		$scope.modalDialog = null;
 	});
 	
 	$scope.loadIndentInfo();

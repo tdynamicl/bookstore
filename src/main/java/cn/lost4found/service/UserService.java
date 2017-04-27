@@ -2,6 +2,7 @@ package cn.lost4found.service;
 
 import java.util.LinkedList;
 import cn.lost4found.dto.BookInfoDto;
+import cn.lost4found.dto.IndentDto;
 import cn.lost4found.dto.SubmitIndentDto;
 import cn.lost4found.dto.UserRegisterDto;
 import cn.lost4found.entity.IndentEntity;
@@ -32,6 +33,14 @@ public interface UserService {
 	 * @throws Exception
 	 */
 	public BookInfoDto loadBookInfo(String id) throws Exception;
+	
+	/**
+	 * 获得书籍图片的base64编码
+	 * @param bookId
+	 * @return
+	 * @throws Exception
+	 */
+	public String loadBookImage(String bookId) throws Exception;
 	
 	/**
 	 * 通过类型字符串和号来加载
@@ -99,5 +108,55 @@ public interface UserService {
 	 * @throws Exception
 	 */
 	public void deleteIndent(String id, String userId) throws Exception;
+	
+	/**
+	 * 获取某用户未完成订单
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
+	public LinkedList<IndentDto> loadUnfinishedIndent(String userId) throws Exception;
+	
+	/**
+	 * 获取某用户已完成订单
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
+	public LinkedList<IndentDto> loadFinishedIndent(String userId) throws Exception;
+
+	/**
+	 * 用户添加书籍收藏
+	 * @param bookId
+	 * @param userId
+	 * @throws Exception
+	 */
+	public void addFavoriteBook(String bookId, String userId) throws Exception;
+
+	/**
+	 * 用户取消书籍收藏
+	 * @param bookId
+	 * @param userId
+	 * @throws Exception
+	 */
+	public void delFavoriteBook(String bookId, String userId) throws Exception;
+	
+	/**
+	 * 检查用户是否收藏此书
+	 * @param bookId
+	 * @param userId
+	 * @throws Exception
+	 */
+	public boolean checkFavorite(String bookId, String userId) throws Exception;
+	
+	/**
+	 * 模糊查询 从书名，书描述，作者名，出版社中查
+	 * @param keyword
+	 * @param index
+	 * @param limit
+	 * @return
+	 * @throws Exception
+	 */
+	public LinkedList<BookInfoDto> queryByNameDescAuthorPressLimited(String keyword, int index, int limit) throws Exception; 
 	
 }

@@ -65,6 +65,15 @@ h1, h2, h3, h4, h5, h6 {
 .bttnAddtocart {
 	background-color: white;
 }
+
+.bttnFavorite {
+	background-color: white;
+}
+
+.bttnUnFavorite {
+	background-color: white;
+}
+
 nav li {
 	cursor: pointer;
 }
@@ -82,10 +91,16 @@ nav li {
 }
 #wrapper > header {
 	height: 80px;
-	
+
 }
+
+.logo {
+	margin-top: 5px;
+}
+
 #wrapper > header > form > input {
 	position: absolute;
+	padding-left: 7px;
 	border: 2px solid orange;
 	font-size: 120%;
 	outline: none;
@@ -99,6 +114,7 @@ nav li {
 #wrapper > header > form > button {
 	position: absolute;
 	color: white;
+	cursor: pointer;
 	font-family: "微软雅黑";
 	font-size: 120%;
 	border: 2px solid orange;

@@ -4,14 +4,18 @@ import java.util.LinkedList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.lost4found.dao.BookDao;
+import cn.lost4found.dao.BookImageDao;
+import cn.lost4found.dao.FavoriteDao;
 import cn.lost4found.dao.IndentDao;
 import cn.lost4found.dao.KeywordDao;
 import cn.lost4found.dao.RefBookKeywordDao;
 import cn.lost4found.dao.UserDao;
 import cn.lost4found.dto.BookInfoDto;
+import cn.lost4found.dto.IndentDto;
 import cn.lost4found.dto.SubmitIndentDto;
 import cn.lost4found.dto.UserRegisterDto;
 import cn.lost4found.entity.BookEntity;
+import cn.lost4found.entity.FavoriteEntity;
 import cn.lost4found.entity.IndentEntity;
 import cn.lost4found.entity.KeywordEntity;
 import cn.lost4found.entity.UserEntity;
@@ -32,6 +36,10 @@ public class UserServiceImpl implements UserService {
 	private RefBookKeywordDao refBookKeywordDao;
 	@Autowired
 	private IndentDao indentDao;
+	@Autowired
+	private FavoriteDao favoriteDao;
+	@Autowired
+	private BookImageDao bookImageDao;
 	
 	@Override
 	public UserEntity login(String account, String password) throws Exception {
@@ -97,6 +105,15 @@ public class UserServiceImpl implements UserService {
 		return bookInfoDto;
 	}
 
+	@Override
+	public String loadBookImage(String bookId) throws Exception {
+		String bookImageStream = bookImageDao.selectOneByBookId(bookId);
+		if (bookImageStream==null) {
+			throw new MyException("此书暂无封面");
+		}
+		return bookImageStream;
+	}
+	
 	@Override
 	public LinkedList<BookInfoDto> loadBookInfosByCategory(String word, int index) throws Exception {
 		KeywordEntity keywordEntity = keywordDao.select("keyword", word);
@@ -203,5 +220,76 @@ public class UserServiceImpl implements UserService {
 			throw new MyException("该订单（编号："+ indentEntity.getId() +"）不属于你，无法查看或操作");
 		}
 	}
+
+	@Override
+	public LinkedList<IndentDto> loadUnfinishedIndent(String userId) throws Exception {
+		LinkedList<IndentEntity> entityList = indentDao.queryAllUnfinishedIndentByUserId(userId);
+		return entityList2dtoList(entityList);
+	}
+
+	@Override
+	public LinkedList<IndentDto> loadFinishedIndent(String userId) throws Exception {
+		LinkedList<IndentEntity> entityList = indentDao.queryAllFinishedIndentByUserId(userId);
+		return entityList2dtoList(entityList);
+	}
+	
+	private LinkedList<IndentDto> entityList2dtoList(LinkedList<IndentEntity> entityList) throws Exception{
+		LinkedList<IndentDto> dtoList = new LinkedList<>();
+		IndentDto tempDto = null;
+		BookEntity tempBookEntity = null;
+		for(IndentEntity i : entityList){
+			tempDto = new IndentDto();
+			tempDto.setId(i.getId());
+			tempDto.setGenerateTime(i.getGenerateTime());
+			tempDto.setBookId(i.getBookId());
+			tempBookEntity = bookDao.select("id", i.getBookId());
+			tempDto.setBookName(tempBookEntity.getName());
+			tempDto.setStatus(i.getStatus());
+			dtoList.add(tempDto);
+		}
+		return dtoList;
+	}
+
+	@Override
+	public void addFavoriteBook(String bookId, String userId) throws Exception {
+		if (checkFavorite(bookId, userId)) {
+			throw new MyException("您已经收藏了此书！");
+		}
+		FavoriteEntity favoriteEntity = new FavoriteEntity();
+		favoriteEntity.setId(Util.generateUUID());
+		favoriteEntity.setBookId(bookId);
+		favoriteEntity.setUserId(userId);
+		favoriteEntity.setAddTime(Util.nowDate());
+		favoriteDao.insert(favoriteEntity);
+	}
+
+	@Override
+	public void delFavoriteBook(String bookId, String userId) throws Exception {
+		if (favoriteDao.selectByBookIdAndUserId(bookId, userId)==null) {
+			throw new MyException("取消了收藏！");
+		}
+		favoriteDao.deleteByBookIdAndUserId(bookId, userId);
+	}
+
+	@Override
+	public boolean checkFavorite(String bookId, String userId) throws Exception {
+		return favoriteDao.selectByBookIdAndUserId(bookId, userId)!=null;
+	}
+
+	@Override
+	public LinkedList<BookInfoDto> queryByNameDescAuthorPressLimited(String keyword, int index, int limit) throws Exception {
+		keyword = "%" + keyword + "%";
+		LinkedList<String> ids = bookDao.queryByNameDescAuthorPressLimited(keyword, index, limit);
+		if (ids.isEmpty()) {
+			throw new MyException("没有更多搜索结果了");
+		}
+		LinkedList<BookInfoDto> dtos = new LinkedList<>();
+		for(String id : ids){
+			dtos.add(loadBookInfo(id));
+		}
+		return dtos;
+	}
+
+
 	
 }

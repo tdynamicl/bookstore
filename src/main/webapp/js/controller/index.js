@@ -10,7 +10,7 @@ indexapp.controller("nav-controller", function($scope, $rootScope, $http) {
 	};
 	
 	$scope.toPrivateCenter = function() {
-		location.href = "user.html?id=" + $rootScope.user.id;
+		location.href = "user.html";
 	};
 	
 	$scope.logout = function() {
@@ -22,6 +22,6 @@ indexapp.controller("nav-controller", function($scope, $rootScope, $http) {
 	
 });
 
-indexapp.controller("newBook-controller", function($scope, $rootScope, $http) {
+indexapp.controller("index-controller", function($scope, $rootScope, $http) {
 	
 });

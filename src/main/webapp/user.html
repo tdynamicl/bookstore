@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="index-app">
+<html ng-app="user-app">
 <head>
 <meta charset="utf-8">
 <title>个人中心|xxx</title>
@@ -40,11 +40,50 @@
 			</ul>
 		</div>
 	</nav>
-	<div id="wrapper">
-				
+	<div id="wrapper" ng-controller="user-controller" ng-cloak>
+		<header>
+			<form>
+				<input>
+				<button>搜索</button>
+			</form>
+		</header>
+		<div class="panel panel-default">
+	    	<div class="panel-heading">
+	        	<h3 class="panel-title">个人信息</h3>
+	   		</div>
+	    	<div id="profileEL" class="panel-body">
+	        	<span>昵称：{{user.nickname}}</span>
+	        	<span>手机号：{{user.telephone}}</span>
+	        	<span>注册邮箱：{{user.email}}</span>
+	   		</div>
+		</div>
+		<div class="panel panel-default">
+	    	<div class="panel-heading">
+	        	<h3 class="panel-title">未完成订单（点击订单号查看详情）</h3>
+	   		</div>
+	    	<div id="unFinishedIndentEL" class="panel-body">
+				<!-- js填充  -->
+	   		</div>
+		</div>
+		<div class="panel panel-default">
+	    	<div class="panel-heading">
+	        	<h3 class="panel-title">已完成订单（点击订单号查看详情）</h3>
+	   		</div>
+	    	<div id="finishedIndentEL" class="panel-body">
+				<!-- js填充  -->
+	   		</div>
+		</div>
+		<div class="panel panel-default">
+	    	<div class="panel-heading">
+	        	<h3 class="panel-title">我的收藏</h3>
+	   		</div>
+	    	<div id="finishedIndentEL" class="panel-body">
+	        	内容
+	   		</div>
+		</div>
 		
 		
 	</div>
 </body>
-<script src='js/controller/index.js'></script>
+<script src='js/controller/user.js'></script>
 </html>

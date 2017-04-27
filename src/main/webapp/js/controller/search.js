@@ -1,6 +1,5 @@
-var categoryapp = angular.module("category-app", []);
-
-categoryapp.controller("nav-controller", function($scope, $rootScope, $http) {
+var searchapp = angular.module("search-app", []);
+searchapp.controller("nav-controller", function($scope, $rootScope, $http) {
 	$rootScope.user = null;
 	$rootScope.checkLoginUser = function() {
 		var userString = sessionStorage.getItem("user");
@@ -20,25 +19,24 @@ categoryapp.controller("nav-controller", function($scope, $rootScope, $http) {
 	};
 		
 	$rootScope.checkLoginUser();
-
 	
 });
 
-categoryapp.controller("books-controller", function($scope, $rootScope, $http) {
-	document.title = getQueryString("word");
+searchapp.controller("search-controller", function($scope, $rootScope, $http) {
 	$scope.currIndex = 0;
 	$scope.BooksEL = $("#books");
 	
-	$scope.loadBookInfo = function(){
-		var param = {"word": getQueryString("word"), "index": $scope.currIndex};
+	$scope.loadSearchResult = function(){
+		var param = {};
+		param.keyword = getQueryString("keyword");
+		param.index = $scope.currIndex;
 		$http({
 			method: 'POST',
-			url: 'loadBookInfosByCategory.do',
+			url: 'search.do',
 			data: $.param(param),
 			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
 		}).then(function(resp){
 			if(resp.data.code){
-				//获取失败
 				$scope.modalDialog = {};
 				$scope.modalDialog.title = "提示";
 				$scope.modalDialog.content = resp.data.message;
@@ -74,7 +72,7 @@ categoryapp.controller("books-controller", function($scope, $rootScope, $http) {
 			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
 		}).then(function(resp){
 			if(resp.data.code){
-				alert(resp.data.message);
+				//alert(resp.data.message);
 			}else{
 				succFun(resp);
 			}
@@ -82,7 +80,7 @@ categoryapp.controller("books-controller", function($scope, $rootScope, $http) {
 			alert("获取封面图片时网络异常");
 		});
 	};
-
+	
 	$scope.showModalDialog = function(){
 		$scope.modalResult = {confirmed: false, canceled: false};
 		$('#modalEL').modal({show: true});
@@ -121,6 +119,6 @@ categoryapp.controller("books-controller", function($scope, $rootScope, $http) {
 		});
 	};
 	
-	$scope.loadBookInfo();
+	$scope.loadSearchResult();
 	
 });

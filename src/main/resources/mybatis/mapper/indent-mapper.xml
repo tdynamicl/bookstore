@@ -31,6 +31,16 @@
 		book_id=#{bookId} and status=5
 	</select>
 
+	<select id="queryAllUnfinishedIndentByUserId" resultMap="indentEntity">
+		select * from info_indent where
+		user_id=#{userId} and status in (1, 2, 3)
+	</select>
+
+	<select id="queryAllFinishedIndentByUserId" resultMap="indentEntity">
+		select * from info_indent where
+		user_id=#{userId} and status in (4, 5)
+	</select>
+
 	<insert id="insert">
 		insert into info_indent
 			(id, book_id, user_id, receiver_name, receiver_tel, address, 

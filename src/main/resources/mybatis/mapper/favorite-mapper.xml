@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lost4found.dao.FavoriteDao">
+	
+	<resultMap type="cn.lost4found.entity.FavoriteEntity" id="favoriteEntity"
+		autoMapping="true">
+		<id property="id" column="id" />
+		<result property="bookId" column="book_id" />
+		<result property="userId" column="user_id" />
+		<result property="addTime" column="add_time" />
+	</resultMap>
+
+	<select id="select" resultMap="favoriteEntity">
+		select * from info_favorite where
+		${uf}=#{value}
+	</select>
+	
+	<select id="selectByBookIdAndUserId" resultMap="favoriteEntity">
+		select * from info_favorite where
+		book_id=#{arg0} and user_id=#{arg1}
+	</select>
+	
+	<insert id="insert">
+		insert into info_favorite
+			(id, book_id, user_id, add_time)
+		values
+			(#{id}, #{bookId}, #{userId}, #{addTime})
+	</insert>
+	
+	<delete id="deleteByBookIdAndUserId">
+		delete from info_favorite where
+		book_id=#{arg0} and user_id=#{arg1}
+	</delete>
+	
+	<update id="update">
+	<!-- 
+		update sys_user set
+			account=#{account}, password=#{password},
+			nickname=#{nickname}, telephone=#{telephone}, email=#{email}
+		where
+			id=#{id}
+	 -->
+	</update>
+</mapper>

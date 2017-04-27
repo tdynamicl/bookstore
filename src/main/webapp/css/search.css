@@ -1,0 +1,24 @@
+#books {
+	
+}
+
+.book-item {
+	position: relative;
+}
+
+.book-item:hover {
+	background-color: #ffffdd;
+}
+
+.book-item > div > img {
+	height: 150px;
+	width: 150px;
+}
+
+.book-item > .detail {
+	position: absolute;
+	top: 0;
+	left: 180px;
+	height: 150px;
+	width: 1020px;
+}

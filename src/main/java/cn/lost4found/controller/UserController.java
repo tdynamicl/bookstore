@@ -48,6 +48,14 @@ public class UserController {
 		return jsonRespose.toModelAndView();
 	}
 	
+	@RequestMapping(value="/loadBookImage.do", method=RequestMethod.POST)
+	public ModelAndView loadBookImage(@RequestParam("id")String id) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		jsonRespose.setData(userServiceImpl.loadBookImage(id));
+		return jsonRespose.toModelAndView();
+	}
+	
+	
 	@RequestMapping(value="loadBookInfosByCategory.do", method=RequestMethod.POST)
 	public ModelAndView loadBookInfosByCategory(@RequestParam("word")String word, @RequestParam("index")int index) throws Exception{
 		List<BookInfoDto> resultList = userServiceImpl.loadBookInfosByCategory(word, index);
@@ -105,6 +113,50 @@ public class UserController {
 	public ModelAndView deleteIndent(@RequestParam("id")String id, @RequestParam("userId")String userId) throws Exception{
 		JsonRespose jsonRespose = new JsonRespose();
 		userServiceImpl.deleteIndent(id, userId);
+		return jsonRespose.toModelAndView();
+	}
+	
+	@RequestMapping(value="loadUnfinishedIndent.do", method=RequestMethod.POST)
+	public ModelAndView loadUnfinishedIndent(@RequestParam("userId")String userId) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		jsonRespose.setData(userServiceImpl.loadUnfinishedIndent(userId));
+		return jsonRespose.toModelAndView();
+	}
+	
+	@RequestMapping(value="loadFinishedIndent.do", method=RequestMethod.POST)
+	public ModelAndView loadFinishedIndent(@RequestParam("userId")String userId) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		jsonRespose.setData(userServiceImpl.loadFinishedIndent(userId));
+		return jsonRespose.toModelAndView();
+	}
+	
+	@RequestMapping(value="addFavoriteBook.do", method=RequestMethod.POST)
+	public ModelAndView addFavoriteBook(@RequestParam("bookId")String bookId, @RequestParam("userId")String userId) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		userServiceImpl.addFavoriteBook(bookId, userId);
+		jsonRespose.setMessage("添加成功");
+		return jsonRespose.toModelAndView();
+	}
+	
+	@RequestMapping(value="delFavoriteBook.do", method=RequestMethod.POST)
+	public ModelAndView delFavoriteBook(@RequestParam("bookId")String bookId, @RequestParam("userId")String userId) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		userServiceImpl.delFavoriteBook(bookId, userId);
+		jsonRespose.setMessage("移除收藏成功");
+		return jsonRespose.toModelAndView();
+	}
+	
+	@RequestMapping(value="checkFavorite.do", method=RequestMethod.POST)
+	public ModelAndView checkFavorite(@RequestParam("bookId")String bookId, @RequestParam("userId")String userId) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		jsonRespose.setData(userServiceImpl.checkFavorite(bookId, userId));
+		return jsonRespose.toModelAndView();
+	}
+	
+	@RequestMapping(value="search.do", method=RequestMethod.POST)
+	public ModelAndView search(@RequestParam("keyword")String keyword, @RequestParam("index")int index) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		jsonRespose.setData(userServiceImpl.queryByNameDescAuthorPressLimited(keyword, index, 7));
 		return jsonRespose.toModelAndView();
 	}
 	

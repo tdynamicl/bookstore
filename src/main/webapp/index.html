@@ -40,11 +40,12 @@
 			</ul>
 		</div>
 	</nav>
-	<div id="wrapper">
+	<div id="wrapper" ng-controller="index-controller" ng-cloak>
 		<header>
-			<form>
-				<input>
-				<button>搜索</button>
+			<a class="logo" href="index.html" ><img src="img/commonLib/logo.png"/></a>
+			<form name="searchForm" action="search.html" method="GET" novalidate>
+				<input name="keyword" placeholder="输入关键字搜索" required>
+				<button ng-disabled="searchForm.keyword.$error.required" type="submit">搜索</button>
 			</form>
 		</header>
 		<div id="category">
@@ -101,7 +102,7 @@
 		<div id="img-exhibition">
 			<img src="img/index/exihibitions/01.jpg" />
 		</div>
-		<div id="newBooks" ng-controller="newBook-controller">
+		<div id="newBooks">
 			<h3><span>新书上架</span></h3>
 			<div>
 				<img src=""/>
@@ -176,7 +177,10 @@
 				</ol>
 			</div>
 		</aside>
-		<div></div>
+		<div>
+			<h1>为您推荐</h1>
+			
+		</div>
 	</div>
 	
 
