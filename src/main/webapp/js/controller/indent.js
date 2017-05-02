@@ -1,99 +1,81 @@
-var indentapp = angular.module("indent-app", []);
-indentapp.controller("nav-controller", function($scope, $rootScope, $http) {
-	$rootScope.user = null;
-	$rootScope.checkLoginUser = function() {
-		var userString = sessionStorage.getItem("user");
-		if (userString !== null) {
-			$rootScope.user = JSON.parse(userString);
-			$scope.nickname = $scope.user.nickname;
-		}
-	};
-	
-	$scope.toPrivateCenter = function() {
-		location.href = "user.html";
-	};
-	
-	$scope.logout = function() {
-		sessionStorage.removeItem("user");
-		location.reload();
-	};
-		
-	$rootScope.checkLoginUser();
-	
-});
-
-indentapp.controller("indent-controller", function($scope, $rootScope, $http, $filter) {
+myApp.controller("indent-controller", function($scope, $rootScope, $filter, myService) {
 	$scope.bookInfo = null;
 	$scope.indentInfo = null;
 	$scope.modalDialog = {};
 	$scope.modalDialogDefault = {title:"", content:"", hasCancel: false, hasConfirm: false};
 	$scope.loadIndentInfo = function() {
 		var param = {};
-		param.id = getQueryString("id");
-		$scope.sendRequest('loadIndentInfo.do', param, function(resp) {
+		param.id = myService.getQueryString("id");
+		param.userId = $rootScope.user.id;
+		myService.httpPost('loadIndentInfo.do', param, function(resp) {
 			$scope.indentInfo = resp.data.data;
 			$scope.indentInfo.generateTime = $filter('date')($scope.indentInfo.generateTime, "yyyy-MM-dd HH:mm:ss");
 			$scope.loadBookInfo(resp.data.data.bookId);
-			/////////////////////////////////////////////
-			console.log($scope.indentInfo);
 		});
 	};
 	
 	$scope.loadBookInfo = function(bookId){
 		var param = {};
 		param.id = bookId;
-		$scope.sendRequest('loadBookInfo.do', param, function(resp) {
+		myService.httpPost('loadBookInfo.do', param, function(resp) {
 			$scope.bookInfo = resp.data.data;
 			$scope.bookInfo.bookURL = "book.html?id=" + resp.data.data.id;
-			/////////////////////////////////
-			console.log($scope.bookInfo);
-		}, false);
+		});
 	};
 	
 	$scope.purchase = function() {
+		$scope.checkAndToLogin();
 		var param = {};
 		param.id = $scope.indentInfo.id;
-		$scope.sendRequest('purchaseIndent.do', param, function(resp) {
+		param.userId = $rootScope.user.id;
+		myService.httpPost('purchaseIndent.do', param, function(resp) {
 			location.reload();
 		});
 	};
 	
 	$scope.cancelIndent = function() {
+		$scope.checkAndToLogin();
 		var param = {};
 		param.id = $scope.indentInfo.id;
-		$scope.sendRequest('cancelIndent.do', param, function(resp) {
+		param.userId = $rootScope.user.id;
+		myService.httpPost('cancelIndent.do', param, function(resp) {
 			window.location = "index.html";
 		});
 	};
 	
 	$scope.received = function() {
+		$scope.checkAndToLogin();
 		var param = {};
 		param.id = $scope.indentInfo.id;
-		$scope.sendRequest('receivedIndent.do', param, function(resp) {
+		param.userId = $rootScope.user.id;
+		myService.httpPost('receivedIndent.do', param, function(resp) {
 			location.reload();
 		});
 	};
 	
 	$scope.rate = function() {
+		$scope.checkAndToLogin();
 		var param = {};
 		param.id = $scope.indentInfo.id;
-		$scope.sendRequest('rateIndent.do', param, function(resp) {
+		param.userId = $rootScope.user.id;
+		myService.httpPost('rateIndent.do', param, function(resp) {
 			location.reload();
 		});
 	};
 	
 	$scope.deleteIndent = function() {
+		$scope.checkAndToLogin();
 		var param = {};
 		param.id = $scope.indentInfo.id;
-		$scope.sendRequest('deleteIndent.do', param, function(resp) {
+		param.userId = $rootScope.user.id;
+		myService.httpPost('deleteIndent.do', param, function(resp) {
 			window.location = "index.html";
 		});
 	};
 	
-	$scope.sendRequest = function(url, param, succFun, checkLogin) {
-		checkLogin = !(checkLogin===false);
+	$scope.checkAndToLogin = function(){
 		$rootScope.checkLoginUser();
-		if (checkLogin && $rootScope.user===null) {
+		if ($rootScope.user===null) {
 			$scope.modalDialog = angular.copy($scope.modalDialogDefault);
 			$scope.modalDialog.title = "提示";
 			$scope.modalDialog.content = "您还未登录，请登录后继续";
@@ -103,25 +85,6 @@ indentapp.controller("indent-controller", function($scope, $rootScope, $http, $f
 				window.location = "login.html";
 			};
 			$scope.showModalDialog();
-		} else {
-			if (checkLogin) {
-				param.userId = $rootScope.user.id;
-			} 
-			$http({
-				method: 'POST',
-				url: url,
-				data: $.param(param),
-				headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
-			}).then(function(resp){
-				if(resp.data.code){
-					//后台业务失败
-					alert(resp.data.message);
-				}else{
-					succFun(resp);
-				}
-			}, function(err){
-				alert("网络异常");
-			});
 		}
 	};
 	

@@ -1,41 +1,12 @@
-var searchapp = angular.module("search-app", []);
-searchapp.controller("nav-controller", function($scope, $rootScope, $http) {
-	$rootScope.user = null;
-	$rootScope.checkLoginUser = function() {
-		var userString = sessionStorage.getItem("user");
-		if (userString !== null) {
-			$rootScope.user = JSON.parse(userString);
-			$scope.nickname = $scope.user.nickname;
-		}
-	};
-	
-	$scope.toPrivateCenter = function() {
-		location.href = "user.html";
-	};
-	
-	$scope.logout = function() {
-		sessionStorage.removeItem("user");
-		location.reload();
-	};
-		
-	$rootScope.checkLoginUser();
-	
-});
-
-searchapp.controller("search-controller", function($scope, $rootScope, $http) {
+myApp.controller("search-controller", function($scope, $rootScope, myService) {
 	$scope.currIndex = 0;
 	$scope.BooksEL = $("#books");
 	
 	$scope.loadSearchResult = function(){
 		var param = {};
-		param.keyword = getQueryString("keyword");
+		param.keyword = myService.getQueryString("keyword");
 		param.index = $scope.currIndex;
-		$http({
-			method: 'POST',
-			url: 'search.do',
-			data: $.param(param),
-			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
-		}).then(function(resp){
+		myService.httpPost('search.do', param, function (resp) {
 			if(resp.data.code){
 				$scope.modalDialog = {};
 				$scope.modalDialog.title = "提示";
@@ -56,28 +27,6 @@ searchapp.controller("search-controller", function($scope, $rootScope, $http) {
 				}
 				$scope.currIndex += bookInfos.length;
 			}
-		}, function(err){
-			alert("网络异常");
-		});
-	};
-	
-	//获取封面图片
-	$scope.loadBookImage = function(bookId, succFun) {
-		var param = {};
-		param.id = bookId;
-		$http({
-			method: 'POST',
-			url: 'loadBookImage.do',
-			data: $.param(param),
-			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
-		}).then(function(resp){
-			if(resp.data.code){
-				//alert(resp.data.message);
-			}else{
-				succFun(resp);
-			}
-		}, function(err){
-			alert("获取封面图片时网络异常");
 		});
 	};
 	
@@ -114,8 +63,12 @@ searchapp.controller("search-controller", function($scope, $rootScope, $http) {
 			'</div></div></div>'
 		); 
 		$scope.BooksEL.append(bookEL);
-		$scope.loadBookImage(bookInfo.id, function(resp) {
-			$('#'+bookInfo.id)[0].src = resp.data.data;
+		myService.loadCoverBase64(bookInfo.id, function(resp) {
+			if (resp.data.data===null) {
+				$('#'+bookInfo.id)[0].src = "img/commonLib/nocover.png";
+			} else {
+				$('#'+bookInfo.id)[0].src = resp.data.data;
+			}
 		});
 	};
 	

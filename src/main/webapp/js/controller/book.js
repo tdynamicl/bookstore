@@ -1,40 +1,11 @@
-var bookapp = angular.module("book-app", []);
-
-bookapp.controller("nav-controller", function($scope, $rootScope, $http) {
-	$rootScope.user = null;
-	$rootScope.checkLoginUser = function() {
-		var userString = sessionStorage.getItem("user");
-		if (userString !== null) {
-			$rootScope.user = JSON.parse(userString);
-			$scope.nickname = $scope.user.nickname;
-		}
-	};
-	
-	$scope.toPrivateCenter = function() {
-		location.href = "user.html";
-	};
-	
-	$scope.logout = function() {
-		sessionStorage.removeItem("user");
-		location.reload();
-	};
-		
-	$rootScope.checkLoginUser();
-	
-});
-
-bookapp.controller("book-controller", function($scope, $rootScope, $http) {
+myApp.controller("book-controller", function($scope, $rootScope, myService) {
 	$scope.modalDialog = {};
 	$scope.isFavorited = null;
 	$scope.modalDialogDefault = {title:"", content:"", hasCancel: false, hasConfirm: false};
 	$scope.loadBookInfo = function(){
-		var param = {'id': getQueryString("id")};
-		$http({
-			method: 'POST',
-			url: 'loadBookInfo.do',
-			data: $.param(param),
-			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
-		}).then(function(resp){
+		var param = {};
+		param.id = myService.getQueryString("id");
+		myService.httpPost('loadBookInfo.do', param, function(resp){
 			if(resp.data.code){
 				//获取失败
 				alert(resp.data.message);
@@ -42,55 +13,32 @@ bookapp.controller("book-controller", function($scope, $rootScope, $http) {
 			}else{
 				$scope.bookInfo = angular.copy(resp.data.data);
 				document.title = $scope.bookInfo.name;
-				$scope.loadBookImage(param.id);
-			}
-		}, function(err){
-			alert("网络异常");
-			//window.location="index.html";
+				//获取封面图片
+				myService.loadCoverBase64(param.id, function(resp) {
+					if (resp.data.data===null) {
+						$('#coverEL')[0].src = "img/commonLib/nocover.png";
+					} else{
+						$('#coverEL')[0].src = resp.data.data;
+					}
+				});
+			}		
 		});
-
 	};
 	
-	//获取封面图片
-	$scope.loadBookImage = function(bookId) {
-		var param = {};
-		param.id = bookId;
-		$http({
-			method: 'POST',
-			url: 'loadBookImage.do',
-			data: $.param(param),
-			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
-		}).then(function(resp){
-			if(resp.data.code){
-				alert(resp.data.message);
-			}else{
-				$('#coverEL')[0].src = resp.data.data;
-			}
-		}, function(err){
-			alert("获取封面图片时网络异常");
-		});
-	};
-
 	//检查是否已经收藏
 	$scope.checkFavorite = function(bookId) {
 		if ($rootScope.user===null) {
 			return;
 		}
-		var param = {'bookId': getQueryString("id"), 'userId': $rootScope.user.id};
-		param.id = bookId;
-		$http({
-			method: 'POST',
-			url: 'checkFavorite.do',
-			data: $.param(param),
-			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
-		}).then(function(resp){
+		var param = {};
+		param.bookId = myService.getQueryString("id");
+		param.userId = $rootScope.user.id;
+		myService.httpPost('checkFavorite.do', param, function(resp){
 			if(resp.data.code){
 				alert(resp.data.message);
 			}else{
 				$scope.isFavorited = resp.data.data;
 			}
-		}, function(err){
-			alert("获取封面图片时网络异常");
 		});
 	};
 	
@@ -99,42 +47,32 @@ bookapp.controller("book-controller", function($scope, $rootScope, $http) {
 		if ($rootScope.user===null) {
 			return;
 		}
-		var param = {'bookId': getQueryString("id"), 'userId': $rootScope.user.id};
-		$http({
-			method: 'POST',
-			url: 'addFavoriteBook.do',
-			data: $.param(param),
-			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
-		}).then(function(resp){
+		var param = {};
+		param.bookId = myService.getQueryString("id");
+		param.userId = $rootScope.user.id;
+		myService.httpPost('addFavoriteBook.do', param, function(resp){
 			if(resp.data.code){
 				alert(resp.data.message);
 			}else{
 				$scope.isFavorited = true;
 			}
-		}, function(err){
-			alert("收藏书籍时网络异常");
 		});
 	};
 	
 	//取消收藏
 	$scope.unFavorite = function() {
-		if ($rootScope.user===null) {
+				if ($rootScope.user===null) {
 			return;
 		}
-		var param = {'bookId': getQueryString("id"), 'userId': $rootScope.user.id};
-		$http({
-			method: 'POST',
-			url: 'delFavoriteBook.do',
-			data: $.param(param),
-			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
-		}).then(function(resp){
+		var param = {};
+		param.bookId = myService.getQueryString("id");
+		param.userId = $rootScope.user.id;
+		myService.httpPost('delFavoriteBook.do', param, function(resp){
 			if(resp.data.code){
 				alert(resp.data.message);
 			}else{
 				$scope.isFavorited = false;
 			}
-		}, function(err){
-			alert("取消收藏时网络异常");
 		});
 	};
 	

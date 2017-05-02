@@ -1,42 +1,13 @@
-var categoryapp = angular.module("category-app", []);
-
-categoryapp.controller("nav-controller", function($scope, $rootScope, $http) {
-	$rootScope.user = null;
-	$rootScope.checkLoginUser = function() {
-		var userString = sessionStorage.getItem("user");
-		if (userString !== null) {
-			$rootScope.user = JSON.parse(userString);
-			$scope.nickname = $scope.user.nickname;
-		}
-	};
-	
-	$scope.toPrivateCenter = function() {
-		location.href = "user.html";
-	};
-	
-	$scope.logout = function() {
-		sessionStorage.removeItem("user");
-		location.reload();
-	};
-		
-	$rootScope.checkLoginUser();
-
-	
-});
-
-categoryapp.controller("books-controller", function($scope, $rootScope, $http) {
-	document.title = getQueryString("word");
+myApp.controller("category-controller", function($scope, $rootScope, myService) {
+	document.title = myService.getQueryString("word");
 	$scope.currIndex = 0;
 	$scope.BooksEL = $("#books");
 	
 	$scope.loadBookInfo = function(){
-		var param = {"word": getQueryString("word"), "index": $scope.currIndex};
-		$http({
-			method: 'POST',
-			url: 'loadBookInfosByCategory.do',
-			data: $.param(param),
-			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
-		}).then(function(resp){
+		var param = {};
+		param.word = myService.getQueryString("word");
+		param.index = $scope.currIndex;
+		myService.httpPost('loadBookInfosByCategory.do', param, function(resp){
 			if(resp.data.code){
 				//获取失败
 				$scope.modalDialog = {};
@@ -58,31 +29,9 @@ categoryapp.controller("books-controller", function($scope, $rootScope, $http) {
 				}
 				$scope.currIndex += bookInfos.length;
 			}
-		}, function(err){
-			alert("网络异常");
 		});
 	};
 	
-	//获取封面图片
-	$scope.loadBookImage = function(bookId, succFun) {
-		var param = {};
-		param.id = bookId;
-		$http({
-			method: 'POST',
-			url: 'loadBookImage.do',
-			data: $.param(param),
-			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
-		}).then(function(resp){
-			if(resp.data.code){
-				alert(resp.data.message);
-			}else{
-				succFun(resp);
-			}
-		}, function(err){
-			alert("获取封面图片时网络异常");
-		});
-	};
-
 	$scope.showModalDialog = function(){
 		$scope.modalResult = {confirmed: false, canceled: false};
 		$('#modalEL').modal({show: true});
@@ -115,9 +64,16 @@ categoryapp.controller("books-controller", function($scope, $rootScope, $http) {
 			'		<span class="rankLevel">' + bookInfo.rankLevel + '</span>'+
 			'</div></div></div>'
 		); 
+		/**
+		 * 获取封面
+		 */
 		$scope.BooksEL.append(bookEL);
-		$scope.loadBookImage(bookInfo.id, function(resp) {
-			$('#'+bookInfo.id)[0].src = resp.data.data;
+		myService.loadCoverBase64(bookInfo.id, function(resp) {
+			if (resp.data.data===null) {
+				$('#'+bookInfo.id)[0].src = "img/commonLib/nocover.png";
+			} else{
+				$('#'+bookInfo.id)[0].src = resp.data.data;
+			}
 		});
 	};
 	

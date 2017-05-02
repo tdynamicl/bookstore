@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="login-app">
+<html ng-app="myApp">
 <head>
 <meta charset="utf-8">
 <title>登录|xxx</title>
@@ -33,9 +33,9 @@
 			</ul>
 		</div>
 	</nav>
-	<div id="wrapper">
-		<form ng-controller="login-controller" name="loginForm" 
-				class="form-signin" role="form" novalidate ng-cloak>
+	<div id="wrapper" ng-controller="login-controller" ng-cloak>
+		<form name="loginForm" 
+				class="form-signin" role="form" novalidate>
 			<h2 class="form-signin-header">登录</h2>
 				<span class="errortip">{{errorTip}}&nbsp;<br></span> 
 			<span class="errortip">
@@ -66,5 +66,7 @@
 		</from>
 	</div>
 </body>
+<script src="js/common/app.js" ></script>
+<script src="js/controller/nav.js" ></script>
 <script src='js/controller/login.js'></script>
 </html>

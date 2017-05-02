@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html ng-app="book-app">
+<html ng-app="myApp">
 <head>
 <meta charset="utf-8">
 <title></title>
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/angular-animate.min.js"></script>
+<script src="js/lib/angular-md5.min.js"></script>
 <script src="js/lib/jquery-3.1.1.min.js"></script>
 <script src="js/lib/bootstrap.min.js"></script>
-<script src="js/common.js"></script>
 <link rel="stylesheet" href="css/lib/bootstrap.min.css" />
 <link rel="stylesheet" href="css/lib/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="css/common.css" />
@@ -41,14 +41,14 @@
 			</ul>
 		</div>
 	</nav>
-	<div id="wrapper">
+	<div id="wrapper" ng-controller="book-controller" ng-cloak>
 		<header>
 			<form>
 				<input>
 				<button>搜索</button>
 			</form>
 		</header>
-		<div id="main" ng-controller="book-controller" ng-cloak>
+		<div id="main">
 			<img id="coverEL" />
 			<article>
 				<header><span class="bookName">{{bookInfo.name}}</span></header>
@@ -93,5 +93,7 @@
 	
 
 </body>
+<script src="js/common/app.js"></script>
+<script src="js/controller/nav.js"></script>
 <script src="js/controller/book.js"></script>
 </html>

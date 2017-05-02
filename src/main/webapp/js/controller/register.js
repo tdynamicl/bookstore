@@ -1,25 +1,18 @@
-
-var registerapp = angular.module('register-app', ['angular-md5']);
-registerapp.controller('register-controller', function($scope, $http, md5){
+myApp.controller('register-controller', function($scope, md5, myService){
 	$scope.user={};
 	$scope.regResult = {code: -1, message:''};
 	$scope.register = function(){
-		$scope.encuser = angular.copy($scope.user);
-		$scope.encuser.account = md5.createHash($scope.encuser.account);
-		$scope.encuser.password = md5.createHash(md5.createHash($scope.encuser.password));
-		$http({
-			method: 'POST',
-			url: 'register.do',
-			data: $.param($scope.encuser),
-			headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}
-		}).then(function(resp){
+		var param = {};
+		param = angular.copy($scope.user);
+		param.account = md5.createHash(param.account);
+		param.password = md5.createHash(md5.createHash(param.password));
+		myService.httpPost('register.do', param, function(resp){
 			$scope.registertip = resp.data.message;
 			$scope.regResult = angular.copy(resp.data);
 			$('#regResultModal').modal({show:true});
-		}, function(err){
-			alert("网络异常");
 		});
-	};		
+	};
+	
 	$('#regResultModal').on('hidden.bs.modal', function () {
 		if($scope.regResult.code === 0) {
 			window.location.href = "login.html";
