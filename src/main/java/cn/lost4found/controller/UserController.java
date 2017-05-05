@@ -103,9 +103,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="rateIndent.do", method=RequestMethod.POST)
-	public ModelAndView rateIndent(@RequestParam("id")String id, @RequestParam("userId")String userId) throws Exception{
+	public ModelAndView rateIndent(@RequestParam("id")String id, @RequestParam("userId")String userId, @RequestParam("content")String content, @RequestParam("level")int level) throws Exception{
 		JsonRespose jsonRespose = new JsonRespose();
-		userServiceImpl.rateIndent(id, userId, "12321", 2);
+		userServiceImpl.rateIndent(id, userId, content, level);
 		return jsonRespose.toModelAndView();
 	}
 	

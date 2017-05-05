@@ -91,11 +91,14 @@ nav li {
 }
 #wrapper > header {
 	height: 80px;
-
 }
 
-.logo {
-	margin-top: 5px;
+.logo > img {
+	margin-top: 7px;
+}
+
+.modal-dialog {
+	width: 400px;
 }
 
 #wrapper > header > form > input {

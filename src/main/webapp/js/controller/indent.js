@@ -1,8 +1,24 @@
+var currStar = 3;
+var onStar = function(index) {
+	if (index===currStar) {
+		return;
+	}
+	for(var i = 1; i <= 5; i++){
+		var starEL = $("span[star='" + i + "']");
+		if (i <= index) {
+			starEL.removeClass("emptyStar");
+			starEL.addClass("fullStar");
+		} else {
+			starEL.removeClass("fullStar");
+			starEL.addClass("emptyStar");
+		}
+	}
+	currStar = index;
+};
+
 myApp.controller("indent-controller", function($scope, $rootScope, $filter, myService) {
 	$scope.bookInfo = null;
 	$scope.indentInfo = null;
-	$scope.modalDialog = {};
-	$scope.modalDialogDefault = {title:"", content:"", hasCancel: false, hasConfirm: false};
 	$scope.loadIndentInfo = function() {
 		var param = {};
 		param.id = myService.getQueryString("id");
@@ -58,6 +74,8 @@ myApp.controller("indent-controller", function($scope, $rootScope, $filter, mySe
 		var param = {};
 		param.id = $scope.indentInfo.id;
 		param.userId = $rootScope.user.id;
+		param.level = currStar;
+		param.content = $scope.commentContent;
 		myService.httpPost('rateIndent.do', param, function(resp) {
 			location.reload();
 		});
@@ -76,37 +94,12 @@ myApp.controller("indent-controller", function($scope, $rootScope, $filter, mySe
 	$scope.checkAndToLogin = function(){
 		$rootScope.checkLoginUser();
 		if ($rootScope.user===null) {
-			$scope.modalDialog = angular.copy($scope.modalDialogDefault);
-			$scope.modalDialog.title = "提示";
-			$scope.modalDialog.content = "您还未登录，请登录后继续";
-			$scope.modalDialog.hasConfirm = true;
-			$scope.modalDialog.confirmFun = function() {
+			myService.showModal($scope, '找不到登录信息', '您可能还还未登录，请登录后继续', function() {
 				sessionStorage.setItem("previousURL", document.URL);
 				window.location = "login.html";
-			};
-			$scope.showModalDialog();
+			});
 		}
 	};
-	
-	$scope.showModalDialog = function(){
-		$scope.modalResult = {confirmed: false, canceled: false};
-		$('#modalEL').modal({show: true});
-	};
-	
-	$scope.confirm = function() {
-		$scope.modalResult.confirmed = true;
-	};
-	
-	$scope.cancel = function() {
-		$scope.modalResult.canceled = true; 
-	};
-	
-	$('#modalEL').on('hidden.bs.modal', function () {
-		if ($scope.modalResult.confirmed && $scope.modalDialog.confirmFun!==undefined) {
-			$scope.modalDialog.confirmFun();
-		}
-		$scope.modalDialog = null;
-	});
 	
 	$scope.loadIndentInfo();
 	

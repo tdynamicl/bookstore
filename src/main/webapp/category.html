@@ -2,7 +2,7 @@
 <html ng-app="myApp">
 <head>
 <meta charset="utf-8">
-<title></title>
+<title>分类查看</title>
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/angular-animate.min.js"></script>
 <script src="js/lib/angular-md5.min.js"></script>
@@ -48,9 +48,10 @@
 	
 	<div id="wrapper" ng-controller="category-controller" ng-cloak>
 		<header>
-			<form>
-				<input>
-				<button>搜索</button>
+			<a class="logo" href="index.html" ><img src="img/commonLib/logo.png"/></a>
+			<form name="searchForm" action="search.html" method="GET" novalidate>
+				<input name="keyword" placeholder="输入关键字搜索" >
+				<button type="submit">搜索</button>
 			</form>
 		</header>
 		<div >

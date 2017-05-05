@@ -2,7 +2,7 @@
 <html ng-app="myApp">
 <head>
 <meta charset="utf-8">
-<title></title>
+<title>书籍详情</title>
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/angular-animate.min.js"></script>
 <script src="js/lib/angular-md5.min.js"></script>
@@ -43,9 +43,10 @@
 	</nav>
 	<div id="wrapper" ng-controller="book-controller" ng-cloak>
 		<header>
-			<form>
-				<input>
-				<button>搜索</button>
+			<a class="logo" href="index.html" ><img src="img/commonLib/logo.png"/></a>
+			<form name="searchForm" action="search.html" method="GET" novalidate>
+				<input name="keyword" placeholder="输入关键字搜索" >
+				<button type="submit">搜索</button>
 			</form>
 		</header>
 		<div id="main">
@@ -74,19 +75,20 @@
 				</div>
 			</article>
 			<!-- 模态对话框 -->
-			<div class="modal fade" id="modalEL" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			    <div class="modal-dialog">
-			        <div class="modal-content">
+			<div id="modalEL" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    	<div class="modal-dialog">
+		       		<div class="modal-content">
 			            <div class="modal-header">
-			                <h4 class="modal-title">{{modalDialog.title}}</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			                <h4 class="modal-title">{{modal.title}}</h4>
 			            </div>
-			            <div class="modal-body">{{modalDialog.content}}</div>
+			            <div class="modal-body">{{modal.content}}</div>
 			            <div class="modal-footer">
-			                <button ng-if="modalDialog.hasCancel" ng-click="cancel()" class="btn btn-default">取消</button>
-			                <button ng-if="modalDialog.hasConfirm" ng-click="confirm()" class="btn btn-primary" data-dismiss="modal">确定</button>
+			                <button class="btn btn-default" data-dismiss="modal">取消</button>
+			                <button ng-click="modal.confirm()" class="btn btn-primary" data-dismiss="modal">确定</button>
 			            </div>
-			        </div>
-			    </div>
+		       		</div>
+		    	</div>
 			</div>
 		</div>
 	</div>

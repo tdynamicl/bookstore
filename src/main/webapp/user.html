@@ -2,7 +2,7 @@
 <html ng-app="myApp">
 <head>
 <meta charset="utf-8">
-<title>个人中心|xxx</title>
+<title>个人中心</title>
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/angular-animate.min.js"></script>
 <script src="js/lib/angular-md5.min.js"></script>
@@ -33,7 +33,7 @@
 					<a class="dropdown-toggle" data-toggle="dropdown">{{nickname}}
 						<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a>个人中心</a></li>
+						<li><a ng-click="toPrivateCenter()">个人中心</a></li>
 						<li class="divider"></li>
 						<li><a ng-click="logout()">退出登录</a></li>
 					</ul>
@@ -43,9 +43,10 @@
 	</nav>
 	<div id="wrapper" ng-controller="user-controller" ng-cloak>
 		<header>
-			<form>
-				<input>
-				<button>搜索</button>
+			<a class="logo" href="index.html" ><img src="img/commonLib/logo.png"/></a>
+			<form name="searchForm" action="search.html" method="GET" novalidate>
+				<input name="keyword" placeholder="输入关键字搜索" >
+				<button type="submit">搜索</button>
 			</form>
 		</header>
 		<div class="panel panel-default">

@@ -1,13 +1,10 @@
-/**
- * 定义app
- */
+//定义app
 var myApp = angular.module('myApp', ['angular-md5']);
 
+//放一些工具方法
 myApp.service('myService', function($http){
 	
-	/**
-	 * post 一个请求，给出成功的回调
-	 */
+	 //post一个请求，给出成功的回调
 	this.httpPost = function(url, param, succFun){
 		$http({
 			method: 'POST',
@@ -21,9 +18,7 @@ myApp.service('myService', function($http){
 		});
 	};
 	
-	/**
-	 * 从URL获取参数
-	 */
+	//从URL获取参数
 	this.getQueryString = function(name) { 
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
 		var r = window.location.search.substr(1).match(reg); 
@@ -32,13 +27,34 @@ myApp.service('myService', function($http){
 		return null; 
 	};
 	
-	/**
-	 * 加载图片
-	 */
+	//加载图片的base64编码
 	this.loadCoverBase64 = function (bookId, callback) {
 		this.httpPost('loadBookImage.do', {id: bookId}, function(resp){
 			callback(resp);
 		})
 	};
 	
+	//显示模态框
+	this.showModal = function($scope, title, content, confirmFun) {
+		$scope.modal = {};
+		var result = {confirmed: false, canceled: false};
+		$('#modalEL').on('hidden.bs.modal', function () {
+			if (result.confirmed && confirmFun!==undefined) {
+				confirmFun();
+			}
+			$scope.modal = null;
+		});
+		$('#modalEL').on('show.bs.modal', function(){
+			var $this = $(this);
+			var $modal_dialog = $this.find('.modal-dialog');
+			$this.css('display', 'block');
+			$modal_dialog.css({'margin-top': Math.max(0, ($(window).height() - $modal_dialog.height()) / 2) });
+		});
+		$scope.modal.confirm = function() {
+			result.confirmed = true;
+		};
+		$scope.modal.title = title;
+		$scope.modal.content = content;
+		$('#modalEL').modal({show: true});
+	};
 });

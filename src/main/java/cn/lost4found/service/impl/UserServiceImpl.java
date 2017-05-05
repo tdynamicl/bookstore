@@ -195,8 +195,11 @@ public class UserServiceImpl implements UserService {
 		IndentEntity indentEntity = indentDao.select("id", id);
 		checkIndentOwner(indentEntity, userId);
 		if (indentEntity.getStatus() != 4) {
-			throw new MyException("该订单不处于“已收货，未评价”状态");
+			throw new MyException("该订单不处于“已收货、未评价”状态");
 		}
+		indentEntity.setCommentTime(Util.nowDate());
+		indentEntity.setCommentContent(content);
+		indentEntity.setCommentLevel(level);
 		indentEntity.setStatus(5);
 		indentDao.update(indentEntity);
 	}
@@ -290,6 +293,4 @@ public class UserServiceImpl implements UserService {
 		return dtos;
 	}
 
-
-	
 }

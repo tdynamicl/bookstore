@@ -1,7 +1,5 @@
 myApp.controller("book-controller", function($scope, $rootScope, myService) {
-	$scope.modalDialog = {};
 	$scope.isFavorited = null;
-	$scope.modalDialogDefault = {title:"", content:"", hasCancel: false, hasConfirm: false};
 	$scope.loadBookInfo = function(){
 		var param = {};
 		param.id = myService.getQueryString("id");
@@ -61,18 +59,20 @@ myApp.controller("book-controller", function($scope, $rootScope, myService) {
 	
 	//取消收藏
 	$scope.unFavorite = function() {
-				if ($rootScope.user===null) {
+		if ($rootScope.user===null) {
 			return;
 		}
-		var param = {};
-		param.bookId = myService.getQueryString("id");
-		param.userId = $rootScope.user.id;
-		myService.httpPost('delFavoriteBook.do', param, function(resp){
-			if(resp.data.code){
-				alert(resp.data.message);
-			}else{
-				$scope.isFavorited = false;
-			}
+		myService.showModal($scope, '提示', '取消收藏此书？', function() {
+			var param = {};
+			param.bookId = myService.getQueryString("id");
+			param.userId = $rootScope.user.id;
+			myService.httpPost('delFavoriteBook.do', param, function(resp){
+				if(resp.data.code){
+					alert(resp.data.message);
+				}else{
+					$scope.isFavorited = false;
+				}
+			});
 		});
 	};
 	
@@ -80,40 +80,14 @@ myApp.controller("book-controller", function($scope, $rootScope, myService) {
 	$scope.purchase = function(){
 		$rootScope.checkLoginUser();
 		if ($rootScope.user == null) {
-			$scope.modalDialog = angular.copy($scope.modalDialogDefault);
-			$scope.modalDialog.title = "提示";
-			$scope.modalDialog.content = "您还未登录，请登录后继续";
-			$scope.modalDialog.hasConfirm = true;
-			$scope.modalDialog.confirmFun = function() {
+			myService.showModal($scope, '提示', '您还未登录，请登录后继续。', function() {
 				sessionStorage.setItem("previousURL", document.URL);
 				window.location = "login.html";
-			};
-			$scope.showModalDialog();
+			});
 		} else {
 			window.location = "deal.html?bid=" + $scope.bookInfo.id;
 		}
 	};
-	
-	//------------------------------------
-	$scope.showModalDialog = function(){
-		$scope.modalResult = {confirmed: false, canceled: false};
-		$('#modalEL').modal({show: true});
-	};
-	
-	$scope.confirm = function() {
-		$scope.modalResult.confirmed = true;
-	};
-	
-	$scope.cancel = function() {
-		$scope.modalResult.canceled = true; 
-	};
-	
-	$('#modalEL').on('hidden.bs.modal', function () {
-		if ($scope.modalResult.confirmed && $scope.modalDialog.confirmFun!==undefined) {
-			$scope.modalDialog.confirmFun();
-		}
-		$scope.modalDialog = null;
-	});
 	
 	$scope.loadBookInfo();
 	$scope.checkFavorite();

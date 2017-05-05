@@ -2,7 +2,7 @@
 <html ng-app="myApp">
 <head>
 <meta charset="utf-8">
-<title>登录|xxx</title>
+<title>登录</title>
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/angular-animate.min.js"></script>
 <script src="js/lib/angular-md5.min.js"></script>
@@ -34,6 +34,13 @@
 		</div>
 	</nav>
 	<div id="wrapper" ng-controller="login-controller" ng-cloak>
+		<header>
+			<a class="logo" href="index.html" ><img src="img/commonLib/logo.png"/></a>
+			<form name="searchForm" action="search.html" method="GET" novalidate>
+				<input name="keyword" placeholder="输入关键字搜索" >
+				<button type="submit">搜索</button>
+			</form>
+		</header>
 		<form name="loginForm" 
 				class="form-signin" role="form" novalidate>
 			<h2 class="form-signin-header">登录</h2>
