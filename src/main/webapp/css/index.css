@@ -51,71 +51,78 @@
 	position: absolute;
 	left: 220px;
 	top: 80px;
-	width: 760px;
+	width: 804px;
 	height: 300px;
-	background-color: #4CAE4C;
 }
 #img-exhibition img{
-	width: 760px;
+	border: none;
+	width: 804px;
 	height: 300px;
 }
-#newBooks {
+#img-exhibition .carousel-control {
+	line-height: 300px;
+}
+#newBooksEL {
 	position: absolute;
 	left: 220px;
 	top: 400px;
-	width: 760px;
+	right: 0;
 	height: 219px;
 }
-#newBooks > div {
-	padding: 10px 25px 0 25px;
+#newBooksEL > h3{
+/* 	padding-bottom: 3px;
+	border-bottom: 1px solid #C0C0C0; */
+}
+.newBookEL:first-child {
+	margin-left: 3px;
+}
+.newBookEL {
+	position: relative;
+	padding: 10px 0px 0 0px;
+	margin: 0 0 0 23px;
 	float: left;
-	width: 190px;
+	width: 140px;
 	height: 191px;
 }
-#newBooks > div > img{
+.newBookEL a{
+	color: black;
+}
+.newBookEL img{
 	cursor: pointer;
 	width: 140px;
 	height: 150px;
 }
-#newBooks > div > span {
+.newBookEL span:first-child {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: block;
 	line-height: 24px;
+	height: 24px;
 	cursor: pointer;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
-#newBooks .price {
+.newBookEL .price {
+	position: absolute;
+	padding: 0 2px 0 2px;
 	cursor: default;
-	float: right;
+	bottom: 32px;
+	right: 1px;
+	height: 25px;
 	color:#D9534F;
+	border-top-left-radius: 6px;
+	background-color: rgba(255,255,255,0.7);
 	font-family:"微软雅黑";
 	font-size: 120%;
 }
-#newBooks .price::before {
+.newBookEL .price::before {
 	content: "￥";
 }
-#newBooks h3 {
+.newBookEL h3 {
 	font-family: "微软雅黑";
 	border-bottom: 1px solid black;
 }
-aside {
-	position: absolute;
-	width: 200px;
-	height: 539px;
-	top: 80px;
-	left: 1000px;
-}
-aside h3 {
-	font-family: "微软雅黑";
-	margin-bottom: 17px;
-}
-aside > div {
-	border: 2px solid gray;
-	border-radius: 6px;
-	padding: 20px;
-	margin-bottom: 20px;
-}
-aside ol {
-	margin: 0;
-	padding-left: 20px;
-}
-aside li {
-	padding-top: 10px;
-}
+

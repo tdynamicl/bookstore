@@ -6,24 +6,6 @@
 	resize: none;
 }
 
-.ratyStar {
-	cursor: pointer;
-	display: inline-block;
-	width: 25px;
-	height: 25px;
-	background-image: url(../img/commonLib/stars.png);
-	background-repeat: no-repeat;
-	background-position: -66px 0;
-}
-
-.fullStar {
-	background-position: -2px 0;
-}
-
-.halfStar {
-	background-position: -34px 0;
-}
-
 .emptyStar {
 	background-position: -66px 0;
 }

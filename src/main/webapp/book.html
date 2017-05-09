@@ -69,26 +69,36 @@
 					<span ng-show="user!==null">
 						<button ng-show="isFavorited===false" ng-click="favorite()" class="bttn bttnFavorite"><span class="glyphicon glyphicon-star-empty"></span>收藏</button>
 						<button ng-show="isFavorited===true" ng-click="unFavorite()" class="bttn bttnUnFavorite"><span class="glyphicon glyphicon-star"></span>已收藏</button>
-					</span>
-					<button class="bttn bttnAddtocart"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;加入购物车</button>
-					<button ng-click="purchase()" class="bttn bttnBuynow">立即购买</button>
+					</span><button ng-click="addToCart()"
+						class="bttn bttnAddtoCart"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;加入购物车</button><button
+						ng-click="purchase()" class="bttn bttnBuynow">立即购买</button>
 				</div>
 			</article>
-			<!-- 模态对话框 -->
-			<div id="modalEL" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		    	<div class="modal-dialog">
-		       		<div class="modal-content">
-			            <div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			                <h4 class="modal-title">{{modal.title}}</h4>
-			            </div>
-			            <div class="modal-body">{{modal.content}}</div>
-			            <div class="modal-footer">
-			                <button class="btn btn-default" data-dismiss="modal">取消</button>
-			                <button ng-click="modal.confirm()" class="btn btn-primary" data-dismiss="modal">确定</button>
-			            </div>
-		       		</div>
-		    	</div>
+		</div>
+		<hr>
+		<div ng-controller="comment-controller" class="panel panel-default">
+	    	<div class="panel-heading">
+	        	<h3 class="panel-title com-text-center">书籍评价（{{bookInfo.rankTotal}}）</h3>
+	   		</div>
+	    	<div id="commentsEL" class="panel-body">
+				<!-- js填充  -->
+	   		</div>
+		</div>
+		
+		<!-- 模态对话框 -->
+		<div id="modalEL" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+		   		<div class="modal-content">
+			        <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			            <h4 class="modal-title">{{modal.title}}</h4>
+			        </div>
+			        <div class="modal-body">{{modal.content}}</div>
+			        <div class="modal-footer">
+			            <button class="btn btn-default" data-dismiss="modal">取消</button>
+			            <button ng-click="modal.confirm()" class="btn btn-primary" data-dismiss="modal">确定</button>
+			        </div>
+		   		</div>
 			</div>
 		</div>
 	</div>
@@ -98,4 +108,5 @@
 <script src="js/common/app.js"></script>
 <script src="js/controller/nav.js"></script>
 <script src="js/controller/book.js"></script>
+<script src="js/controller/comment.js"></script>
 </html>

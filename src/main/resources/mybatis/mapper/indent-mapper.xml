@@ -2,7 +2,6 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.lost4found.dao.IndentDao">
-	
 	<resultMap type="cn.lost4found.entity.IndentEntity" id="indentEntity"
 		autoMapping="true">
 		<id property="id" column="id" />
@@ -15,7 +14,12 @@
 		<result property="commentTime" column="comment_time" />
 		<result property="generateTime" column="generate_time" />
 	</resultMap>
-
+	<resultMap type="cn.lost4found.dto.CommentDto" id="commentDto">
+		<result property="userId" column="user_id" />
+		<result property="content" column="comment_content" />
+		<result property="time" column="comment_time" />
+		<result property="level" column="comment_level" />
+	</resultMap>
 	<select id="select" resultMap="indentEntity">
 		select * from info_indent where
 		${uf}=#{value}
@@ -40,7 +44,12 @@
 		select * from info_indent where
 		user_id=#{userId} and status in (4, 5)
 	</select>
-
+	
+	<select id="queryCommentsLimitByBookId" resultMap="commentDto">
+		select * from info_indent where
+		book_id=#{arg0} and status=5 order by comment_time desc limit #{arg1}, 10
+	</select>
+	
 	<insert id="insert">
 		insert into info_indent
 			(id, book_id, user_id, receiver_name, receiver_tel, address, 

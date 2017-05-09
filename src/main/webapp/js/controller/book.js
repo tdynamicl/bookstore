@@ -64,8 +64,8 @@ myApp.controller("book-controller", function($scope, $rootScope, myService) {
 		}
 		myService.showModal($scope, '提示', '取消收藏此书？', function() {
 			var param = {};
-			param.bookId = myService.getQueryString("id");
 			param.userId = $rootScope.user.id;
+			param.bookId = myService.getQueryString("id");
 			myService.httpPost('delFavoriteBook.do', param, function(resp){
 				if(resp.data.code){
 					alert(resp.data.message);
@@ -76,8 +76,21 @@ myApp.controller("book-controller", function($scope, $rootScope, myService) {
 		});
 	};
 	
+	$scope.addToCart = function() {
+		var param = {};
+		param.userId = $rootScope.user.id;
+		param.bookId = myService.getQueryString("id");
+		myService.httpPost('addToCart.do', param, function(resp){
+			if(resp.data.code){
+				alert(resp.data.message);
+			}else{
+				myService.showModal($scope, '提示', resp.data.message);
+			}
+		});
+	};
+	
 	// 购买书籍（按钮事件）
-	$scope.purchase = function(){
+	$scope.purchase = function() {
 		$rootScope.checkLoginUser();
 		if ($rootScope.user == null) {
 			myService.showModal($scope, '提示', '您还未登录，请登录后继续。', function() {

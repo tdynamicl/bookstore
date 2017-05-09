@@ -1,6 +1,13 @@
 myApp.controller("user-controller", function($scope, $rootScope, $filter, myService) {
 	$scope.indentStatus = ['已删除', '待支付', '待发货', '已发货', '待评价', '已完成'];
 	
+	$scope.loadProfile = function() {
+		myService.loadUserIconBase64($rootScope.user.id, function(resp) {
+			$('#profileEL .icon')[0].src = resp.data.data;
+		});
+		
+	};
+	
 	$scope.loadAllIndentForUser = function() {
 		$scope.loadUnfinishedIndent();
 		$scope.loadFinishedIndent();
@@ -51,10 +58,14 @@ myApp.controller("user-controller", function($scope, $rootScope, $filter, myServ
 		}
 	};
 	
-	if ($rootScope.user === null) {
-		location.href = "index.html";
-	}
 	
-	$scope.loadAllIndentForUser();
-	
+	$scope.entry = function() {
+		if ($rootScope.user === null) {
+			location.href = "index.html";
+		}
+		$scope.loadAllIndentForUser();
+		$scope.loadProfile();
+	};
+	$scope.entry();
+
 });

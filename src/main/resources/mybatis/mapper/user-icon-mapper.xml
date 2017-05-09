@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lost4found.dao.UserIconDao">
+	
+	<select id="selectUserIconByUserId" resultType="java.lang.String">
+		select user_icon from info_user_icon where
+		user_id=#{userId}
+	</select>
+	
+	<insert id="insert">
+
+	</insert>
+	
+	<update id="update">
+
+	</update>
+</mapper>

@@ -5,16 +5,17 @@ body, h1, h2, h3, h4, h5, h6 {
 h1, h2, h3, h4, h5, h6 {
 	font-family: "微软雅黑";
 }
+img {
+	border: 1px solid #C0C0C0;
+}
 .com-text-center {
 	text-align: center;
 }
-.bookDiscription {
-	padding: 10px 7px 10px 7px;
-	margin: 0 0 20px 0;
-	border: 1px solid #C0C0C0;
+.com-text-right {
+	text-align: right;
 }
-.bookDiscription > span {
-	margin-right: 20px;
+.cursorPointer {
+	cursor: pointer;
 }
 .bookName::before {
 	content: "《";
@@ -35,7 +36,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: #666666;
 }
 .rankTotal::after {
-	content: "条评论";
+	content: "条评价";
 	color: #666666;
 }
 .rankLevel::before {
@@ -52,6 +53,9 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: 70%;
 	content: "￥";
 }
+.curserPointer {
+	cursor: pointer;
+}
 .bttn {
 	font-family: "微软雅黑";
 	font-size: 120%;
@@ -62,7 +66,7 @@ h1, h2, h3, h4, h5, h6 {
 .bttnBuynow {
 	background-color: orange;
 }
-.bttnAddtocart {
+.bttnAddtoCart {
 	background-color: white;
 }
 
@@ -86,7 +90,7 @@ nav li {
 }
 #wrapper {
 	position: relative;
-	width: 1200px;
+	width: 1024px;
 	margin: 0 auto;
 }
 #wrapper > header {
@@ -94,6 +98,7 @@ nav li {
 }
 
 .logo > img {
+	border: none;
 	margin-top: 7px;
 }
 
@@ -112,7 +117,7 @@ nav li {
 	height: 40px;
 	width: 300px;
 	top: 20px;
-	left: 650px;
+	left: 640px;
 }
 #wrapper > header > form > button {
 	position: absolute;
@@ -126,7 +131,7 @@ nav li {
 	height: 40px;
 	width: 80px;
 	top: 20px;
-	left: 950px;
+	left: 940px;
 }
 .load-more {
 	background-color: #efefef;
@@ -134,4 +139,27 @@ nav li {
 	font-size: 120%;
 	padding: 5px;
 	cursor: pointer;
+}
+
+.ratyStar {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background-image: url(../img/commonLib/stars.png);
+	background-repeat: no-repeat;
+	background-position: -66px 0;
+}
+
+.fullStar {
+	background-position: -2px 0;
+}
+
+.halfStar {
+	background-position: -34px 0;
+}
+.right-bottom {
+	display: inline-block;
+	position: absolute;
+	right: 0;
+	bottom: 0;
 }

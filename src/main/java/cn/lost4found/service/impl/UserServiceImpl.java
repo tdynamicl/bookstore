@@ -4,17 +4,23 @@ import java.util.LinkedList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.lost4found.dao.BookDao;
+import cn.lost4found.dao.BookExhibitionImageDao;
 import cn.lost4found.dao.BookImageDao;
+import cn.lost4found.dao.CartDao;
 import cn.lost4found.dao.FavoriteDao;
 import cn.lost4found.dao.IndentDao;
 import cn.lost4found.dao.KeywordDao;
 import cn.lost4found.dao.RefBookKeywordDao;
 import cn.lost4found.dao.UserDao;
+import cn.lost4found.dao.UserIconDao;
 import cn.lost4found.dto.BookInfoDto;
+import cn.lost4found.dto.CommentDto;
 import cn.lost4found.dto.IndentDto;
 import cn.lost4found.dto.SubmitIndentDto;
 import cn.lost4found.dto.UserRegisterDto;
 import cn.lost4found.entity.BookEntity;
+import cn.lost4found.entity.BookExhibitionImageEntity;
+import cn.lost4found.entity.CartEntity;
 import cn.lost4found.entity.FavoriteEntity;
 import cn.lost4found.entity.IndentEntity;
 import cn.lost4found.entity.KeywordEntity;
@@ -40,6 +46,12 @@ public class UserServiceImpl implements UserService {
 	private FavoriteDao favoriteDao;
 	@Autowired
 	private BookImageDao bookImageDao;
+	@Autowired
+	private UserIconDao userIconDao;
+	@Autowired
+	private BookExhibitionImageDao bookExhibitionImageDao;
+	@Autowired
+	private CartDao cartDao;
 	
 	@Override
 	public UserEntity login(String account, String password) throws Exception {
@@ -281,16 +293,78 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public LinkedList<BookInfoDto> queryByNameDescAuthorPressLimited(String keyword, int index, int limit) throws Exception {
-		keyword = "%" + keyword + "%";
+		char[] chars = keyword.toCharArray();
+		StringBuilder sBuilder = new StringBuilder("%");
+		for (int i = 0; i < chars.length; i++) {
+			sBuilder.append(chars[i]).append('%');
+		}
+		keyword = sBuilder.toString();
 		LinkedList<String> ids = bookDao.queryByNameDescAuthorPressLimited(keyword, index, limit);
 		if (ids.isEmpty()) {
-			throw new MyException("没有更多搜索结果了");
+			if (index==0) {
+				throw new MyException("什么都没有收到，试试其他关键字吧", 3001);
+			} else {
+				throw new MyException("没有更多搜索结果", 3002);
+			}
 		}
 		LinkedList<BookInfoDto> dtos = new LinkedList<>();
-		for(String id : ids){
+		for(String id: ids){
 			dtos.add(loadBookInfo(id));
 		}
 		return dtos;
+	}
+
+	@Override
+	public LinkedList<BookInfoDto> queryNewBook(int limit) throws Exception {
+		LinkedList<String> ids = bookDao.queryOrderDescLimitByArgs("add_time", 0, 5);
+		if (ids.isEmpty()) {
+			throw new MyException("暂无最新书籍推荐");
+		}
+		LinkedList<BookInfoDto> dtos = new LinkedList<>();
+		for(String id: ids){
+			dtos.add(loadBookInfo(id));
+		}
+		return dtos;
+	}
+
+	@Override
+	public LinkedList<CommentDto> queryComments(String bookId, int index) throws Exception {
+		LinkedList<CommentDto> dtos = indentDao.queryCommentsLimitByBookId(bookId, index);
+		if (dtos.isEmpty()) {
+			throw new MyException("暂无评论", 3011);
+		}
+		for (CommentDto dto : dtos) {
+			dto.setNickname(userDao.select("id", dto.getUserId()).getNickname());
+		}
+		return dtos;
+	}
+
+	@Override
+	public String loadUserIcon(String userId) throws Exception {
+		String userIcon = userIconDao.selectUserIconByUserId(userId);
+		if (userIcon==null) {
+			throw new MyException("该用户没有头像", 4011);
+		}
+		return userIcon;
+	}
+
+	@Override
+	public LinkedList<BookExhibitionImageEntity> loadExihibitionBook() throws Exception {
+		LinkedList<BookExhibitionImageEntity> list = bookExhibitionImageDao.selectAll();
+		if (list.isEmpty()) {
+			throw new MyException("没有要轮播的图片", 4021);
+		}
+		return list;
+	}
+
+	@Override
+	public void addToCart(String bookId, String userId) throws Exception {
+		CartEntity cartEntity = new CartEntity();
+		cartEntity.setAddTime(Util.nowDate());
+		cartEntity.setId(Util.generateUUID());
+		cartEntity.setUserId(userId);
+		cartEntity.setBookId(bookId);
+		cartDao.insert(cartEntity);
 	}
 
 }

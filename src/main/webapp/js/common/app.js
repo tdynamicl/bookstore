@@ -27,16 +27,24 @@ myApp.service('myService', function($http){
 		return null; 
 	};
 	
-	//加载图片的base64编码
+	//加载封面的base64编码
 	this.loadCoverBase64 = function (bookId, callback) {
 		this.httpPost('loadBookImage.do', {id: bookId}, function(resp){
 			callback(resp);
 		})
 	};
 	
+	//加载头像的base64编码
+	this.loadUserIconBase64 = function (userId, callback) {
+		this.httpPost('loadUserIcon.do', {userId: userId}, function(resp){
+			callback(resp);
+		})
+	};
+	
 	//显示模态框
-	this.showModal = function($scope, title, content, confirmFun) {
+	this.showModal = function($scope, title, content, confirmFun, _noCancel) {
 		$scope.modal = {};
+		$scope.modal.button = {noCancel: _noCancel===true};
 		var result = {confirmed: false, canceled: false};
 		$('#modalEL').on('hidden.bs.modal', function () {
 			if (result.confirmed && confirmFun!==undefined) {

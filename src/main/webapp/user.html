@@ -51,17 +51,20 @@
 		</header>
 		<div class="panel panel-default">
 	    	<div class="panel-heading">
-	        	<h3 class="panel-title">个人信息</h3>
+	        	<h3 class="panel-title com-text-center">个人信息</h3>
 	   		</div>
 	    	<div id="profileEL" class="panel-body">
-	        	<span>昵称：{{user.nickname}}</span>
-	        	<span>手机号：{{user.telephone}}</span>
-	        	<span>注册邮箱：{{user.email}}</span>
+	    		<img class="icon">
+	    		<div class="detail">
+	        		<span>昵称：{{user.nickname}}</span>
+	        		<span>手机号：{{user.telephone}}</span>
+	        		<span>注册邮箱：{{user.email}}</span>
+	    		</div>
 	   		</div>
 		</div>
 		<div class="panel panel-default">
 	    	<div class="panel-heading">
-	        	<h3 class="panel-title">未完成订单（点击订单号查看详情）</h3>
+	        	<h3 class="panel-title com-text-center">未完成订单<a class="cursorPointer" data-toggle="collapse" data-target="#unFinishedIndentEL">&lt;显示/隐藏&gt;</a></h3>
 	   		</div>
 	    	<div id="unFinishedIndentEL" class="panel-body">
 				<!-- js填充  -->
@@ -69,17 +72,17 @@
 		</div>
 		<div class="panel panel-default">
 	    	<div class="panel-heading">
-	        	<h3 class="panel-title">已完成订单（点击订单号查看详情）</h3>
+	        	<h3 class="panel-title com-text-center">已完成订单<a class="cursorPointer" data-toggle="collapse" data-target="#finishedIndentEL">&lt;显示/隐藏&gt;</a></h3>
 	   		</div>
-	    	<div id="finishedIndentEL" class="panel-body">
+	    	<div id="finishedIndentEL" class="panel-body collapse in">
 				<!-- js填充  -->
 	   		</div>
 		</div>
 		<div class="panel panel-default">
 	    	<div class="panel-heading">
-	        	<h3 class="panel-title">我的收藏</h3>
+	        	<h3 class="panel-title com-text-center">我的收藏</h3>
 	   		</div>
-	    	<div id="finishedIndentEL" class="panel-body">
+	    	<div id="favoriteBookEL" class="panel-body">
 	        	内容
 	   		</div>
 		</div>

@@ -36,10 +36,6 @@
 	<div id="wrapper" ng-controller="login-controller" ng-cloak>
 		<header>
 			<a class="logo" href="index.html" ><img src="img/commonLib/logo.png"/></a>
-			<form name="searchForm" action="search.html" method="GET" novalidate>
-				<input name="keyword" placeholder="输入关键字搜索" >
-				<button type="submit">搜索</button>
-			</form>
 		</header>
 		<form name="loginForm" 
 				class="form-signin" role="form" novalidate>
@@ -66,7 +62,7 @@
 						type="password" class="form-control" placeholder="密码" required>
 			</div>
 			<br>
-			<label><input type="checkbox" value="remember-me">&nbsp;记住我(没完成)</label>
+			<label><input type="checkbox" value="remember-me">&nbsp;记住我</label>
 			<button ng-click="login()" class="btn btn-md btn-primary btn-block"
 				ng-disabled="loginForm.account.$invalid ||  
 						 loginForm.password.$invalid">登录</button>

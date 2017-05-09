@@ -130,6 +130,14 @@ public class UserController {
 		return jsonRespose.toModelAndView();
 	}
 	
+	@RequestMapping(value="addToCart.do", method=RequestMethod.POST)
+	public ModelAndView addToCart(@RequestParam("bookId")String bookId, @RequestParam("userId")String userId) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		userServiceImpl.addToCart(bookId, userId);
+		jsonRespose.setMessage("添加成功");
+		return jsonRespose.toModelAndView();
+	}
+	
 	@RequestMapping(value="addFavoriteBook.do", method=RequestMethod.POST)
 	public ModelAndView addFavoriteBook(@RequestParam("bookId")String bookId, @RequestParam("userId")String userId) throws Exception{
 		JsonRespose jsonRespose = new JsonRespose();
@@ -160,11 +168,40 @@ public class UserController {
 		return jsonRespose.toModelAndView();
 	}
 	
-	//-------ExceptionHandler--------------
+	@RequestMapping(value="loadNewBook.do", method=RequestMethod.POST)
+	public ModelAndView loadNewBook() throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		jsonRespose.setData(userServiceImpl.queryNewBook(4));
+		return jsonRespose.toModelAndView();
+	}
+	
+	@RequestMapping(value="loadComment.do", method=RequestMethod.POST)
+	public ModelAndView loadComment(@RequestParam("bookId")String bookId, @RequestParam("index")int index) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		jsonRespose.setData(userServiceImpl.queryComments(bookId, index));
+		return jsonRespose.toModelAndView();
+	}
+	
+	@RequestMapping(value="loadUserIcon.do", method=RequestMethod.POST)
+	public ModelAndView loadUserIcon(@RequestParam("userId")String userId) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		jsonRespose.setData(userServiceImpl.loadUserIcon(userId));
+		return jsonRespose.toModelAndView();
+	}
+	
+	@RequestMapping(value="loadExihibitionBook.do", method=RequestMethod.POST)
+	public ModelAndView loadExihibitionBook() throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		jsonRespose.setData(userServiceImpl.loadExihibitionBook());
+		return jsonRespose.toModelAndView();
+	}
+	
+	
+	//-------ExceptionHandlers--------------
 	@ExceptionHandler(MyException.class)
 	public ModelAndView exceptionHandler(MyException e) throws Exception{
 		JsonRespose jsonRespose = new JsonRespose();
-		jsonRespose.setCode(1001);
+		jsonRespose.setCode(e.getErrorCode());
 		jsonRespose.setMessage(e.getMessage());
 		return jsonRespose.toModelAndView();
 	}
@@ -173,7 +210,7 @@ public class UserController {
 	public ModelAndView defExceptionHandler(Exception e) throws Exception{
 		e.printStackTrace();
 		JsonRespose jsonRespose = new JsonRespose();
-		jsonRespose.setCode(1101);
+		jsonRespose.setCode(1001);
 		jsonRespose.setMessage("发生未知错误，请稍后重试");
 		return jsonRespose.toModelAndView();
 	}

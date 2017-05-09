@@ -1,5 +1,5 @@
 #main {
-	
+	position: relative;
 }
 #main > img {
 	width: 300px;
@@ -8,7 +8,9 @@
 #main > article {
 	position: absolute;
 	left: 320px;
-	top: 80px;
+	top: 0;
+	right: 0;
+	bottom: 0;
 }
 #main > article > header {
 	border-top: 1px solid #C0C0C0;
@@ -17,7 +19,7 @@
 	margin-bottom: 20px;
 }
 #main > article > p {
-	font-size: 120%;
+	height: 80px;
 }
 
 #main .priceDiv {
@@ -29,11 +31,65 @@
 }
 
 .operations {
-	margin-top: 50px;
-	height: 30px;
-	float: right;
+	position: absolute;
+	margin: 10px 0 0 0;
+	bottom: 0;
+	right: 0;
 }
 
 .operations button {
+	display: inline-block;
 	margin-left: 15px;
+	text-align: right;
+}
+.bookDiscription {
+	padding: 10px 7px 10px 7px;
+	margin: 0 0 20px 0;
+	border: 1px solid #C0C0C0;
+}
+.bookDiscription > span {
+	margin-right: 20px;
+}
+
+.comment {
+	position: relative;
+	height: 150px;
+}
+
+.comment img{
+	position: absolute;
+	height: 150px;
+	width: 150px;
+	top: 0;
+	left: 0;
+	
+}
+.comment > div {
+	position: absolute;
+	left: 180px;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+.comment .commentStars {
+	position: relative;
+	
+}
+.comment .commentContent {
+	position: relative;
+}
+.comment .commentUser {
+	position: relative;
+}
+.commentUser::before {
+	content: "评价者：";
+	color: #666666;
+}
+.comment .commentTime {
+	margin: 0 0 0 20px;
+	position: relative;
+}
+.commentTime::before {
+	content: "评价时间：";
+	color: #666666;
 }

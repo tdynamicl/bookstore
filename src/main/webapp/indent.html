@@ -41,7 +41,23 @@
 			</ul>
 		</div>
 	</nav>
-	<div ng-controller="indent-controller" id="wrapper" ng-cloak>
+	<div ng-controller="indent-controller" id="wrapper">
+		<!-- 模态对话框 -->
+		<div id="modalEL" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+		   		<div class="modal-content">
+			        <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			            <h4 class="modal-title">{{modal.title}}</h4>
+			        </div>
+			        <div class="modal-body">{{modal.content}}</div>
+			        <div class="modal-footer">
+			            <button class="btn btn-default" data-dismiss="modal">取消</button>
+			            <button ng-click="modal.confirm()" class="btn btn-primary" data-dismiss="modal">确定</button>
+			        </div>
+		   		</div>
+			</div>
+		</div>
 		<header>
 			<a class="logo" href="index.html" ><img src="img/commonLib/logo.png"/></a>
 			<form name="searchForm" action="search.html" method="GET" novalidate>
@@ -78,7 +94,7 @@
 		<div ng-if="indentInfo.status===3">
 			<h1>管理员已发货</h1>
 			<div class="operations">
-				<button class="btn btn-warning" ng-click="received()">签收订单</button>
+				<button class="btn btn-warning" ng-click="received()">确认收货</button>
 			</div>
 		</div>
 		<div ng-if="indentInfo.status===4">
@@ -94,41 +110,25 @@
 				<button class="btn btn-danger" ng-click="deleteIndent()">删除订单记录</button>
 			</div>
 		</div>
-		<!-- 模态对话框 -->
-		<div class="modal fade" id="modalEL" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		    <div class="modal-dialog">
-		        <div class="modal-content">
-		            <div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		                <h4 class="modal-title">{{modalDialog.title}}</h4>
-		            </div>
-		            <div class="modal-body">{{modalDialog.content}}</div>
-		            <div class="modal-footer">
-		                <button ng-if="modalDialog.hasCancel" ng-click="cancel()" class="btn btn-default">取消</button>
-		                <button ng-if="modalDialog.hasConfirm" ng-click="confirm()" class="btn btn-primary" data-dismiss="modal">确定</button>
-		            </div>
-		        </div>
-		    </div>
-		</div>
 		<div id="rateModal" class="modal fade" id="modalEL" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		    <div class="modal-dialog">
 		        <div class="modal-content">
 		            <div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		                <h4 class="modal-title">添加评论</h4>
+		                <h4 class="modal-title">添加评价</h4>
 		            </div>
 		            <div class="modal-body">
 		            	<div class="form-group">
-    						<label for="name">输入你想说的评论：</label>
+    						<label for="name">输入你想说的内容：</label>
 							<textarea ng-model="commentContent" class="form-control commentEL" rows="7" maxlength="150" placeholder="最多可输入150个字"></textarea>
 						</div>
 	    				<label for="name">评星级：</label>
 						<div id="starsEL" class="ratyStars">
-							<span onmouseover="onStar(1)" star="1" class="ratyStar fullStar"></span
-							><span onmouseover="onStar(2)" star="2" class="ratyStar fullStar"></span
-							><span onmouseover="onStar(3)" star="3" class="ratyStar fullStar"></span
-							><span onmouseover="onStar(4)" star="4" class="ratyStar emptyStar"></span
-							><span onmouseover="onStar(5)" star="5" class="ratyStar emptyStar"></span>
+							<span onclick="onStar(1)" star="1" class="ratyStar fullStar cursorPointer"></span
+							><span onclick="onStar(2)" star="2" class="ratyStar fullStar cursorPointer"></span
+							><span onclick="onStar(3)" star="3" class="ratyStar fullStar cursorPointer"></span
+							><span onclick="onStar(4)" star="4" class="ratyStar emptyStar cursorPointer"></span
+							><span onclick="onStar(5)" star="5" class="ratyStar emptyStar cursorPointer"></span>
 						</div>
 		            </div>
 		            <div class="modal-footer">

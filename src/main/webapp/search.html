@@ -17,7 +17,7 @@
 	
 </style>
 </head>
-<body>
+<body ng-controller="search-controller">
 	<nav ng-controller="nav-controller" class="navbar navbar-default"
 		role="navigation" novalidate ng-cloak style="border-radius: 0;">
 		<div class="container-fluid">
@@ -46,34 +46,34 @@
 		</div>
 	</nav>
 	
-	<div id="wrapper" ng-controller="search-controller">
+	<div id="wrapper">
 		<header>
-			<form>
-				<input>
-				<button ng-disabled=" loginForm.account.$error.required">搜索</button>
+			<a class="logo" href="index.html" ><img src="img/commonLib/logo.png"/></a>
+			<form name="searchForm" action="search.html" method="GET" novalidate>
+				<input name="keyword" placeholder="输入关键字搜索" >
+				<button type="submit">搜索</button>
 			</form>
 		</header>
 		<div >
 			<div id="books">
 				<!-- js自动生成内容 -->
 			</div>
-			<div ng-click="loadSearchResult()" class="text-center load-more">
-				点击加载更多
-			</div>
-			<div class="modal fade" id="modalEL" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			    <div class="modal-dialog">
-			        <div class="modal-content">
-			            <div class="modal-header">
-			            	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			                <h4 class="modal-title">{{modalDialog.title}}</h4>
-			            </div>
-			            <div class="modal-body">{{modalDialog.content}}</div>
-			            <div class="modal-footer">
-			                <button ng-if="modalDialog.hasCancel" ng-click="cancel()" class="btn btn-default">取消</button>
-			                <button ng-if="modalDialog.hasConfirm" ng-click="confirm()" class="btn btn-primary" data-dismiss="modal">确定</button>
-			            </div>
+			<div ng-disabled="isNoMore===true" ng-click="loadSearchResult()" class="text-center load-more">{{loadMoreELText}}</div>
+		</div>
+		<!-- 模态对话框 -->
+		<div id="modalEL" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+		   		<div class="modal-content">
+			        <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			            <h4 class="modal-title">{{modal.title}}</h4>
 			        </div>
-			    </div>
+			        <div class="modal-body">{{modal.content}}</div>
+			        <div class="modal-footer">
+			            <button ng-if="modal.button.noCancel===false" class="btn btn-default" data-dismiss="modal">取消</button>
+			            <button ng-click="modal.confirm()" class="btn btn-primary" data-dismiss="modal">确定</button>
+			        </div>
+		   		</div>
 			</div>
 		</div>
 	</div>

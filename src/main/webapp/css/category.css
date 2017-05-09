@@ -19,6 +19,21 @@
 	position: absolute;
 	top: 0;
 	left: 180px;
+	right: 0;
 	height: 150px;
-	width: 1020px;
+}
+.book-item > .detail > h3 {
+	font-size: 140%;
+	margin: 5px 0 7px 0;
+}
+.bookDiscription {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 10px 7px 10px 7px;
+	border: 1px solid #C0C0C0;
+}
+.bookDiscription > span {
+	margin-right: 20px;
 }

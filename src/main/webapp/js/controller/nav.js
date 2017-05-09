@@ -18,7 +18,7 @@ myApp.controller("nav-controller", function($scope, $rootScope, $http) {
 	$scope.logout = function() {
 		sessionStorage.removeItem("user");
 		$rootScope.user = null;
-		//location.reload();
+		location.reload();
 	};
 		
 	$rootScope.checkLoginUser();

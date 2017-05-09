@@ -22,6 +22,9 @@ myApp.controller("indent-controller", function($scope, $rootScope, $filter, mySe
 	$scope.loadIndentInfo = function() {
 		var param = {};
 		param.id = myService.getQueryString("id");
+		if ($rootScope.user===null) {
+			return;
+		}
 		param.userId = $rootScope.user.id;
 		myService.httpPost('loadIndentInfo.do', param, function(resp) {
 			$scope.indentInfo = resp.data.data;
@@ -101,6 +104,7 @@ myApp.controller("indent-controller", function($scope, $rootScope, $filter, mySe
 		}
 	};
 	
+	$scope.checkAndToLogin();
 	$scope.loadIndentInfo();
 	
 });

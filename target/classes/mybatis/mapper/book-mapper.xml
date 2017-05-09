@@ -8,17 +8,6 @@
 		<id property="id" column="id" />
 		<result property="pressTime" column="press_time" />
 	</resultMap>
-
-	<select id="select" resultMap="bookEntity">
-		select * from info_book where
-		${uf}=#{value}
-	</select>
-	
-	<select id="queryByNameDescAuthorPressLimited" resultType="java.lang.String">
-		select * from info_book where
-		name like #{arg0} or description like #{arg0} or author like #{arg0}
-		or press like #{arg0} limit #{arg1}, #{arg2}
-	</select>
 	
 	<insert id="insert">
 		insert into info_book
@@ -27,13 +16,28 @@
 			(#{id}, #{name}, #{description}, #{author}, #{press}, #{pressTime}, #{price}, #{addTime})
 	</insert>
 	
+	<select id="select" resultMap="bookEntity">
+		select * from info_book where
+		${uf}=#{value}
+	</select>
+	
+	<select id="queryByNameDescAuthorPressLimited" resultType="java.lang.String">
+		select id from info_book where
+		name like #{arg0} or description like #{arg0} or author like #{arg0}
+		or press like #{arg0} limit #{arg1}, #{arg2}
+	</select>
+	
+	<select id="queryOrderLimitByArgs" resultType="java.lang.String">
+		select id from info_book 
+		order by ${arg0} limit #{arg1}, #{arg2}
+	</select>
+	
+	<select id="queryOrderDescLimitByArgs" resultType="java.lang.String">
+		select id from info_book 
+		order by ${arg0} desc limit #{arg1}, #{arg2}
+	</select>
+	
 	<update id="update">
-	<!-- 
-		update sys_user set
-			account=#{account}, password=#{password},
-			nickname=#{nickname}, telephone=#{telephone}, email=#{email}
-		where
-			id=#{id}
-	 -->
+		
 	</update>
 </mapper>

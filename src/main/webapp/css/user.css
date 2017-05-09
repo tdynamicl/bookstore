@@ -4,3 +4,17 @@
  #finishedIndentEL span {
  	margin-right: 20px;
  }
+ #profileEL {
+ 	position: relative;
+ }
+ #profileEL .detail{
+	position: absolute;
+	left: 180px;
+	top: 15px;
+	right: 15px;
+	bottom: 15px;
+} 
+#profileEL .icon {
+	height: 150px;
+	width: 150px;
+}

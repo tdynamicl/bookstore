@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lost4found.dao.BookExhibitionImageDao">
+	
+	<resultMap type="cn.lost4found.entity.BookExhibitionImageEntity" id="bookExhibitionImageEntity">
+		<result property="bookId" column="book_id" />
+		<result property="imageStream" column="exhibition_image" />
+	</resultMap>
+
+	<select id="selectAll" resultMap="bookExhibitionImageEntity">
+		select * from info_book_exhibition
+	</select>
+
+	<insert id="insert">
+
+	</insert>
+	
+	<update id="update">
+		
+	</update>
+</mapper>

@@ -1,50 +1,41 @@
 myApp.controller("search-controller", function($scope, $rootScope, myService) {
+	$scope.pageSetting = {pageSize: 7};
 	$scope.currIndex = 0;
+	$scope.loadMoreELText = "点击加载更多";
+	$scope.isNoMore = false;
 	$scope.BooksEL = $("#books");
 	
 	$scope.loadSearchResult = function(){
 		var param = {};
 		param.keyword = myService.getQueryString("keyword");
+		
 		param.index = $scope.currIndex;
 		myService.httpPost('search.do', param, function (resp) {
 			if(resp.data.code){
-				$scope.modalDialog = {};
-				$scope.modalDialog.title = "提示";
-				$scope.modalDialog.content = resp.data.message;
-				$scope.modalDialog.hasConfirm = true;
-				$scope.modalDialog.confirmFun = function() {
-					return;
-				};
-				$scope.showModalDialog();
-			}else{
-				var bookInfos = angular.copy(resp.data.data);
-				if (bookInfos == null) {
-					return;
+				$scope.loadMoreELText = resp.data.message;
+				switch (resp.data.code) {
+				case 3001:
+					$scope.isNoMore = true;
+					break;
+				case 3002:
+					$scope.isNoMore = true;
+					break;
+				default:
+					break;
 				}
-				//添加
+			} else {
+				var bookInfos = resp.data.data;
 				for (var i = 0; i < bookInfos.length; i++) {
 					$scope.addBookEL(bookInfos[i]);
+					$scope.currIndex++;
 				}
-				$scope.currIndex += bookInfos.length;
+				if (bookInfos.length < $scope.pageSetting.pageSize) {
+					$scope.loadMoreELText = "暂无更多搜索结果";
+					$scope.isNoMore = true;
+				}
 			}
 		});
 	};
-	
-	$scope.showModalDialog = function(){
-		$scope.modalResult = {confirmed: false, canceled: false};
-		$('#modalEL').modal({show: true});
-	};
-	
-	$scope.confirm = function() {
-		$scope.modalResult.confirmed = true;
-	};
-	
-	$('#modalEL').on('hidden.bs.modal', function () {
-		if ($scope.modalResult.confirmed && $scope.modalDialog.confirmFun!==undefined) {
-			$scope.modalDialog.confirmFun();
-		}
-		$scope.modalDialog = null;
-	});
 	
 	$scope.addBookEL = function(bookInfo){
 		var bookEL = $('<hr/><div class="book-item">'+

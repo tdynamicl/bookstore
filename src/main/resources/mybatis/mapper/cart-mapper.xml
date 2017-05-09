@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lost4found.dao.CartDao">
+	
+	<resultMap type="cn.lost4found.entity.CartEntity" id="cartEntity">
+		<id property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="bookId" column="book_id" />
+		<result property="addTime" column="add_time" />
+		<result property="purchaseId" column="purchase_id" />
+		<result property="purchaseTime" column="purchase_time" />
+		<result property="indentId" column="indent_id" />
+	</resultMap>
+
+	<select id="select" resultMap="cartEntity">
+		select * from info_cart where
+		${uf}=#{value}
+	</select>
+	
+	<select id="selectByBookIdAndUserId" resultMap="cartEntity">
+		select * from info_cart where
+		book_id=#{arg0} and user_id=#{arg1}
+	</select>
+	
+	<insert id="insert">
+		insert into info_cart
+			(id, user_id, book_id, add_time, purchase_id, purchase_time, indent_id)
+		values
+			(#{id}, #{userId}, #{bookId}, #{addTime}, #{purchaseId}, #{purchaseTime}, #{indentId})
+	</insert>
+	
+	<delete id="delete">
+
+	</delete>
+	
+	<update id="update">
+
+	</update>
+</mapper>

@@ -3,9 +3,11 @@ package cn.lost4found.service;
 import java.util.LinkedList;
 
 import cn.lost4found.dto.BookInfoDto;
+import cn.lost4found.dto.CommentDto;
 import cn.lost4found.dto.IndentDto;
 import cn.lost4found.dto.SubmitIndentDto;
 import cn.lost4found.dto.UserRegisterDto;
+import cn.lost4found.entity.BookExhibitionImageEntity;
 import cn.lost4found.entity.IndentEntity;
 import cn.lost4found.entity.UserEntity;
 
@@ -127,6 +129,14 @@ public interface UserService {
 	public LinkedList<IndentDto> loadFinishedIndent(String userId) throws Exception;
 
 	/**
+	 * 添加书籍到购物车
+	 * @param bookId
+	 * @param userId
+	 * @throws Exception
+	 */
+	public void addToCart(String bookId, String userId) throws Exception;
+	
+	/**
 	 * 用户添加书籍收藏
 	 * @param bookId
 	 * @param userId
@@ -159,5 +169,38 @@ public interface UserService {
 	 * @throws Exception
 	 */
 	public LinkedList<BookInfoDto> queryByNameDescAuthorPressLimited(String keyword, int index, int limit) throws Exception; 
+	
+	/**
+	 * 最新上架的limit本书
+	 * @param limit
+	 * @return
+	 * @throws Exception
+	 */
+	public LinkedList<BookInfoDto> queryNewBook(int limit) throws Exception;
+	
+	/**
+	 * 查询评论
+	 * @param bookId
+	 * @param index
+	 * @return
+	 * @throws Exception
+	 */
+	public LinkedList<CommentDto> queryComments(String bookId, int index) throws Exception;
+	
+	/**
+	 * 获得用户头像
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
+	public String loadUserIcon(String userId) throws Exception;
+	
+	
+	/**
+	 * 加载轮播图片及书籍id
+	 * @return
+	 * @throws Exception
+	 */
+	public LinkedList<BookExhibitionImageEntity> loadExihibitionBook() throws Exception;
 	
 }

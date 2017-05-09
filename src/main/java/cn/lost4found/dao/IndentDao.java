@@ -2,6 +2,7 @@ package cn.lost4found.dao;
 
 import java.util.LinkedList;
 
+import cn.lost4found.dto.CommentDto;
 import cn.lost4found.entity.IndentEntity;
 
 public interface IndentDao extends BaseDao<IndentEntity> {
@@ -37,5 +38,14 @@ public interface IndentDao extends BaseDao<IndentEntity> {
 	 * @throws Exception
 	 */
 	public LinkedList<IndentEntity> queryAllFinishedIndentByUserId(String userId) throws Exception;
+	
+	/**
+	 * 查询评论
+	 * @param bookId
+	 * @param index
+	 * @return
+	 * @throws Exception
+	 */
+	public LinkedList<CommentDto> queryCommentsLimitByBookId(String bookId, int index) throws Exception;
 	
 }
