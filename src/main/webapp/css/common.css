@@ -77,11 +77,11 @@ img {
 .bttnUnFavorite {
 	background-color: white;
 }
-
 nav li {
 	cursor: pointer;
 }
 .navbar{
+	border-radius: 0;
 	margin-bottom: 0;
 	min-width: 1200px;
 }

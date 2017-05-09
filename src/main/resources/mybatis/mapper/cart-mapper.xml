@@ -18,6 +18,11 @@
 		${uf}=#{value}
 	</select>
 	
+	<select id="queryPurchaseIdIsNull" resultMap="cartEntity">
+		select * from info_cart where
+		purchase_id is null and user_id=#{userId}
+	</select>
+	
 	<select id="selectByBookIdAndUserId" resultMap="cartEntity">
 		select * from info_cart where
 		book_id=#{arg0} and user_id=#{arg1}

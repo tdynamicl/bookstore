@@ -8,6 +8,7 @@ import cn.lost4found.dto.IndentDto;
 import cn.lost4found.dto.SubmitIndentDto;
 import cn.lost4found.dto.UserRegisterDto;
 import cn.lost4found.entity.BookExhibitionImageEntity;
+import cn.lost4found.entity.CartEntity;
 import cn.lost4found.entity.IndentEntity;
 import cn.lost4found.entity.UserEntity;
 
@@ -202,5 +203,13 @@ public interface UserService {
 	 * @throws Exception
 	 */
 	public LinkedList<BookExhibitionImageEntity> loadExihibitionBook() throws Exception;
+	
+	/**
+	 * 加载购物车中未支付的
+	 * @param 用户的id
+	 * @return 购物车项目列表
+	 * @throws Exception
+	 */
+	public LinkedList<CartEntity> loadCartUnpurchased(String userId) throws Exception;
 	
 }

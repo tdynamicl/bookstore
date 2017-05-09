@@ -367,4 +367,13 @@ public class UserServiceImpl implements UserService {
 		cartDao.insert(cartEntity);
 	}
 
+	@Override
+	public LinkedList<CartEntity> loadCartUnpurchased(String userId) throws Exception {
+		LinkedList<CartEntity> list = cartDao.queryPurchaseIdIsNull(userId);
+		if (list.isEmpty()) {
+			throw new MyException("购物车是空的", 2021);
+		}
+		return list;
+	}
+
 }

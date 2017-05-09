@@ -138,6 +138,13 @@ public class UserController {
 		return jsonRespose.toModelAndView();
 	}
 	
+	@RequestMapping(value="loadCartInfo.do", method=RequestMethod.POST)
+	public ModelAndView loadCartInfo(@RequestParam("userId")String userId) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		jsonRespose.setData(userServiceImpl.loadCartUnpurchased(userId));
+		return jsonRespose.toModelAndView();
+	}
+	
 	@RequestMapping(value="addFavoriteBook.do", method=RequestMethod.POST)
 	public ModelAndView addFavoriteBook(@RequestParam("bookId")String bookId, @RequestParam("userId")String userId) throws Exception{
 		JsonRespose jsonRespose = new JsonRespose();

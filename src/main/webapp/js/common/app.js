@@ -14,7 +14,7 @@ myApp.service('myService', function($http){
 		}).then(function(resp){
 			succFun(resp);
 		}, function(err){
-			alert("网络异常: " + err);
+			console.log("网络异常: " + err);
 		});
 	};
 	
