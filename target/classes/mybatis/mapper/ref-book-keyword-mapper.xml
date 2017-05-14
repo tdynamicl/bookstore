@@ -7,12 +7,18 @@
 		autoMapping="true">
 		<id property="id" column="id" />
 		<result property="bookId" column="book_id" />
-		<result property="KeywordId" column="keyword_id" />
+		<result property="keywordId" column="keyword_id" />
 	</resultMap>
 
 
 	<select id="select" resultMap="refBookKeywordEntity">
 	
+	</select>
+	
+	<select id="selectByBookId" resultMap="refBookKeywordEntity">
+		select * 
+		from ref_book_keyword
+		where ${uf}=#{value}
 	</select>
 	
 	<insert id="insert">
@@ -26,10 +32,43 @@
 
 	</update>
 
+	<delete id="delete">
+		delete from ref_book_keyword
+		where ${uf}=#{value}
+	</delete>
+
 	<select id="queryByKeywordIdLimited" resultType="java.lang.String">
 		select book_id from ref_book_keyword where
 			keyword_id=#{arg0}
 		limit #{arg1},#{arg2}
 	</select>
-
+	
+	<select id="selectCountByClass" resultType="Integer">
+		select count(*)
+		from(select *
+		from ref_book_keyword
+		where true
+		<trim>
+			<if test="classify=='education'">
+				and keyword_id=1 or keyword_id=2 or keyword_id=3 or keyword_id=4 or keyword_id=5
+			</if>
+			<if test="classify=='novel'">
+				and keyword_id=6 or keyword_id=7 or keyword_id=8 or keyword_id=9
+			</if>
+			<if test="classify=='art'">
+				and keyword_id=10 or keyword_id=11 or keyword_id=12 or keyword_id=13 
+			</if>
+			<if test="classify=='child'">
+				and keyword_id=14 or keyword_id=15 or keyword_id=16
+			</if>
+			<if test="classify=='live'">
+				and keyword_id=17 or keyword_id=18 or keyword_id=19 or keyword_id=20
+			</if>
+			<if test="classify=='science'">
+				and keyword_id=21 or keyword_id=22 or keyword_id=23 or keyword_id=24 or keyword_id=25 or keyword_id=26
+			</if>
+		</trim>
+		GROUP BY book_id)r1
+	</select>
+	
 </mapper>

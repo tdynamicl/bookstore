@@ -25,7 +25,7 @@
 	
 	<select id="selectByBookIdAndUserId" resultMap="cartEntity">
 		select * from info_cart where
-		book_id=#{arg0} and user_id=#{arg1}
+		book_id=#{arg0} and user_id=#{arg1} order by add_time desc
 	</select>
 	
 	<insert id="insert">
@@ -36,10 +36,16 @@
 	</insert>
 	
 	<delete id="delete">
-
+		delete from info_cart where
+		${uf}=#{value}
 	</delete>
 	
-	<update id="update">
-
+	<update id="updatePurchaseInfo">
+		update info_cart set 
+			purchase_id=#{purchaseId}, 
+			purchase_time=#{purchaseTime}, 
+			indent_id=#{indentId}
+		where
+			id=#{id}
 	</update>
 </mapper>

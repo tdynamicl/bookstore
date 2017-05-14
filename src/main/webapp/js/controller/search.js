@@ -13,10 +13,13 @@ myApp.controller("search-controller", function($scope, $rootScope, myService) {
 		myService.httpPost('search.do', param, function (resp) {
 			if(resp.data.code){
 				$scope.loadMoreELText = resp.data.message;
+				$scope.isNoMore=true;
 				switch (resp.data.code) {
+				// 空的
 				case 3001:
 					$scope.isNoMore = true;
 					break;
+				// 没有更多
 				case 3002:
 					$scope.isNoMore = true;
 					break;
@@ -38,7 +41,7 @@ myApp.controller("search-controller", function($scope, $rootScope, myService) {
 	};
 	
 	$scope.addBookEL = function(bookInfo){
-		var bookEL = $('<hr/><div class="book-item">'+
+		var bookEL = $('<div class="book-item">'+
 			'<div>'+
 			'	<img id="' + bookInfo.id + '" />'+
 			'</div>'+
@@ -51,9 +54,10 @@ myApp.controller("search-controller", function($scope, $rootScope, myService) {
 			'		<span class="pressTime">' + bookInfo.pressTime + '</span>'+
 			'		<span class="rankTotal">' + bookInfo.rankTotal + '</span>'+
 			'		<span class="rankLevel">' + bookInfo.rankLevel + '</span>'+
-			'</div></div></div>'
+			'</div></div></div><hr/>'
 		); 
 		$scope.BooksEL.append(bookEL);
+		$('#books .noItem').remove();
 		myService.loadCoverBase64(bookInfo.id, function(resp) {
 			if (resp.data.data===null) {
 				$('#'+bookInfo.id)[0].src = "img/commonLib/nocover.png";

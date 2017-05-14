@@ -1,20 +1,55 @@
 #unFinishedIndentEL span {
 	margin-right: 20px;
 }
- #finishedIndentEL span {
+#finishedIndentEL span {
  	margin-right: 20px;
  }
- #profileEL {
+#profileEL {
  	position: relative;
  }
- #profileEL .detail{
+#profileEL .detail{
 	position: absolute;
 	left: 180px;
 	top: 15px;
 	right: 15px;
 	bottom: 15px;
 } 
+#profileEL .detail span{
+	margin-right: 25px;
+} 
 #profileEL .icon {
 	height: 150px;
 	width: 150px;
+}
+
+.favoriteBook {
+	position: relative;
+}
+.favoriteBook img{
+	height: 100px;
+	width: 90px;
+}
+.favoriteBook .detail {
+	position: absolute;
+	left: 130px;
+	top: 0;
+	bottom: 0;
+	right: 100px;
+}
+.favoriteBook .detail span:first-child {
+	margin-top: 0;
+}
+.favoriteBook .detail span {
+	margin-top: 5px;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.favoriteBook .operation {
+	width: 70px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
 }

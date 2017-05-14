@@ -18,7 +18,7 @@
 		role="navigation" novalidate ng-cloak>
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand">玄奘书籍销售平台</a>
+				<a class="navbar-brand">玄奘求书</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li ng-if="user===null">
@@ -28,6 +28,10 @@
 				<li ng-if="user===null">
 					<a href="login.html">
 					<span class="glyphicon glyphicon-log-in"></span> 登录</a>
+				</li>
+				<li ng-if="user!==null" >
+					<a href="cart.html">
+					<span class="glyphicon glyphicon-shopping-cart"></span> 查看购物车<span class="badge">{{cartTotal}}</span></a>
 				</li>
 				<li ng-if="user!==null" class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown">{{nickname}}
@@ -41,7 +45,7 @@
 			</ul>
 		</div>
 	</nav>
-	<div ng-controller="indent-controller" id="wrapper">
+	<div ng-controller="indent-controller" id="wrapper" ng-clock>
 		<!-- 模态对话框 -->
 		<div id="modalEL" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -139,6 +143,9 @@
 		    </div>
 		</div>
 	</div>
+	<footer>
+		<hr><div class="text-center">Copyright &copy; 玄奘求书 2017-2018, All Rights Reserved</div><hr>
+	</footer>
 </body>
 <script src="js/common/app.js" ></script>
 <script src="js/controller/nav.js" ></script>

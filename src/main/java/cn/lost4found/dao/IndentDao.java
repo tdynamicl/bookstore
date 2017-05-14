@@ -1,7 +1,7 @@
 package cn.lost4found.dao;
 
 import java.util.LinkedList;
-
+import org.apache.ibatis.annotations.Param;
 import cn.lost4found.dto.CommentDto;
 import cn.lost4found.entity.IndentEntity;
 
@@ -47,5 +47,51 @@ public interface IndentDao extends BaseDao<IndentEntity> {
 	 * @throws Exception
 	 */
 	public LinkedList<CommentDto> queryCommentsLimitByBookId(String bookId, int index) throws Exception;
+	
+	/**
+	 * 根据用户名，书名，下单日期查询所有订单
+	 * @param bookName,userName,generateTime
+	 * @return
+	 * @throws Exception
+	 * @author 杨贤伟
+	 */
+	public LinkedList<cn.lost4found.entity.manager.IndentEntity> selectByDto(@Param("bookName")String bookName,
+			@Param("userName")String userName,
+			@Param("generateTime")String generateTime,
+			@Param("status")int status,
+			@Param("first")int first,
+			@Param("end")int end)throws Exception;
+	/**
+	 * 根据用户名，书名，下单日期查询总个数
+	 * @param bookName,userName,generateTime
+	 * @return
+	 * @throws Exception
+	 * @author 杨贤伟
+	 */
+	public int selectCountByDto(@Param("bookName")String bookName,
+			@Param("userName")String userName,
+			@Param("generateTime")String generateTime,
+			@Param("status")int status,
+			@Param("first")int first,
+			@Param("end")int end)throws Exception;
+	
+	/**
+	 * 根据id查询订单信息
+	 * @author 杨贤伟
+	 */
+	public cn.lost4found.entity.manager.IndentEntity selectById(@Param("id")String id)throws Exception;
+	
+	/**
+	 * 改变订单状态
+	 * @author 杨贤伟
+	 */
+	public void changeIndentStatus(@Param("id")String id,@Param("status")int status)throws Exception;
+
+	/**
+	 * 通过订单状态查询订单
+	 * @author 杨贤伟
+	 */
+	public void selectByStatus(@Param("status")String status,@Param("first")int first,
+			@Param("end")int end)throws Exception;
 	
 }

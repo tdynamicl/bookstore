@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html ng-app="index-app">
+<html ng-app="myApp">
 <head>
 <meta charset="utf-8">
 <title>首页</title>
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/angular-animate.min.js"></script>
+<script src="js/lib/angular-md5.min.js"></script>
 <script src="js/lib/jquery-3.1.1.min.js"></script>
 <script src="js/lib/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/lib/bootstrap.min.css" />
@@ -14,10 +15,10 @@
 </head>
 <body>
 	<nav ng-controller="nav-controller" class="navbar navbar-default"
-		role="navigation" novalidate ng-cloak style="border-radius: 0;">
+		role="navigation" novalidate ng-cloak>
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand">玄奘书籍销售平台</a>
+				<a class="navbar-brand">玄奘求书</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li ng-if="user===null">
@@ -27,6 +28,10 @@
 				<li ng-if="user===null">
 					<a href="login.html">
 					<span class="glyphicon glyphicon-log-in"></span> 登录</a>
+				</li>
+				<li ng-if="user!==null" >
+					<a href="cart.html">
+					<span class="glyphicon glyphicon-shopping-cart"></span> 查看购物车<span class="badge">{{cartTotal}}</span></a>
 				</li>
 				<li ng-if="user!==null" class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown">{{nickname}}
@@ -40,11 +45,12 @@
 			</ul>
 		</div>
 	</nav>
-	<div id="wrapper">
+	<div id="wrapper" ng-controller="index-controller" ng-cloak>
 		<header>
-			<form>
-				<input>
-				<button>搜索</button>
+			<a class="logo" href="index.html" ><img src="img/commonLib/logo.png"/></a>
+			<form name="searchForm" action="search.html" method="GET" novalidate>
+				<input name="keyword" placeholder="输入关键字搜索" >
+				<button type="submit">搜索</button>
 			</form>
 		</header>
 		<div id="category">
@@ -98,88 +104,35 @@
 				</div>
 			</div>
 		</div>
-		<div id="img-exhibition">
-			<img src="img/index/exihibitions/01.jpg" />
+		<div id="img-exhibition" class="carousel slide">
+		    <ol class="carousel-indicators">
+		    	<!-- js填充 -->
+		    </ol>   
+		    <!-- 轮播（Carousel）项目 -->
+		    <div class="carousel-inner">
+		    	<!-- js填充 -->
+		    </div>
+		    <a class="left carousel-control" href="#img-exhibition" role="button" data-slide="prev">
+    		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    		<span class="sr-only">上一张</span>
+  			</a>
+  			<a class="right carousel-control" href="#img-exhibition" role="button" data-slide="next">
+    		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    		<span class="sr-only">下一张</span>
+  			</a>
 		</div>
-		<div id="newBooks" ng-controller="newBook-controller">
-			<h3><span>新书上架</span></h3>
-			<div>
-				<img src=""/>
-				<span>xxxxxxxxx</span>
-				<span class="price">15</span>
-			</div>
-			<div>
-				<img src=""/>
-				<span>xxxxxxxxx</span>
-				<span class="price">15</span>
-			</div>
-			<div>
-				<img src=""/>
-				<span>xxxxxxxxx</span>
-				<span class="price">15</span>
-			</div>
-			<div>
-				<img src=""/>
-				<span>xxxxxxxxx</span>
-				<span class="price">15</span>
+		<div id="newBooksEL">
+			<h3><span>新书上架</span><div></div></h3>
+			<div class="containerEL">
+			
 			</div>
 		</div>
-		<aside>
-			<div>
-				<h3><span class="glyphicon glyphicon-star-empty"></span>销售榜</h3>
-				<ol>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-					<li>
-						<a href="#">xxx是怎么炼成的</a>
-					</li>
-				</ol>
-			</div>
-		</aside>
-		<div></div>
 	</div>
-	
-
+	<footer>
+		<hr><div class="text-center">Copyright &copy; 玄奘求书 2017-2018, All Rights Reserved</div><hr>
+	</footer>
 </body>
+<script src="js/common/app.js" ></script>
+<script src="js/controller/nav.js" ></script>
 <script src='js/controller/index.js'></script>
 </html>

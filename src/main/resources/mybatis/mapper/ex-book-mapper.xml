@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lost4found.dao.ExBookDao">
+
+	<resultMap type="cn.lost4found.entity.ExBookEntity" id="exBookEntity"
+		autoMapping="true">
+		<id property="id" column="book_id" />
+		<result property="image" column="exhibition_image" />
+	</resultMap>
+	
+	<insert id="insertById">
+		insert into info_book_exhibition
+		(book_id) values(#{bookId})
+	</insert>
+	
+	<select id="selectExBook" resultMap="exBookEntity">
+		select * 
+		from info_book_exhibition 
+	</select>
+	
+	<delete id="delete">
+		delete from info_book_exhibition
+		where ${uf}=#{value}
+	</delete>
+	
+	<update id="changeExBookCover">
+		update info_book_exhibition
+		set exhibition_image=#{image}
+		where book_id=#{bookId}
+	</update>
+</mapper>

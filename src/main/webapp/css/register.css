@@ -1,6 +1,19 @@
 #wrapper {
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 60px;
-	width: 20em;
+	width: 1024px;
+	background-image: url('../img/commonLib/login-background.jpg');
+	background-repeat: no-repeat;
+	background-position: -220px -200px;
+}
+
+form {
+	position: absolute;
+	width: 310px;
+	top: 60px;
+	background-color: white;
+	right: 0;
+	border: 1px solid gray;
+	border-radius: 4px;
+	padding: 20px;
 }

@@ -16,10 +16,12 @@
 	border-top: 1px solid #C0C0C0;
 	font-family: "微软雅黑";
 	font-size: 200%;
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 }
 #main > article > p {
 	height: 80px;
+	line-height: 26px;
+	overflow: hidden;
 }
 
 #main .priceDiv {

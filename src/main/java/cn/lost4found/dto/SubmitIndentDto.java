@@ -6,6 +6,7 @@ public class SubmitIndentDto {
 	private String addr;
 	private String receiverName;
 	private String receiverTel;
+	private int status = 1;
 
 	public String getUserId() {
 		return userId;
@@ -47,10 +48,18 @@ public class SubmitIndentDto {
 		this.receiverTel = receiverTel;
 	}
 
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "SubmitIndentDto [userId=" + userId + ", bookId=" + bookId + ", addr=" + addr + ", receiverName="
-				+ receiverName + ", receiverTel=" + receiverTel + "]";
+				+ receiverName + ", receiverTel=" + receiverTel + ", status=" + status + "]";
 	}
 
 }

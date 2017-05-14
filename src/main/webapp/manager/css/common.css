@@ -1,0 +1,127 @@
+body{
+	background: url(../img/bg.jpg);
+	font-family: "微软雅黑";
+}
+body, h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+	padding: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: "微软雅黑";
+}
+.com-text-center {
+	text-align: center;
+}
+.bookDiscription {
+	padding: 10px 7px 10px 7px;
+	margin: 0 0 20px 0;
+	border: 1px solid #C0C0C0;
+}
+.bookDiscription > span {
+	margin-right: 20px;
+}
+.bookName::before {
+	content: "《";
+}
+.bookName::after {
+	content: "》";
+}
+.authorName::before {
+	content: "作者：";
+	color: #666666;
+}
+.pressName::before {
+	content: "出版社：";
+	color: #666666;
+}
+.pressTime::before {
+	content: "出版时间：";
+	color: #666666;
+}
+.rankTotal::after {
+	content: "条评论";
+	color: #666666;
+}
+.rankLevel::before {
+	content: "平均评分：";
+	color: #666666;
+}
+.price {
+	font-family: "微软雅黑";
+	color: red;
+	padding-left: 30px;
+	font-size: 220%;
+}
+.price::before {
+	font-size: 70%;
+	content: "￥";
+}
+.bttn {
+	font-family: "微软雅黑";
+	font-size: 120%;
+	padding: 5px 12px;
+	border: 1px solid;
+	border-radius: 3px;
+}
+.bttnBuynow {
+	background-color: orange;
+}
+.bttnAddtocart {
+	background-color: white;
+}
+nav li {
+	cursor: pointer;
+}
+.navbar{
+	margin-bottom: 0;
+	min-width: 1200px;
+}
+.errortip{
+	color:red;
+}
+#wrapper {
+	position: relative;
+	width: 1200px;
+	margin: 0 auto;
+}
+#wrapper > header {
+	height: 80px;
+
+}
+
+.logo {
+	margin-top: 5px;
+}
+
+#wrapper > header > form > input {
+	position: absolute;
+	border: 2px solid orange;
+	font-size: 120%;
+	outline: none;
+	border-right: none;
+	line-height: 40px;
+	height: 40px;
+	width: 300px;
+	top: 20px;
+	left: 650px;
+}
+#wrapper > header > form > button {
+	position: absolute;
+	color: white;
+	font-family: "微软雅黑";
+	font-size: 120%;
+	border: 2px solid orange;
+	outline: none;
+	background-color: orange;
+	height: 40px;
+	width: 80px;
+	top: 20px;
+	left: 950px;
+}
+.load-more {
+	background-color: #efefef;
+	font-family: "微软雅黑";
+	font-size: 120%;
+	padding: 5px;
+	cursor: pointer;
+}

@@ -14,6 +14,7 @@ myApp.controller("category-controller", function($scope, $rootScope, myService) 
 			if(resp.data.code){
 				$scope.loadMoreELText = resp.data.message;
 				$scope.isNoMore = true;
+				$('.load-more')[0].remove();
 			} else {
 				var bookInfos = resp.data.data;
 				for (var i = 0; i < bookInfos.length; i++) {
@@ -29,7 +30,7 @@ myApp.controller("category-controller", function($scope, $rootScope, myService) 
 	};
 	
 	$scope.addBookEL = function(bookInfo){
-		var bookEL = $('<hr/><div class="book-item">'+
+		var bookEL = $('<div class="book-item">'+
 			'<div>'+
 			'	<img id="' + bookInfo.id + '" />'+
 			'</div>'+
@@ -42,12 +43,13 @@ myApp.controller("category-controller", function($scope, $rootScope, myService) 
 			'		<span class="pressTime">' + bookInfo.pressTime + '</span>'+
 			'		<span class="rankTotal">' + bookInfo.rankTotal + '</span>'+
 			'		<span class="rankLevel">' + bookInfo.rankLevel + '</span>'+
-			'</div></div></div>'
+			'</div></div></div><hr/>'
 		); 
 		/**
 		 * 获取封面
 		 */
 		$scope.BooksEL.append(bookEL);
+		$('#books .noItem').remove();
 		myService.loadCoverBase64(bookInfo.id, function(resp) {
 			if (resp.data.data===null) {
 				$('#'+bookInfo.id)[0].src = "img/commonLib/nocover.png";

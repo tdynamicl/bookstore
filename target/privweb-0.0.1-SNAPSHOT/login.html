@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html ng-app="login-app">
+<html ng-app="myApp">
 <head>
 <meta charset="utf-8">
-<title>登录|xxx</title>
+<title>登录</title>
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/angular-animate.min.js"></script>
 <script src="js/lib/angular-md5.min.js"></script>
@@ -16,10 +16,10 @@
 
 <body>
 	<nav class="navbar navbar-default"
-		role="navigation" novalidate ng-cloak style="border-radius: 0;">
+		role="navigation" novalidate ng-cloak>
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand">玄奘书籍销售平台</a>
+				<a class="navbar-brand">玄奘求书</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
@@ -33,11 +33,14 @@
 			</ul>
 		</div>
 	</nav>
-	<div id="wrapper">
-		<form ng-controller="login-controller" name="loginForm" 
-				class="form-signin" role="form" novalidate ng-cloak>
+	<div id="wrapper" ng-controller="login-controller" ng-cloak>
+		<header>
+			<a class="logo" href="index.html" ><img src="img/commonLib/logo.png"/></a>
+		</header>
+		<form name="loginForm" 
+				class="form-signin" role="form" novalidate>
 			<h2 class="form-signin-header">登录</h2>
-				<span class="errortip">{{errorTip}}&nbsp;<br></span> 
+			<span class="errortip">{{logintip}}&nbsp;<br></span> 
 			<span class="errortip">
 				<span ng-show="loginForm.account.$dirty && loginForm.account.$invalid">
 					<span ng-show="loginForm.account.$error.required">请填写用户名</span>&nbsp;
@@ -59,12 +62,17 @@
 						type="password" class="form-control" placeholder="密码" required>
 			</div>
 			<br>
-			<label><input type="checkbox" value="remember-me">&nbsp;记住我(没完成)</label>
+			<label><input type="checkbox" value="remember-me">&nbsp;记住我</label>
 			<button ng-click="login()" class="btn btn-md btn-primary btn-block"
-				ng-disabled=" loginForm.account.$invalid ||  
+				ng-disabled="loginForm.account.$invalid ||  
 						 loginForm.password.$invalid">登录</button>
 		</from>
 	</div>
+	<footer>
+		<hr><div class="text-center">Copyright &copy; 玄奘求书 2017-2018, All Rights Reserved</div><hr>
+	</footer>
 </body>
+<script src="js/common/app.js" ></script>
+<script src="js/controller/nav.js" ></script>
 <script src='js/controller/login.js'></script>
 </html>

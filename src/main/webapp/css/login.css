@@ -2,8 +2,20 @@
 	margin-left: auto;
 	margin-right: auto;
 	width: 1024px;
+	background-image: url('../img/commonLib/login-background.jpg');
+	background-repeat: no-repeat;
+	background-position: -220px -200px;
 }
-
 form {
-	width: 270px;
+	width: 310px;
+	padding: 20px;
+	position: absolute;
+	background-color: white;
+	top: 110px;
+	right: 0;
+	border: 1px solid gray;
+	border-radius: 4px;
+}
+.logo >img {
+	background-color: white;
 }

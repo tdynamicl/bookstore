@@ -24,9 +24,4 @@ public class BookExhibitionImageEntity implements Serializable {
 		this.imageStream = imageStream;
 	}
 
-	@Override
-	public String toString() {
-		return "BookExhibitionImageEntity [bookId=" + bookId + ", imageStream=" + imageStream + "]";
-	}
-
 }

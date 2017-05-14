@@ -1,14 +1,25 @@
 /**
  * 导航栏控制器
  */
-myApp.controller("nav-controller", function($scope, $rootScope, $http) {
+myApp.controller("nav-controller", function($scope, $rootScope, myService) {
 	$rootScope.user = null;
 	$rootScope.checkLoginUser = function() {
 		var userString = sessionStorage.getItem("user");
-		if (userString !== null) {
+		if (userString) {
 			$rootScope.user = JSON.parse(userString);
-			$scope.nickname = $scope.user.nickname;
+			$scope.initializeUI();
 		}
+	};
+	
+	$scope.initializeUI = function() {
+		$scope.nickname = $scope.user.nickname;
+		myService.loadCartTotal($rootScope.user.id, function(resp) {
+			if (resp.data.code) {
+				$rootScope.cartTotal = 0;
+			} else {
+				$rootScope.cartTotal = resp.data.data.length;
+			}
+		});
 	};
 	
 	$scope.toPrivateCenter = function() {

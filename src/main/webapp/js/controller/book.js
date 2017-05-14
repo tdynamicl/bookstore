@@ -77,16 +77,25 @@ myApp.controller("book-controller", function($scope, $rootScope, myService) {
 	};
 	
 	$scope.addToCart = function() {
-		var param = {};
-		param.userId = $rootScope.user.id;
-		param.bookId = myService.getQueryString("id");
-		myService.httpPost('addToCart.do', param, function(resp){
-			if(resp.data.code){
-				alert(resp.data.message);
-			}else{
-				myService.showModal($scope, '提示', resp.data.message);
-			}
-		});
+		$rootScope.checkLoginUser();
+		if ($rootScope.user == null) {
+			myService.showModal($scope, '提示', '您还未登录，请登录后继续。', function() {
+				sessionStorage.setItem("previousURL", document.URL);
+				window.location = "login.html";
+			});
+		} else {
+			var param = {};
+			param.userId = $rootScope.user.id;
+			param.bookId = myService.getQueryString("id");
+			myService.httpPost('addToCart.do', param, function(resp){
+				if(resp.data.code){
+					alert(resp.data.message);
+				}else{
+					myService.showModal($scope, '提示', resp.data.message, undefined, true);
+					$rootScope.cartTotal++;
+				}
+			});
+		}
 	};
 	
 	// 购买书籍（按钮事件）

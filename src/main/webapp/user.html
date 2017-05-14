@@ -18,7 +18,7 @@
 		role="navigation" novalidate ng-cloak>
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand">玄奘书籍销售平台</a>
+				<a class="navbar-brand">玄奘求书</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li ng-if="user===null">
@@ -28,6 +28,10 @@
 				<li ng-if="user===null">
 					<a href="login.html">
 					<span class="glyphicon glyphicon-log-in"></span> 登录</a>
+				</li>
+				<li ng-if="user!==null" >
+					<a href="cart.html">
+					<span class="glyphicon glyphicon-shopping-cart"></span> 查看购物车<span class="badge">{{cartTotal}}</span></a>
 				</li>
 				<li ng-if="user!==null" class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown">{{nickname}}
@@ -66,8 +70,11 @@
 	    	<div class="panel-heading">
 	        	<h3 class="panel-title com-text-center">未完成订单<a class="cursorPointer" data-toggle="collapse" data-target="#unFinishedIndentEL">&lt;显示/隐藏&gt;</a></h3>
 	   		</div>
-	    	<div id="unFinishedIndentEL" class="panel-body">
+	    	<div id="unFinishedIndentEL" class="panel-body collapse in">
 				<!-- js填充  -->
+				<div class="noItem">
+	        		<span class="glyphicon glyphicon-exclamation-sign">您没有<b>未</b>完成的订单</span>
+	        	</div>
 	   		</div>
 		</div>
 		<div class="panel panel-default">
@@ -76,19 +83,28 @@
 	   		</div>
 	    	<div id="finishedIndentEL" class="panel-body collapse in">
 				<!-- js填充  -->
+				<div class="noItem">
+	        		<span class="glyphicon glyphicon-exclamation-sign">您没有<b>已</b>完成的订单</span>
+	        	</div>
 	   		</div>
 		</div>
 		<div class="panel panel-default">
 	    	<div class="panel-heading">
-	        	<h3 class="panel-title com-text-center">我的收藏</h3>
+	        	<h3 class="panel-title com-text-center">我的收藏夹<a class="cursorPointer" data-toggle="collapse" data-target="#favoriteBookEL">&lt;显示/隐藏&gt;</a></h3>
 	   		</div>
-	    	<div id="favoriteBookEL" class="panel-body">
-	        	内容
+	    	<div id="favoriteBookEL" class="panel-body collapse in">
+	        	<div class="noItem">
+	        		<span class="glyphicon glyphicon-exclamation-sign">没有收藏，去<a href="index.html">主页</a>看看吧</span>
+	        	</div>
+
 	   		</div>
 		</div>
 		
 		
 	</div>
+	<footer>
+		<hr><div class="text-center">Copyright &copy; 玄奘求书 2017-2018, All Rights Reserved</div><hr>
+	</footer>
 </body>
 <script src="js/common/app.js" ></script>
 <script src="js/controller/nav.js" ></script>

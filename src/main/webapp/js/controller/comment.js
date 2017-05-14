@@ -22,6 +22,7 @@ myApp.controller('comment-controller', function($scope, $rootScope, $filter, myS
 	};
 	
 	$scope.addCommentEL = function(comment) {
+		$('#commentsEL .noItem').remove();
 		if ($scope.isFirstEL===false) {
 			$scope.commentsEL.append($('<hr>'));
 		}
@@ -41,7 +42,7 @@ myApp.controller('comment-controller', function($scope, $rootScope, $filter, myS
 		$scope.commentsEL.append(commentEL);
 		myService.loadUserIconBase64(comment.userId, function(resp) {
 			if (resp.data.data===null) {
-				//$('#'+bookInfo.id)[0].src = "img/commonLib/nocover.png";
+				$('#'+comment.userId)[0].src = "img/commonLib/noUserIcon.jpg";
 			} else{
 				$('#'+comment.userId)[0].src = resp.data.data;
 			}

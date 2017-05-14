@@ -18,7 +18,7 @@
 		role="navigation" novalidate ng-cloak>
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand">网络书籍销售平台</a>
+				<a class="navbar-brand">玄奘求书</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
@@ -36,13 +36,10 @@
 	<div ng-controller="register-controller" id="wrapper" ng-cloak>
 		<header>
 			<a class="logo" href="index.html" ><img src="img/commonLib/logo.png"/></a>
-			<form name="searchForm" action="search.html" method="GET" novalidate>
-				<input name="keyword" placeholder="输入关键字搜索" >
-				<button type="submit">搜索</button>
-			</form>
 		</header>
 		<form name="registerForm" class="form-signup" role="form" novalidate >
 			<h2 class="form-signin-header">注册</h2>
+			<span class="errortip">{{errortip}}&nbsp;<br></span> 
 			<span class="errortip">
 				<span ng-show="registerForm.account.$dirty && registerForm.account.$invalid">
 					<span ng-show="registerForm.account.$error.required">用户名不能为空</span>
@@ -51,7 +48,7 @@
 			<div class="input-group input-group-md has-feedback">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
 				<input ng-model="user.account" type="text" class="form-control"
-					name="account" maxlength="12" placeholder="用户名" required autofocus>
+					name="account" maxlength="12" placeholder="用户名" ng-change="cleartip()" required autofocus>
 				<span class="glyphicon glyphicon-ok form-control-feedback"
 				ng-show="registerForm.account.$dirty && registerForm.account.$valid"></span>
 			</div>
@@ -64,7 +61,7 @@
 			<div class="input-group input-group-md">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
 				<input ng-model="user.password" type="password" class="form-control"
-					name="password" maxlength="16" ng-minlength="6" placeholder="密码" required>
+					name="password" maxlength="16" ng-minlength="6" placeholder="密码" ng-change="cleartip()" required>
 				<span class="glyphicon glyphicon-ok form-control-feedback "
 				ng-show="registerForm.password.$dirty && registerForm.password.$valid"></span>
 			</div>
@@ -76,7 +73,7 @@
 			<div class="input-group input-group-md">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></span>
 				<input ng-model="user.nickname" type="text" class="form-control"
-					maxlength="12" name="nickname" placeholder="昵称" required>
+					maxlength="12" name="nickname" placeholder="昵称" ng-change="cleartip()" required>
 				<span class="glyphicon glyphicon-ok form-control-feedback"
 				ng-show="registerForm.nickname.$dirty && registerForm.nickname.$valid"></span>
 			</div>
@@ -90,7 +87,7 @@
 			<div class="input-group input-group-md">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
 				<input ng-model="user.telephone" type="tel" class="form-control" ng-pattern="/^1\d{10}$/"
-					name="tel" maxlength="11" ng-minlength="11" placeholder="电话" required>
+					name="tel" maxlength="11" ng-minlength="11" placeholder="电话" ng-change="cleartip()" required>
 				<span class="glyphicon glyphicon-ok form-control-feedback"
 				ng-show="registerForm.tel.$dirty && registerForm.tel.$valid"></span>
 			</div>
@@ -104,7 +101,7 @@
 			<div class="input-group input-group-md">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
 				<input ng-model="user.email" type="email" class="form-control"
-					name="email" placeholder="邮箱" required>
+					name="email" placeholder="邮箱" ng-change="cleartip()" required>
 				<span class="glyphicon glyphicon-ok form-control-feedback"
 				ng-show="registerForm.email.$dirty && registerForm.email.$valid"></span>
 			</div>
@@ -131,8 +128,26 @@
 		        </div>
 		    </div>
 		</div>
+		<!-- 模态对话框 -->
+		<div id="modalEL" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+		   		<div class="modal-content">
+			        <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			            <h4 class="modal-title">{{modal.title}}</h4>
+			        </div>
+			        <div class="modal-body">{{modal.content}}</div>
+			        <div class="modal-footer">
+			            <button ng-if="modal.button.noCancel===false" class="btn btn-default" data-dismiss="modal">取消</button>
+			            <button ng-click="modal.confirm()" class="btn btn-primary" data-dismiss="modal">确定</button>
+			        </div>
+		   		</div>
+			</div>
+		</div>
 	</div>
-	
+	<footer>
+		<hr><div class="text-center">Copyright &copy; 玄奘求书 2017-2018, All Rights Reserved</div><hr>
+	</footer>
 </body>
 <script src="js/common/app.js" ></script>
 <script src="js/controller/nav.js" ></script>

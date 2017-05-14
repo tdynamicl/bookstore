@@ -20,6 +20,22 @@
 		<result property="time" column="comment_time" />
 		<result property="level" column="comment_level" />
 	</resultMap>
+	<resultMap type="cn.lost4found.entity.manager.IndentEntity" id="managerIndentEntity"
+		autoMapping="true">
+		<id property="id" column="id" />
+		<result property="bookId" column="book_id" />
+		<result property="userId" column="user_id" />
+		<result property="receiverName" column="receiver_name" />
+		<result property="receiverTel" column="receiver_tel" />
+		<result property="commentLevel" column="comment_level" />
+		<result property="commentContent" column="comment_content" />
+		<result property="commentTime" column="comment_time" />
+		<result property="generateTime" column="generate_time" />
+		<result property="bookName" column="bookName"/>
+		<result property="userName" column="userName"/>
+	</resultMap>
+	
+	
 	<select id="select" resultMap="indentEntity">
 		select * from info_indent where
 		${uf}=#{value}
@@ -74,4 +90,70 @@
 		where
 			id=#{id}
 	</update>
+	
+	
+	<select id="selectById" resultMap="managerIndentEntity">
+		select ii.* ,ib.name as bookName,iu.nickname as userName
+		from info_indent as ii,info_book as ib,info_user as iu
+		where ii.id=#{id} and ii.book_id=ib.id and ii.user_id= iu.id
+		
+	</select>
+	
+	<select id="selectByStatus" resultMap="managerIndentEntity">
+		select ii.* ,ib.name as bookName,iu.nickname as userName
+		from info_indent as ii,info_book as ib,info_user as iu
+		where ii.status=#{status} and ii.book_id=ib.id and ii.user_id= iu.id
+		order by generate_time desc
+		limit #{first},#{end}
+	</select>
+	
+	<select id="selectByDto" resultMap="managerIndentEntity">
+		select ii.* ,ib.name as bookName,iu.nickname as userName
+		from info_indent as ii,info_book as ib,info_user as iu
+		where ii.book_id=ib.id and ii.user_id= iu.id
+		<trim prefix="" suffix="" suffixOverrides="">
+			<if test="bookName!=null and bookName!=''">
+				and ii.book_id in (select id from info_book where name like '%${bookName}%')
+			</if>
+			<if test="userName!=null and userName!=''">
+				and ii.user_id in (select id from info_user where nickname like '%${userName}%')
+			</if>
+			<if test="generateTime!=null and generateTime!=''">
+				and generate_time like '${generateTime}%'
+			</if>
+			<if test="status!=null and status!=''">
+				and status = #{status}
+			</if>
+		order by generate_time desc
+		limit #{first},#{end}
+		</trim>
+	</select>
+	<select id="selectCountByDto" resultType="Integer">
+		select count(*)
+		from info_indent as ii,info_book as ib,info_user as iu
+		where ii.book_id=ib.id and ii.user_id= iu.id
+		<trim prefix="" suffix="" suffixOverrides="">
+			<if test="bookName!=null and bookName!=''">
+				and ii.book_id in (select id from info_book where name like '%${bookName}%')
+			</if>
+			<if test="userName!=null and userName!=''">
+				and ii.user_id in (select id from info_user where nickname like '%${userName}%')
+			</if>
+			<if test="generateTime!=null and generateTime!=''">
+				and generate_time like '${generateTime}%'
+			</if>
+			<if test="status!=null and status!=''">
+				and status = #{status}
+			</if>
+		</trim>
+	</select>
+	<update id="changeIndentStatus">
+		update info_indent
+		set status=#{status}
+		where id=#{id}
+	</update>
+	
+	
+	
+	
 </mapper>

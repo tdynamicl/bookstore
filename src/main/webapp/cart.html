@@ -2,7 +2,7 @@
 <html ng-app="myApp">
 <head>
 <meta charset="utf-8">
-<title>分类查看</title>
+<title>购物车</title>
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/angular-animate.min.js"></script>
 <script src="js/lib/angular-md5.min.js"></script>
@@ -11,18 +11,14 @@
 <link rel="stylesheet" href="css/lib/bootstrap.min.css" />
 <link rel="stylesheet" href="css/lib/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="css/common.css" />
-<link rel="stylesheet" href="css/category.css" />
-<style>
-	
-	
-</style>
+<link rel="stylesheet" href="css/cart.css" />
 </head>
-<body ng-controller="cart-controller" ng-cloak>
+<body>
 	<nav ng-controller="nav-controller" class="navbar navbar-default"
 		role="navigation" novalidate ng-cloak>
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand">玄奘书籍销售平台</a>
+				<a class="navbar-brand">玄奘求书</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li ng-if="user===null">
@@ -46,7 +42,7 @@
 		</div>
 	</nav>
 	
-	<div id="wrapper" >
+	<div id="wrapper" ng-controller="cart-controller" ng-cloak>
 		<header>
 			<a class="logo" href="index.html" ><img src="img/commonLib/logo.png"/></a>
 			<form name="searchForm" action="search.html" method="GET" novalidate>
@@ -54,29 +50,127 @@
 				<button type="submit">搜索</button>
 			</form>
 		</header>
-		<div >
-			<div id="books">
-				<!-- js自动生成内容 -->
+		<hr>
+		<!-- 主要内容 -->
+		<div id="cartEL">
+<!-- 		    <div class="btn-group btn-group-sm">
+			    <button type="button" class="btn btn-default">按钮 4</button>
+			    <button type="button" class="btn btn-default">按钮 5</button>
+			    <button type="button" class="btn btn-default">按钮 6</button>
+			</div> -->
+			<br>
+			<table class="table table-hover class table-condensed">
+				
+			   	<thead>
+			      	<tr>
+			        <th width="70px"><lable><input onclick="checkAll()" type="checkbox">全选</lable></th>
+			        <th width="600px">书籍详情</th>
+			        <th width="70px">定价</th>
+			        <th width="80px">操作</th>
+			    	</tr>
+			   	</thead>
+			   	<tbody class="containerEL">
+				<!-- js填充 -->
+			   	</tbody>
+			</table>
+			<div class="noItem">
+	        	<span class="glyphicon glyphicon-exclamation-sign">没有书籍，去<a href="index.html">主页</a>看看吧</span>
+	        </div>
+			<div class="cartOperation">
+				<hr>
+				<span>总价格<span class="price">0</span></span>
+				<button class="btn btn-danger" data-toggle="modal" data-target="#fillinAddressEL">结算</button>
 			</div>
-			<div ng-disabled="isNoMore===true" ng-click="loadSearchResult()" class="text-center load-more">{{loadMoreELText}}</div>
+		</div>
+		<!-- 模态对话框 -->
+		<div id="modalEL" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+		   		<div class="modal-content">
+			        <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			            <h4 class="modal-title">{{modal.title}}</h4>
+			        </div>
+			        <div class="modal-body">{{modal.content}}</div>
+			        <div class="modal-footer">
+			            <button ng-if="modal.button.noCancel===false" class="btn btn-default" data-dismiss="modal">取消</button>
+			            <button ng-click="modal.confirm()" class="btn btn-primary" data-dismiss="modal">确定</button>
+			        </div>
+		   		</div>
+			</div>
+		</div>
+		<!-- 填写收货地址 -->
+		<div id="fillinAddressEL" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<form role="form" name="dealForm" novalidate>
+		   			<div class="modal-content">
+			     	   <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			          	  <h4 class="modal-title">请填写收货地址</h4>
+			      		</div>
+			        	<div class="modal-body">
+							<span class="errortip">
+								{{errorTip}}&nbsp;		
+							</span>
+							<span class="errortip">
+								<span ng-show="dealForm.province.$dirty && dealForm.province.$invalid">
+									<span ng-show="dealForm.province.$error.required">请填写收货地所在省</span>&nbsp;
+								</span>&nbsp;
+					 		</span>
+					 		<br>
+							<label><input name="province" ng-model="addr.province" ng-change="clearTip()"
+								required>省</label>
+							<br>
+							<span class="errortip">
+								<span ng-show="dealForm.city.$dirty && dealForm.city.$invalid">
+									<span ng-show="dealForm.city.$error.required">请填收货地所在市</span>&nbsp;
+								</span>&nbsp;
+					 		</span>
+					 		<br>
+							<label><input name="city" ng-model="addr.city" ng-change="clearTip()"
+								required>市</label>
+							<br>
+							<span class="errortip">
+								<span ng-show="dealForm.street.$dirty && dealForm.street.$invalid">
+									<span ng-show="dealForm.street.$error.required">请填写详细收货地址</span>&nbsp;
+								</span>&nbsp;
+					 		</span>
+					 		<br>
+							<label><input name="street" ng-model="addr.street" ng-change="clearTip()"
+								required>街道（详细地址）</label>
+							<br>
+							<span class="errortip">
+								<span ng-show="dealForm.name.$dirty && dealForm.name.$invalid">
+									<span ng-show="dealForm.name.$error.required">请填写收货人姓名</span>&nbsp;
+								</span>&nbsp;
+					 		</span>
+					 		<br>
+							<label><input name="name" ng-model="name" ng-change="clearTip()"
+								required>收货人姓名</label>
+							<br>
+							<span class="errortip">
+								<span ng-show="dealForm.tel.$dirty">
+									<span ng-show="dealForm.tel.$error.required">手机号码不能为空</span>
+									<span ng-show="!dealForm.tel.$error.required &&
+										dealForm.tel.$invalid">格式错误</span>
+								</span>&nbsp;
+					 		</span>
+					 		<br>
+							<label><input name="tel" ng-model="tel" ng-change="clearTip()"
+								type="tel" ng-pattern="/^1\d{10}$/" maxlength="11" ng-minlength="11"
+								required>收货人联系电话</label>
+			        	</div>
+			        	<div class="modal-footer">
+			           	 	<button class="btn btn-default" data-dismiss="modal">取消</button>
+			           	 	<button ng-click="purchaseCart()" class="btn btn-success" data-dismiss="modal">确认提交</button>
+			        	</div>
+		   			</div>
+				</form>
+			</div>
 		</div>
 	</div>
-	<!-- 模态对话框 -->
-	<div id="modalEL" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-	   		<div class="modal-content">
-		        <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		            <h4 class="modal-title">{{modal.title}}</h4>
-		        </div>
-		        <div class="modal-body">{{modal.content}}</div>
-		        <div class="modal-footer">
-		            <button ng-if="modal.button.noCancel===false" class="btn btn-default" data-dismiss="modal">取消</button>
-		            <button ng-click="modal.confirm()" class="btn btn-primary" data-dismiss="modal">确定</button>
-		        </div>
-	   		</div>
-		</div>
-	</div>
+	<footer>
+		<hr><div class="text-center">Copyright &copy; 玄奘求书 2017-2018, All Rights Reserved</div><hr>
+	</footer>
 </body>
 <script src="js/common/app.js" ></script>
 <script src="js/controller/nav.js" ></script>

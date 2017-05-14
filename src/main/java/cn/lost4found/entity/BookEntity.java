@@ -1,12 +1,13 @@
 package cn.lost4found.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class BookEntity implements Serializable {
 
 	private static final long serialVersionUID = -7956575569665873343L;
-
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	private String id;
 	private String name;
 	private String description;
@@ -15,7 +16,10 @@ public class BookEntity implements Serializable {
 	private Date pressTime;
 	private int price;
 	private Date addTime;
-
+	
+	public String getPriceStr(){
+		return (((double)this.price)/100)+"";
+	}
 	public String getId() {
 		return id;
 	}
@@ -60,6 +64,10 @@ public class BookEntity implements Serializable {
 		return pressTime;
 	}
 
+	public String getPressTimeString() {
+		return sdf.format(pressTime);
+	}
+
 	public void setPressTime(Date pressTime) {
 		this.pressTime = pressTime;
 	}
@@ -76,14 +84,20 @@ public class BookEntity implements Serializable {
 		return addTime;
 	}
 
+	public String getAddTimeString() {
+		return sdf.format(addTime);
+	}
+
 	public void setAddTime(Date addTime) {
 		this.addTime = addTime;
 	}
 
 	@Override
 	public String toString() {
-		return "BookEntity [id=" + id + ", name=" + name + ", description=" + description + ", author=" + author
-				+ ", press=" + press + ", pressTime=" + pressTime + ", price=" + price + ", addTime=" + addTime + "]";
+		return "BookEntity [id=" + id + ", name=" + name + ", description="
+				+ description + ", author=" + author + ", press=" + press
+				+ ", pressTime=" + pressTime + ", price=" + price
+				+ ", addTime=" + addTime + "]";
 	}
 
 }

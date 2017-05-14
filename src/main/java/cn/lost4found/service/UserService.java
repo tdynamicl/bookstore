@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import cn.lost4found.dto.BookInfoDto;
 import cn.lost4found.dto.CommentDto;
 import cn.lost4found.dto.IndentDto;
+import cn.lost4found.dto.PurchaseCartDto;
 import cn.lost4found.dto.SubmitIndentDto;
 import cn.lost4found.dto.UserRegisterDto;
 import cn.lost4found.entity.BookExhibitionImageEntity;
@@ -211,5 +212,30 @@ public interface UserService {
 	 * @throws Exception
 	 */
 	public LinkedList<CartEntity> loadCartUnpurchased(String userId) throws Exception;
+	
+	/**
+	 * 支付购物车中的条目
+	 * @param purchaseCartDto
+	 * @throws Exception
+	 */
+	public void purchaseCart(PurchaseCartDto purchaseCartDto) throws Exception;
+	
+	/**
+	 * 移除购物车的条目
+	 * @param userId
+	 * @param id
+	 * @throws Exception
+	 */
+	public void removeCartItem(String userId, String id) throws Exception;
+	
+	/**
+	 * 查找用户收藏的书籍，查看第index起的limit本书
+	 * @param userId
+	 * @param index
+	 * @param limit
+	 * @return
+	 * @throws Exception
+	 */
+	public LinkedList<BookInfoDto> loadFavoriteBook(String userId, int index, int limit) throws Exception;
 	
 }

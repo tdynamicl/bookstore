@@ -19,9 +19,15 @@ img {
 }
 .bookName::before {
 	content: "《";
+	color: #666666;
 }
 .bookName::after {
 	content: "》";
+	color: #666666;
+}
+.bookDesc::before {
+	content: "简介：";
+	color: #666666;
 }
 .authorName::before {
 	content: "作者：";
@@ -77,6 +83,9 @@ img {
 .bttnUnFavorite {
 	background-color: white;
 }
+.bttnPurchase {
+	background-color: red;
+}
 nav li {
 	cursor: pointer;
 }
@@ -92,6 +101,7 @@ nav li {
 	position: relative;
 	width: 1024px;
 	margin: 0 auto;
+	min-height: 460px;
 }
 #wrapper > header {
 	height: 80px;
@@ -162,4 +172,10 @@ nav li {
 	position: absolute;
 	right: 0;
 	bottom: 0;
+}
+.noItem {
+	height: 70px;
+	line-height: 70px;
+	text-align: center;
+	
 }

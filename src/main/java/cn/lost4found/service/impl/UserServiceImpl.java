@@ -16,6 +16,7 @@ import cn.lost4found.dao.UserIconDao;
 import cn.lost4found.dto.BookInfoDto;
 import cn.lost4found.dto.CommentDto;
 import cn.lost4found.dto.IndentDto;
+import cn.lost4found.dto.PurchaseCartDto;
 import cn.lost4found.dto.SubmitIndentDto;
 import cn.lost4found.dto.UserRegisterDto;
 import cn.lost4found.entity.BookEntity;
@@ -55,7 +56,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserEntity login(String account, String password) throws Exception {
-		if (account==null||account.length()!=32) {
+		if (account==null||account.equals("")) {
 			throw new MyException("用户名不能为空");
 		}
 		if (password==null||password.length()!=32) {
@@ -78,7 +79,7 @@ public class UserServiceImpl implements UserService {
 		if (userDao.select("account", userDto.getAccount())!=null) {
 			throw new MyException("该用户名已被注册");
 		}
-		if (userDto.getAccount()==null || userDto.getAccount().length()!=32) {
+		if (userDto.getAccount()==null || userDto.getAccount().equals("")) {
 			throw new MyException("用户名不能为空");
 		}
 		if (userDto.getPassword()==null || userDto.getPassword().length()!=32) {
@@ -154,7 +155,7 @@ public class UserServiceImpl implements UserService {
 		indentEntity.setReceiverName(submitIndentDto.getReceiverName());
 		indentEntity.setReceiverTel(submitIndentDto.getReceiverTel());
 		indentEntity.setGenerateTime(Util.nowDate());
-		indentEntity.setStatus(1);
+		indentEntity.setStatus(submitIndentDto.getStatus());
 		indentEntity.setCommentContent(null);
 		indentEntity.setCommentLevel(0);
 		indentEntity.setCommentTime(null);
@@ -372,6 +373,57 @@ public class UserServiceImpl implements UserService {
 		LinkedList<CartEntity> list = cartDao.queryPurchaseIdIsNull(userId);
 		if (list.isEmpty()) {
 			throw new MyException("购物车是空的", 2021);
+		}
+		return list;
+	}
+
+	@Override
+	public void purchaseCart(PurchaseCartDto purchaseCartDto) throws Exception {
+		String idsString = purchaseCartDto.getCartIds();
+		String[] ids = idsString.split("\\|");
+		if (ids.length == 0) {
+			throw new MyException("没有要支付的购物车条目", 2022);
+		}
+		String purchaseId = Util.generateUUID();
+		CartEntity tempCartEntity = null;
+		SubmitIndentDto submitIndentDto = new SubmitIndentDto();
+		submitIndentDto.setAddr(purchaseCartDto.getAddr());
+		submitIndentDto.setUserId(purchaseCartDto.getUserId());
+		submitIndentDto.setReceiverName(purchaseCartDto.getReceiverName());
+		submitIndentDto.setReceiverTel(purchaseCartDto.getReceiverTel());
+		submitIndentDto.setStatus(2);
+		for (String id : ids) {
+			tempCartEntity = new CartEntity();
+			tempCartEntity=cartDao.select("id", id);
+			submitIndentDto.setBookId(tempCartEntity.getBookId());
+			tempCartEntity.setIndentId(submitIndent(submitIndentDto));
+			tempCartEntity.setId(id);
+			tempCartEntity.setPurchaseId(purchaseId);
+			tempCartEntity.setPurchaseTime(Util.nowDate());
+			cartDao.updatePurchaseInfo(tempCartEntity);
+		}
+	}
+
+	@Override
+	public void removeCartItem(String userId, String id) throws Exception {
+		if (userId==null) {
+			throw new MyException("用户信息错误");
+		}
+		if (!userId.equals(cartDao.select("id", id).getUserId())) {
+			throw new MyException("购物车信息错误");
+		}
+		cartDao.delete("id", id);
+	}
+
+	@Override
+	public LinkedList<BookInfoDto> loadFavoriteBook(String userId, int index, int limit) throws Exception {
+		LinkedList<String> bookIds = favoriteDao.queryFavoriteBookIdByUserIdLimited(userId, index, limit);
+		if (bookIds.isEmpty()) {
+			throw new MyException("收藏为空");
+		}
+		LinkedList<BookInfoDto> list = new LinkedList<>();
+		for (String id : bookIds) {
+			list.add(loadBookInfo(id));
 		}
 		return list;
 	}

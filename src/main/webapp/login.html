@@ -19,7 +19,7 @@
 		role="navigation" novalidate ng-cloak>
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand">玄奘书籍销售平台</a>
+				<a class="navbar-brand">玄奘求书</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
@@ -40,7 +40,7 @@
 		<form name="loginForm" 
 				class="form-signin" role="form" novalidate>
 			<h2 class="form-signin-header">登录</h2>
-				<span class="errortip">{{errorTip}}&nbsp;<br></span> 
+			<span class="errortip">{{logintip}}&nbsp;<br></span> 
 			<span class="errortip">
 				<span ng-show="loginForm.account.$dirty && loginForm.account.$invalid">
 					<span ng-show="loginForm.account.$error.required">请填写用户名</span>&nbsp;
@@ -68,6 +68,9 @@
 						 loginForm.password.$invalid">登录</button>
 		</from>
 	</div>
+	<footer>
+		<hr><div class="text-center">Copyright &copy; 玄奘求书 2017-2018, All Rights Reserved</div><hr>
+	</footer>
 </body>
 <script src="js/common/app.js" ></script>
 <script src="js/controller/nav.js" ></script>

@@ -16,6 +16,12 @@
 		${uf}=#{value}
 	</select>
 	
+	<select id="queryFavoriteBookIdByUserIdLimited" resultType="java.lang.String">
+		select book_id from info_favorite where
+		user_id=#{userId} order by add_time desc
+		limit #{index}, #{limit}
+	</select>
+	
 	<select id="selectByBookIdAndUserId" resultMap="favoriteEntity">
 		select * from info_favorite where
 		book_id=#{arg0} and user_id=#{arg1}
@@ -34,12 +40,6 @@
 	</delete>
 	
 	<update id="update">
-	<!-- 
-		update sys_user set
-			account=#{account}, password=#{password},
-			nickname=#{nickname}, telephone=#{telephone}, email=#{email}
-		where
-			id=#{id}
-	 -->
+
 	</update>
 </mapper>

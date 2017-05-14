@@ -27,18 +27,24 @@ myApp.service('myService', function($http){
 		return null; 
 	};
 	
+	this.loadCartTotal = function(userId, callback) {
+		this.httpPost('loadCartInfo.do', {userId: userId}, function(resp) {
+			callback(resp);
+		});
+	};
+	
 	//加载封面的base64编码
 	this.loadCoverBase64 = function (bookId, callback) {
 		this.httpPost('loadBookImage.do', {id: bookId}, function(resp){
 			callback(resp);
-		})
+		});
 	};
 	
 	//加载头像的base64编码
 	this.loadUserIconBase64 = function (userId, callback) {
 		this.httpPost('loadUserIcon.do', {userId: userId}, function(resp){
 			callback(resp);
-		})
+		});
 	};
 	
 	//显示模态框

@@ -1,0 +1,58 @@
+#cartEL {
+ 	
+}
+#cartEL .checkAll {
+
+}
+
+#cartEL .bookDitail{
+	position: relative;
+}
+
+#cartEL .bookDitail>div {
+	position: absolute;
+	left: 130px;
+	top: 5px;
+	bottom: 5px;
+}
+#cartEL .bookDitail>div>span:first-child {
+	margin-top: 0;	
+}
+#cartEL .bookDitail>div>span {
+	margin-top: 5px;
+	display: block;
+	width: 600px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+#cartEL table {
+	border-bottom: 2px solid #ddd;
+}
+#cartEL table .price {
+	padding: 0;
+	font-size: 130%;
+}
+
+#cartEL img {
+	border: none;
+	height: 100px;
+	width: 90px;
+}
+
+#cartEL .cartOperation {
+	position: relative;
+	text-align: right;
+}
+
+#cartEL .cartOperation>span{
+	position: absolute;
+	display: inline-block;
+	right: 55px;
+	bottom: -9px;
+}
+
+#cartEL .cartOperation .price{
+	padding: 0;
+	margin-right: 30px;
+}

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import cn.lost4found.common.MyException;
 import cn.lost4found.dto.BookInfoDto;
+import cn.lost4found.dto.PurchaseCartDto;
 import cn.lost4found.dto.SubmitIndentDto;
 import cn.lost4found.dto.UserRegisterDto;
 import cn.lost4found.dto.json.JsonRespose;
@@ -37,6 +38,7 @@ public class UserController {
 		userServiceImpl.register(userDto);
 		JsonRespose jsonRespose = new JsonRespose();
 		jsonRespose.setMessage("注册成功！");
+		jsonRespose.setData(null);
 		return jsonRespose.toModelAndView();
 	}
 	
@@ -203,6 +205,28 @@ public class UserController {
 		return jsonRespose.toModelAndView();
 	}
 	
+	@RequestMapping(value="purchaseCart.do", method=RequestMethod.POST)
+	public ModelAndView purchaseCart(PurchaseCartDto purchaseCartDto) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		userServiceImpl.purchaseCart(purchaseCartDto);
+		jsonRespose.setMessage("支付成功！");
+		return jsonRespose.toModelAndView();
+	}
+	
+	@RequestMapping(value="removeCartItem.do", method=RequestMethod.POST)
+	public ModelAndView removeCartItem(@RequestParam("userId")String userId, @RequestParam("id")String id) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		userServiceImpl.removeCartItem(userId, id);
+		jsonRespose.setMessage("移除成功");
+		return jsonRespose.toModelAndView();
+	}
+	
+	@RequestMapping(value="loadFavoritBook.do", method=RequestMethod.POST)
+	public ModelAndView loadFavoritBook(@RequestParam("userId")String userId, @RequestParam("index")int index) throws Exception{
+		JsonRespose jsonRespose = new JsonRespose();
+		jsonRespose.setData(userServiceImpl.loadFavoriteBook(userId, index, 5));
+		return jsonRespose.toModelAndView();
+	}
 	
 	//-------ExceptionHandlers--------------
 	@ExceptionHandler(MyException.class)

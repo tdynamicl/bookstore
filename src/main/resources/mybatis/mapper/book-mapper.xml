@@ -7,6 +7,7 @@
 		autoMapping="true">
 		<id property="id" column="id" />
 		<result property="pressTime" column="press_time" />
+		<result property="addTime" column="add_time" />
 	</resultMap>
 	
 	<insert id="insert">
@@ -19,6 +20,18 @@
 	<select id="select" resultMap="bookEntity">
 		select * from info_book where
 		${uf}=#{value}
+	</select>
+	
+	<select id="selectByKey" resultMap="bookEntity">
+		select * from info_book
+		where
+		name like #{key}
+		limit #{first},#{end}
+	</select>
+	
+	<select id="selectTotalRows" resultType="Integer">
+		select count(*) from info_book
+		where name like #{key}
 	</select>
 	
 	<select id="queryByNameDescAuthorPressLimited" resultType="java.lang.String">
@@ -38,6 +51,19 @@
 	</select>
 	
 	<update id="update">
-		
+		update info_book
+		set name=#{name},
+			description=#{description},
+			author=#{author},
+			press=#{press},
+			press_time=#{pressTime},
+			price=#{price}
+		where id = #{id}
 	</update>
+	
+	<delete id="delete">
+		delete from info_book
+		where ${uf}=#{value}
+	</delete>
+	
 </mapper>
